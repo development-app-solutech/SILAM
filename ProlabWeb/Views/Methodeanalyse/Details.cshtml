@@ -1,0 +1,36 @@
+@model ProlabWeb.Db.Methodeanalyse
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Methodeanalyse</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Isdefaultmethode)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Isdefaultmethode)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdanalyseNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdanalyseNavigation.Idanalyse)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdmethodeNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IdmethodeNavigation.Idmethode)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Methodeanalyseid">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

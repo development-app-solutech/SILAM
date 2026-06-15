@@ -1,0 +1,632 @@
+@model ProlabWeb.ViewModels.EnteteresultatEditVM
+@{
+    ViewData["Title"] = "Modification de résultat d'analyse";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Enhanced Header with modern design -->
+<div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl shadow-sm border border-blue-100 p-6 mb-8">
+    <div class="flex items-center justify-between">
+        <div class="flex items-center gap-4">
+            <div class="bg-blue-100 p-3 rounded-xl">
+                <span class="material-symbols-outlined text-blue-600 text-2xl" style="font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24">edit_note</span>
+            </div>
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900 mb-1">@ViewData["Title"]</h1>
+                <p class="text-sm text-gray-600">Saisie et validation des résultats d'analyse médicale</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-3">
+            <a asp-action="Index" class="inline-flex items-center gap-2 px-4 py-2 bg-white hover:bg-gray-50 text-gray-700 hover:text-gray-900 border border-gray-300 rounded-lg transition-colors duration-200 shadow-sm">
+                <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20">arrow_back</span>
+                Retour à la liste
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Enhanced Form Container -->
+<div class="min-w-full mb-8">
+    <form asp-action="Edit" method="post" class="space-y-8" id="edit-form">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Enteteresultatid" />
+        <div asp-validation-summary="ModelOnly" class="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700"></div>
+        
+        <!-- Hidden Fields -->
+        <input hidden asp-for="Codesite" />
+        <input hidden asp-for="Technicienid" />
+        <input hidden asp-for="Entetedemandeid" />
+        <input hidden asp-for="Idanalyse" />
+        <input hidden name="Age" />
+        <input hidden name="Sexe" />
+        <input hidden name="Peau" />
+        
+        <!-- Informations Générales Card -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
+                <div class="flex items-center gap-3">
+                    <div class="bg-indigo-100 p-2 rounded-lg">
+                        <span class="material-symbols-outlined text-indigo-600 text-xl" style="font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24">info</span>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900">Informations Générales</h3>
+                </div>
+            </div>
+            <div class="p-6">
+                <!-- Site, Technicien, Laboratoire -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700" asp-for="Codesite">
+                            <span class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-gray-500 text-sm">business</span>
+                                Site
+                            </span>
+                        </label>
+                        <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50" 
+                                asp-for="Codesite" asp-items="@(ViewData["Codesite"] as List<SelectListItem>)" disabled>
+                        </select>
+                        <span asp-validation-for="Codesite" class="text-red-500 text-sm"></span>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700" asp-for="Technicienid">
+                            <span class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-gray-500 text-sm">person</span>
+                                Technicien
+                            </span>
+                        </label>
+                        <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50" 
+                                asp-for="Technicienid" asp-items="@(ViewData["Technicienid"] as List<SelectListItem>)" disabled>
+                        </select>
+                        <span asp-validation-for="Technicienid" class="text-red-500 text-sm"></span>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700" asp-for="Laboratoireid">
+                            <span class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-gray-500 text-sm">science</span>
+                                Laboratoire
+                            </span>
+                        </label>
+                        <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50" 
+                                asp-for="Laboratoireid" asp-items="@(ViewData["Laboratoireid"] as List<SelectListItem>)" disabled>
+                        </select>
+                        <span asp-validation-for="Laboratoireid" class="text-red-500 text-sm"></span>
+                    </div>
+                </div>
+                
+                <!-- Demande et Analyse -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700" asp-for="Entetedemandeid">
+                            <span class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-gray-500 text-sm">assignment</span>
+                                Demande d'Analyse
+                            </span>
+                        </label>
+                        <p class="text-xs text-gray-500 mb-2">Format : numéro - date - patient - prescripteur - assurance</p>
+                        <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50" 
+                                id="Entetedemandeid" asp-items="@(ViewData["Entetedemandeid"] as List<SelectListItem>)" disabled>
+                        </select>
+                        <span asp-validation-for="Entetedemandeid" class="text-red-500 text-sm"></span>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700" asp-for="Idanalyse">
+                            <span class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-gray-500 text-sm">biotech</span>
+                                Type d'Analyse
+                            </span>
+                        </label>
+                        <select class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50" 
+                                id="Idanalyse" asp-items="@(ViewData["Idanalyse"] as List<SelectListItem>)" disabled>
+                        </select>
+                        <span asp-validation-for="Idanalyse" class="text-red-500 text-sm"></span>
+                    </div>
+                </div>
+                
+                <!-- Date -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-gray-700" asp-for="Date">
+                            <span class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-gray-500 text-sm">calendar_today</span>
+                                Date d'Analyse
+                            </span>
+                        </label>
+                        <input class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200" 
+                               asp-for="Date" type="date" />
+                        <span asp-validation-for="Date" class="text-red-500 text-sm"></span>
+                    </div>
+                </div>
+                
+                <!-- Heures de prélèvement et réception -->
+                <div class="mt-6 pt-6 border-t border-gray-200">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="bg-orange-100 p-2 rounded-lg">
+                            <span class="material-symbols-outlined text-orange-600 text-xl" style="font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24">schedule</span>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-medium text-gray-900">Gestion des heures</h4>
+                            <p class="text-sm text-gray-600">Heures de prélèvement et de réception des échantillons</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="block text-sm font-medium text-gray-700" asp-for="DatePrelevement">
+                                <span class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-gray-500 text-sm">schedule</span>
+                                    Heure de prélèvement
+                                </span>
+                            </label>
+                            @if (User.IsInRole("Technicien"))
+                            {
+                                <input class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200" 
+                                       asp-for="DatePrelevement" type="datetime-local" />
+                            }
+                            else
+                            {
+                                <input class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-700 cursor-not-allowed" 
+                                       asp-for="DatePrelevement" type="datetime-local" readonly disabled />
+                            }
+                            <span asp-validation-for="DatePrelevement" class="text-red-500 text-sm"></span>
+                            <p class="text-xs text-gray-500">Heure à laquelle l'échantillon a été prélevé</p>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-sm font-medium text-gray-700" asp-for="DateReception">
+                                <span class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-gray-500 text-sm">inbox</span>
+                                    Heure d'arrivée au labo
+                                </span>
+                            </label>
+                            @if (User.IsInRole("Technicien"))
+                            {
+                                <input class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200" 
+                                       asp-for="DateReception" type="datetime-local" />
+                            }
+                            else
+                            {
+                                <input class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-700 cursor-not-allowed" 
+                                       asp-for="DateReception" type="datetime-local" readonly disabled />
+                            }
+                            <span asp-validation-for="DateReception" class="text-red-500 text-sm"></span>
+                            <p class="text-xs text-gray-500">Heure d'arrivée de l'échantillon au laboratoire</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Paramètres d'Analyse Card -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
+                <div class="flex items-center gap-3">
+                    <div class="bg-green-100 p-2 rounded-lg">
+                        <span class="material-symbols-outlined text-green-600 text-xl" style="font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24">list_alt</span>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900">Liste des paramètres</h3>
+                        <p class="text-sm text-gray-600">Saisie des résultats et calcul automatique des commentaires</p>
+                    </div>
+                </div>
+            </div>
+            <div class="overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[200px]">
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-gray-400 text-sm">label</span>
+                                        Nom/Code
+                                    </div>
+                                </th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[100px]">
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-gray-400 text-sm">straighten</span>
+                                        Unité
+                                    </div>
+                                </th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[120px]">
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-gray-400 text-sm">edit</span>
+                                        Résultat
+                                    </div>
+                                </th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[100px]">
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-gray-400 text-sm">functions</span>
+                                        Unité SI
+                                    </div>
+                                </th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[120px]">
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-gray-400 text-sm">calculate</span>
+                                        Résultat SI
+                                    </div>
+                                </th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[150px]">
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-gray-400 text-sm">comment</span>
+                                        Commentaire
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                        @for (int i = 0; i < Model.Parametres.Count; i++)
+                        {
+                            <tr class="hover:bg-gray-50 transition-colors duration-150">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <input type="hidden" asp-for="Parametres[i].Parametreid" />
+                                    <div class="flex flex-col">
+                                        <div class="text-sm font-medium text-gray-900">@Model.Parametres[i].Nom</div>
+                                        <input type="hidden" asp-for="Parametres[i].Nom" />
+                                        <div class="text-xs text-gray-500 font-mono bg-gray-100 px-2 py-1 rounded mt-1 inline-block">
+                                            @Model.Parametres[i].Code
+                                        </div>
+                                        <input type="hidden" asp-for="Parametres[i].Code" />
+                                        <!-- Champs cachés pour Builder et FacteurConversion -->
+                                        <input type="hidden" asp-for="Parametres[i].Builder.Type" />
+                                        <input type="hidden" asp-for="Parametres[i].Builder.Valeur" />
+                                        <input type="hidden" asp-for="Parametres[i].FacteurConversion" />
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                        @Model.Parametres[i].Unite
+                                    </span>
+                                    <input type="hidden" asp-for="Parametres[i].Unite" />
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <input class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 text-center font-mono" 
+                                           asp-for="Parametres[i].Resultat" 
+                                           type="number" 
+                                           step="0.01"
+                                           placeholder="--" />
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @if (!string.IsNullOrEmpty(Model.Parametres[i].UniteSI))
+                                    {
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                                            @Model.Parametres[i].UniteSI
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-gray-400 text-sm">--</span>
+                                    }
+                                    <input type="hidden" asp-for="Parametres[i].UniteSI" />
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <input class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 text-center font-mono bg-gray-50" 
+                                           asp-for="Parametres[i].Resultatsi" 
+                                           type="number" 
+                                           step="0.01"
+                                           placeholder="Auto" 
+                                           readonly />
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    @{
+                                        var commentaireClass = "";
+                                        var commentaireStyle = "";
+                                        var badgeClass = "bg-gray-100 text-gray-800";
+                                        var iconName = "help";
+                                        
+                                        if (Model.Parametres[i].Commentaire == "Normal")
+                                        {
+                                            badgeClass = "bg-green-100 text-green-800";
+                                            iconName = "check_circle";
+                                        }
+                                        else if (Model.Parametres[i].Commentaire == "Haut")
+                                        {
+                                            badgeClass = "bg-yellow-100 text-yellow-800";
+                                            iconName = "trending_up";
+                                        }
+                                        else if (Model.Parametres[i].Commentaire == "Bas")
+                                        {
+                                            badgeClass = "bg-red-100 text-red-800";
+                                            iconName = "trending_down";
+                                        }
+                                    }
+                                    <div class="flex items-center gap-2">
+                                        <span class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium @badgeClass transition-all duration-200">
+                                            <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 16">@iconName</span>
+                                            <span id="comment-@i">@(string.IsNullOrEmpty(Model.Parametres[i].Commentaire) ? "Auto" : Model.Parametres[i].Commentaire)</span>
+                                        </span>
+                                    </div>
+                                    <input type="hidden" 
+                                           asp-for="Parametres[i].Commentaire" 
+                                           class="commentaire-field" />
+                                    <span asp-validation-for="Parametres[i].Commentaire" class="text-red-500 text-xs"></span>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Interprétation Card -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
+                <div class="flex items-center gap-3">
+                    <div class="bg-orange-100 p-2 rounded-lg">
+                        <span class="material-symbols-outlined text-orange-600 text-xl" style="font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24">psychology</span>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-gray-900">Interprétation Médicale</h3>
+                        <p class="text-sm text-gray-600">Analyse et conclusions cliniques</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700" asp-for="Interpretation">
+                        <span class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-gray-500 text-sm">description</span>
+                            Interprétation des résultats
+                        </span>
+                    </label>
+                    <textarea class="w-full summernote" asp-for="Interpretation" placeholder="Saisir l'interprétation médicale des résultats d'analyse..."></textarea>
+                    <span asp-validation-for="Interpretation" class="text-red-500 text-sm"></span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Actions Card -->
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl shadow-sm border border-blue-100 p-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="bg-blue-100 p-2 rounded-lg">
+                        <span class="material-symbols-outlined text-blue-600" style="font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24">task_alt</span>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-900">Finaliser l'analyse</h4>
+                        <p class="text-sm text-gray-600">Vérifiez les données avant de sauvegarder</p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <a asp-action="Index" 
+                       class="inline-flex items-center gap-2 px-5 py-3 bg-white hover:bg-gray-50 text-gray-700 hover:text-gray-900 border border-gray-300 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md">
+                        <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20">cancel</span>
+                        Annuler
+                    </a>
+                    <button type="submit" 
+                            name="submitAction" 
+                            value="save" 
+                            class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                            id="save-button">
+                        <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 20">save</span>
+                        <span id="button-text">Enregistrer</span>
+                        <div class="hidden animate-spin" id="button-spinner">
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Enhanced Loading Overlay -->
+<div id="form-loading" class="fixed inset-0 z-50 hidden" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(4px);">
+    <div class="absolute inset-0 flex items-center justify-center">
+        <div class="bg-white rounded-3xl shadow-2xl p-8 max-w-sm mx-4 text-center border border-gray-200">
+            <div class="mb-6">
+                <div class="relative inline-flex">
+                    <div class="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-blue-600 text-2xl" style="font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24">save</span>
+                    </div>
+                </div>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-3">Enregistrement en cours</h3>
+            <p class="text-gray-600 text-sm leading-relaxed">Veuillez patienter pendant la sauvegarde de vos modifications...</p>
+            <div class="mt-6 bg-gray-100 rounded-full h-2">
+                <div class="bg-gradient-to-r from-blue-500 to-indigo-600 h-2 rounded-full animate-pulse" style="width: 75%"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/app/enteteresultat/edit.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function() {
+            function forceFormulaFieldsEditable() {
+                function escapeRegexForFormula(value) {
+                    return (value || '').toString().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                }
+
+                function isSelfVariableInFormula(formula, code) {
+                    if (!formula || !code) return false;
+                    var pattern = new RegExp('\\b' + escapeRegexForFormula(code) + '\\b', 'i');
+                    return pattern.test((formula || '').toString());
+                }
+
+                $('input[name$=".Builder.Type"]').each(function() {
+                    var name = $(this).attr('name');
+                    var match = name.match(/Parametres\[(\d+)\]\.Builder\.Type/);
+                    if (!match) return;
+
+                    var index = match[1];
+                    var type = ($(this).val() || '').toString().trim().toLowerCase();
+                    if (type === 'formule') {
+                        var formula = ($('input[name="Parametres[' + index + '].Builder.Valeur"]').val() || '').toString();
+                        var code = ($('input[name="Parametres[' + index + '].Code"]').val() || '').toString();
+                        var selfFormula = isSelfVariableInFormula(formula, code);
+                        var $resultInput = $('input[name="Parametres[' + index + '].Resultat"]');
+                        if ($resultInput.length) {
+                            $resultInput.prop('readonly', !selfFormula);
+                            if (selfFormula) {
+                                $resultInput.removeAttr('readonly');
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Initialize Summernote with enhanced configuration
+            $('.summernote').summernote({
+                height: 250,
+                minHeight: 200,
+                maxHeight: 400,
+                focus: false,
+                lang: 'fr-FR',
+                placeholder: 'Saisir l\'interprétation médicale des résultats d\'analyse...',
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'italic', 'underline', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link']],
+                    ['view', ['fullscreen', 'codeview']]
+                ],
+                styleTags: [
+                    'p', 'blockquote', 'pre', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
+                ],
+                callbacks: {
+                    onInit: function() {
+                        console.log('Summernote initialized');
+                    }
+                }
+            });
+            
+            // Initialize Select2 for dropdowns
+            $('.kt-select, select').select2({
+                placeholder: "Sélectionner...",
+                allowClear: false,
+                width: '100%',
+                theme: 'default'
+            });
+            
+            // Enhanced form submission with loading spinner
+            $('#edit-form').on('submit', function(e) {
+                // Show loading spinner
+                showLoadingSpinner();
+                
+                // Disable the submit button to prevent double submission
+                const $submitButton = $('#save-button');
+                const $buttonText = $('#button-text');
+                const $buttonSpinner = $('#button-spinner');
+                
+                $submitButton.prop('disabled', true);
+                $buttonText.text('Enregistrement...');
+                $buttonSpinner.removeClass('hidden');
+                
+                // Update Summernote content before submission
+                $('.summernote').each(function() {
+                    $(this).val($(this).summernote('code'));
+                });
+                
+                // If validation fails, re-enable the button
+                setTimeout(function() {
+                    if ($('.field-validation-error:visible').length > 0) {
+                        hideLoadingSpinner();
+                        $submitButton.prop('disabled', false);
+                        $buttonText.text('Enregistrer');
+                        $buttonSpinner.addClass('hidden');
+                    }
+                }, 100);
+            });
+            
+            // Function to show loading spinner
+            function showLoadingSpinner() {
+                $('#form-loading').removeClass('hidden').addClass('flex');
+                $('body').addClass('overflow-hidden');
+            }
+            
+            // Function to hide loading spinner
+            function hideLoadingSpinner() {
+                $('#form-loading').addClass('hidden').removeClass('flex');
+                $('body').removeClass('overflow-hidden');
+            }
+            
+            // Enhanced comment calculation with visual feedback
+            function updateCommentBadge(index, comment) {
+                const $badge = $(`#comment-${index}`).parent();
+                const $icon = $badge.find('.material-symbols-outlined');
+                const $text = $(`#comment-${index}`);
+                
+                // Remove all existing classes
+                $badge.removeClass('bg-gray-100 text-gray-800 bg-green-100 text-green-800 bg-yellow-100 text-yellow-800 bg-red-100 text-red-800');
+                
+                // Apply new styling based on comment
+                let badgeClass = 'bg-gray-100 text-gray-800';
+                let iconName = 'help';
+                
+                if (comment === 'Normal') {
+                    badgeClass = 'bg-green-100 text-green-800';
+                    iconName = 'check_circle';
+                } else if (comment === 'Haut') {
+                    badgeClass = 'bg-yellow-100 text-yellow-800';
+                    iconName = 'trending_up';
+                } else if (comment === 'Bas') {
+                    badgeClass = 'bg-red-100 text-red-800';
+                    iconName = 'trending_down';
+                }
+                
+                $badge.addClass(badgeClass);
+                $icon.text(iconName);
+                $text.text(comment || 'Auto');
+                
+                // Add a subtle animation
+                $badge.addClass('animate-pulse');
+                setTimeout(() => $badge.removeClass('animate-pulse'), 300);
+            }
+            
+            // Override the comment calculation function to use visual badges
+            $(document).on('input change', 'input[name$=".Resultat"]', function() {
+                const $resultatInput = $(this);
+                const name = $resultatInput.attr('name');
+                const indexMatch = name.match(/Parametres\[(\d+)\]\.Resultat/);
+                
+                if (indexMatch) {
+                    const index = indexMatch[1];
+                    const resultatValue = parseFloat($resultatInput.val());
+                    let comment = 'Auto';
+                    
+                    if (!isNaN(resultatValue)) {
+                        if (resultatValue < 0) {
+                            comment = 'Bas';
+                        } else if (resultatValue > 100) {
+                            comment = 'Haut';
+                        } else {
+                            comment = 'Normal';
+                        }
+                        
+                        // Update hidden field
+                        $(`input[name="Parametres[${index}].Commentaire"]`).val(comment);
+                        
+                        // Update visual badge
+                        updateCommentBadge(index, comment);
+                    } else if ($resultatInput.val() === '') {
+                        // Clear comment when result is cleared
+                        $(`input[name="Parametres[${index}].Commentaire"]`).val('');
+                        updateCommentBadge(index, 'Auto');
+                    }
+                }
+            });
+            
+            // Initialize existing values
+            $('input[name$=".Resultat"]').each(function() {
+                $(this).trigger('input');
+            });
+
+            // Filet de sécurité: force la saisie des champs formule même en cas de cache JS.
+            forceFormulaFieldsEditable();
+            
+            // Add smooth scrolling to validation errors
+            if ($('.field-validation-error:visible').length > 0) {
+                $('html, body').animate({
+                    scrollTop: $('.field-validation-error:visible').first().offset().top - 100
+                }, 500);
+            }
+            
+            console.log('Enhanced Edit form initialized successfully');
+        });
+    </script>
+} 

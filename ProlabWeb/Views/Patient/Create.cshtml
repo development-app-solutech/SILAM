@@ -1,0 +1,380 @@
+@model ProlabWeb.ViewModels.PatientCreateVM
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+@* <h1>Create</h1>
+
+<h4>Patient</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Patientid" class="control-label"></label>
+                <input asp-for="Patientid" class="form-control" />
+                <span asp-validation-for="Patientid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Codesite" class="control-label"></label>
+                <input asp-for="Codesite" class="form-control" />
+                <span asp-validation-for="Codesite" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nom" class="control-label"></label>
+                <input asp-for="Nom" class="form-control" />
+                <span asp-validation-for="Nom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Prenom" class="control-label"></label>
+                <input asp-for="Prenom" class="form-control" />
+                <span asp-validation-for="Prenom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nomusage" class="control-label"></label>
+                <input asp-for="Nomusage" class="form-control" />
+                <span asp-validation-for="Nomusage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Codesexe" class="control-label"></label>
+                <input asp-for="Codesexe" class="form-control" />
+                <span asp-validation-for="Codesexe" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Datenaissance" class="control-label"></label>
+                <input asp-for="Datenaissance" class="form-control" />
+                <span asp-validation-for="Datenaissance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Codetypepeau" class="control-label"></label>
+                <input asp-for="Codetypepeau" class="form-control" />
+                <span asp-validation-for="Codetypepeau" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Codetypedocumentidentite" class="control-label"></label>
+                <input asp-for="Codetypedocumentidentite" class="form-control" />
+                <span asp-validation-for="Codetypedocumentidentite" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Numerodocumentidentite" class="control-label"></label>
+                <input asp-for="Numerodocumentidentite" class="form-control" />
+                <span asp-validation-for="Numerodocumentidentite" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ville" class="control-label"></label>
+                <input asp-for="Ville" class="form-control" />
+                <span asp-validation-for="Ville" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Quartier" class="control-label"></label>
+                <input asp-for="Quartier" class="form-control" />
+                <span asp-validation-for="Quartier" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Renseignementclinique" class="control-label"></label>
+                <input asp-for="Renseignementclinique" class="form-control" />
+                <span asp-validation-for="Renseignementclinique" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lieunaissance" class="control-label"></label>
+                <input asp-for="Lieunaissance" class="form-control" />
+                <span asp-validation-for="Lieunaissance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Idinh" class="control-label"></label>
+                <input asp-for="Idinh" class="form-control" />
+                <span asp-validation-for="Idinh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tel" class="control-label"></label>
+                <input asp-for="Tel" class="form-control" />
+                <span asp-validation-for="Tel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Adresse" class="control-label"></label>
+                <input asp-for="Adresse" class="form-control" />
+                <span asp-validation-for="Adresse" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+ *@
+
+<div class="grid grid-cols-2 gap-5">
+    <div>
+        <h1 class="font-bold">Création Patient</h1>
+    </div>
+    <div class="text-end">
+        <a asp-action="Index" class="text-primary">Retour � liste</a>
+    </div>
+</div>
+<div class="flex items-center gap-2">
+    <span class="border-t border-border border-primary w-full">
+    </span>
+</div>
+
+<div class="min-w-full mb-5">
+
+    <form asp-action="Create" class="flex flex-col gap-5" id="" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-red-500"></div>
+        <div class="grid grid-cols-2 gap-10" style="grid-template-columns: 8fr 4fr;">
+            <div class="flex flex-col gap-5">
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Codesite"></label>
+                    <select class="kt-select w-100 js-example-basic-single" asp-for="Codesite" asp-items="@ViewBag.Codesite">
+                    </select>
+                    <span asp-validation-for="Codesite" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Nom">
+                    </label>
+                    <input class="kt-input" asp-for="Nom" placeholder="" type="text">
+                    <span asp-validation-for="Nom" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Prenom">
+                    </label>
+                    <input class="kt-input" asp-for="Prenom" placeholder="" type="text">
+                    <span asp-validation-for="Prenom" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Code">
+                    </label>
+                    <input class="kt-input" asp-for="Code" placeholder="" type="text" readonly>
+                    <span asp-validation-for="Code" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Nomusage">
+                    </label>
+                    <input class="kt-input" asp-for="Nomusage" placeholder="" type="text">
+                    <span asp-validation-for="Nomusage" class="text-red-500"></span>
+                </div>
+                <div class="grid grid-cols-4 gap-5">
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Codesexe"></label>
+                        <select class="kt-select w-100 js-example-basic-single" asp-for="Codesexe" asp-items="@ViewBag.Codesexe">
+                        </select>
+                        <span asp-validation-for="Codesexe" class="text-red-500"></span>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Datenaissance">
+                        </label>
+                        <input class="kt-input" asp-for="Datenaissance" placeholder="" type="date">
+                        <span asp-validation-for="Datenaissance" class="text-red-500"></span>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Age">
+                        </label>
+                        <input class="kt-input" asp-for="Age" placeholder="" type="number" min="0" max="130">
+                        <span asp-validation-for="Age" class="text-red-500"></span>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Codetypepeau"></label>
+                        <select class="kt-select w-100 js-example-basic-single" asp-for="Codetypepeau" asp-items="@ViewBag.Codetypepeau">
+                        </select>
+                        <span asp-validation-for="Codetypepeau" class="text-red-500"></span>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Lieunaissance">
+                    </label>
+                    <input class="kt-input" asp-for="Lieunaissance" placeholder="" type="text">
+                    <span asp-validation-for="Lieunaissance" class="text-red-500"></span>
+                </div>
+                <div class="grid grid-cols-2 gap-5">
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Codetypedocumentidentite"></label>
+                        <select class="kt-select w-100 js-example-basic-single" asp-for="Codetypedocumentidentite" asp-items="@ViewBag.Codetypedocumentidentite">
+                        </select>
+                        <span asp-validation-for="Codetypedocumentidentite" class="text-red-500"></span>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Numerodocumentidentite">
+                        </label>
+                        <input class="kt-input" asp-for="Numerodocumentidentite" placeholder="" type="text">
+                        <span asp-validation-for="Numerodocumentidentite" class="text-red-500"></span>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Adresse">
+                    </label>
+                    <input class="kt-input" asp-for="Adresse" placeholder="" type="text">
+                    <span asp-validation-for="Adresse" class="text-red-500"></span>
+                </div>
+                <div class="grid grid-cols-2 gap-5">
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Tel">
+                        </label>
+                        <input class="kt-input" asp-for="Tel" placeholder="" type="tel">
+                        <span asp-validation-for="Tel" class="text-red-500"></span>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Email">
+                        </label>
+                        <input class="kt-input" asp-for="Email" placeholder="" type="email">
+                        <span asp-validation-for="Email" class="text-red-500"></span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-5">
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Ville"></label>
+                        <input class="kt-input" asp-for="Ville" placeholder="" type="text">
+                        <span asp-validation-for="Ville" class="text-red-500"></span>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Quartier">
+                        </label>
+                        <input class="kt-input" asp-for="Quartier" placeholder="" type="text">
+                        <span asp-validation-for="Quartier" class="text-red-500"></span>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Renseignementclinique">
+                    </label>
+                    <textarea class="kt-input summernote" asp-for="Renseignementclinique" placeholder=""></textarea>
+                    <span asp-validation-for="Renseignementclinique" class="text-red-500"></span>
+                </div>
+            </div>
+            <div class="flex flex-col gap-5">
+                <div class="flex items-center justify-center relative w-full h-[180px] mb-4 shadow-none">
+                    <img alt="" class="h-[180px] shrink-0 cursor-pointer" src="~/img/photo_patient_default.png" id="imgImage" />
+                    <input type="file" asp-for="File" accept="image/*" hidden />
+                    <input type="text" asp-for="Filename" hidden />
+                </div>
+                <div class="flex flex-row justify-center items-center gap-5">
+                    <button type="button" class="kt-btn kt-btn-outline kt-btn-sm ms-1" id="btnSelectImage">
+                        <span class="material-symbols-outlined">
+                            attach_file_add
+                        </span>
+                        Choisir
+                    </button>
+                    <button type="button" class="kt-btn kt-btn-destructive kt-btn-sm ms-1" id="btnCancelImage">
+                        <span class="material-symbols-outlined">
+                            cancel
+                        </span>
+                        Annuler
+                    </button>
+                </div>
+            </div>
+            <div class="inline-flex justify-start grow">
+                <button type="submit" class="kt-btn kt-btn-primary">
+                    <span class="material-symbols-outlined">
+                        save
+                    </span> Enregistrer
+                </button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function() {
+            var defaultImage = '/img/photo_patient_default.png';
+
+            function calculerAgeDepuisDate(dateStr) {
+                if (!dateStr) return '';
+
+                const birthDate = new Date(dateStr);
+                if (isNaN(birthDate.getTime())) return '';
+
+                const today = new Date();
+                let age = today.getFullYear() - birthDate.getFullYear();
+                const monthDiff = today.getMonth() - birthDate.getMonth();
+
+                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+
+                if (age < 0) return '';
+                return age;
+            }
+
+            function setDefaultImage() {
+                $('#imgImage').attr('src', defaultImage);
+                $('[name="File"]').val('');
+                $('[name="Filename"]').val('');
+            }
+
+            $('#btnSelectImage').on('click', function(e) {
+                e.preventDefault();
+                $('[name="File"]').click();
+            });
+
+            $('[name="File"]').on('change', function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#imgImage').attr('src', e.target.result); // Set image preview
+                        $('[name="Filename"]').val(file.name);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            $('#imgImage').on('error', function () {
+                setDefaultImage();
+            });
+
+            $('#btnCancelImage').on('click', function (e) {
+                e.preventDefault();
+                setDefaultImage();
+            });
+
+            $('.js-example-basic-single').select2({
+                // theme: "classic",
+                width: '100%'
+            });
+
+            $('.summernote').summernote({
+                placeholder: '',
+                tabsize: 2,
+                height: 120,
+                toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+                ]
+            });
+
+            $('[name="Datenaissance"]').on('change', function() {
+                const age = calculerAgeDepuisDate($(this).val());
+                if (age !== '') {
+                    $('[name="Age"]').val(age);
+                }
+            });
+
+            if (!$('[name="Age"]').val() && $('[name="Datenaissance"]').val()) {
+                const age = calculerAgeDepuisDate($('[name="Datenaissance"]').val());
+                if (age !== '') {
+                    $('[name="Age"]').val(age);
+                }
+            }
+
+        });
+    </script>
+
+}

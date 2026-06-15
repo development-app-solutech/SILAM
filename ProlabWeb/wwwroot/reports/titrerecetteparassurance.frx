@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="09/24/2025 11:07:36" ReportInfo.Modified="09/24/2025 12:29:48" ReportInfo.CreatorVersion="2025.2.0.0">
+  <Dictionary/>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="56.7">
+      <TextObject Name="Text1" Left="151.2" Top="9.45" Width="415.8" Height="37.8" Border.Lines="All" Fill.Color="WhiteSmoke" Text="Titre de recette (Régularisation)" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 16pt, style=Bold"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="60.7" Width="718.2" Height="66.15" Guides="9.45">
+      <TextObject Name="Text2" Top="9.45" Width="718.2" Height="18.9" Text="Période du : 01/10/2023 au 31/10/2023" HorzAlign="Center" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text3" Top="37.8" Width="718.2" Height="18.9" Text="Type de client : SUNU - Assurance" HorzAlign="Center" Font="Times New Roman, 11pt"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="130.85" Width="718.2" Height="340.2">
+      <TextObject Name="Text4" Top="9.45" Width="103.95" Height="18.9" Text="Département :" Font="Times New Roman, 11pt, style=Bold"/>
+      <TextObject Name="Text5" Left="103.95" Top="9.45" Width="614.25" Height="18.9" Text="BACTERIOLOGIE / MYCOLOGIE" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text6" Top="37.8" Width="302.4" Height="28.35" Border.Lines="All" Fill.Color="WhiteSmoke" Text="Désignation des actes" VertAlign="Center" Font="Times New Roman, 11pt, style=Bold"/>
+      <TextObject Name="Text7" Left="302.4" Top="37.8" Width="113.4" Height="28.35" Border.Lines="All" Fill.Color="WhiteSmoke" Text="Nombre" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 11pt, style=Bold"/>
+      <TextObject Name="Text8" Left="415.8" Top="37.8" Width="151.2" Height="28.35" Border.Lines="All" Fill.Color="WhiteSmoke" Text="P.U." HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 11pt, style=Bold"/>
+      <TextObject Name="Text9" Left="567" Top="37.8" Width="151.2" Height="28.35" Border.Lines="All" Fill.Color="WhiteSmoke" Text="Montant" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 11pt, style=Bold"/>
+      <TextObject Name="Text10" Top="66.15" Width="302.4" Height="28.35" Text="Coproculture" VertAlign="Center" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text11" Left="302.4" Top="66.15" Width="113.4" Height="28.35" Text="2" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text12" Left="415.8" Top="66.15" Width="151.2" Height="28.35" Text="3 500" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text13" Left="567" Top="66.15" Width="151.2" Height="28.35" Text="7 000" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text14" Left="415.8" Top="103.95" Width="151.2" Height="28.35" Text="Total :" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 11pt, style=Bold"/>
+      <TextObject Name="Text15" Top="103.95" Width="415.8" Height="18.9" Text="BACTERIOLOGIE / MYCOLOGIE" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text16" Left="567" Top="103.95" Width="151.2" Height="28.35" Text="21 500" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text17" Left="567" Top="132.3" Width="151.2" Height="28.35" Text="21 500" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text18" Left="415.8" Top="132.3" Width="151.2" Height="28.35" Text="Total remise :" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 11pt, style=Bold"/>
+      <TextObject Name="Text19" Left="567" Top="160.65" Width="151.2" Height="28.35" Text="21 500" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text20" Left="415.8" Top="160.65" Width="151.2" Height="28.35" Text="Diférence :" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 11pt, style=Bold"/>
+      <ContainerObject Name="Container1" Top="198.45" Width="718.2" Height="9.45" Border.Lines="Top"/>
+      <TextObject Name="Text21" Top="207.9" Width="567" Height="28.35" Text="Total :" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 11pt, style=Bold"/>
+      <TextObject Name="Text22" Left="567" Top="207.9" Width="151.2" Height="28.35" Text="21 500" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text23" Left="567" Top="236.25" Width="151.2" Height="28.35" Text="21 500" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text24" Top="236.25" Width="567" Height="28.35" Text="Total remise :" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 11pt, style=Bold"/>
+      <TextObject Name="Text25" Left="567" Top="264.6" Width="151.2" Height="28.35" Text="21 500" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text26" Top="264.6" Width="567" Height="28.35" Text="Différence :" HorzAlign="Right" VertAlign="Center" Font="Times New Roman, 11pt, style=Bold"/>
+      <TextObject Name="Text27" Left="9.45" Top="311.85" Width="368.55" Height="18.9" Text="Lomé, le 06/12/2023 10:12:07" VertAlign="Center" Font="Times New Roman, 11pt"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="475.05" Width="718.2" Height="18.9"/>
+  </ReportPage>
+</Report>

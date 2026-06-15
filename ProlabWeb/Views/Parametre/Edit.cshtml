@@ -1,0 +1,210 @@
+@model ProlabWeb.ViewModels.ParametreEditVM
+
+@{
+    ViewData["Title"] = "Modification Paramètres";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="grid grid-cols-2 gap-5 mb-5">
+    <div>
+        <h1 class="font-bold">@ViewData["Title"]</h1>
+    </div>
+    <div class="text-end">
+        <a asp-action="Index" class="kt-btn kt-btn-light">Retour à la liste</a>
+    </div>
+</div>
+<div class="flex items-center gap-2 mb-4">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+
+<form asp-action="Edit" method="post" class="flex flex-col gap-5">
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+    <div class="grid grid-cols-1 gap-5 mb-5 min-w-full">
+        <div class="flex flex-col gap-5">
+            @if (!string.IsNullOrEmpty(Model.NomLaboratoire))
+            {
+                <label asp-for="NomLaboratoire" class="kt-form-label"></label>
+                <input asp-for="NomLaboratoire" class="kt-input w-100" readonly style="background-color: #f8f9fa; cursor: not-allowed;" />
+                <input asp-for="IdLaboratoire" type="hidden" />
+            }
+            else
+            {
+                <label asp-for="IdLaboratoire" class="kt-form-label"></label>
+                <select asp-for="IdLaboratoire" class="kt-select w-100 js-example-basic-single" asp-items="ViewBag.Laboratoires" id="laboratoireSelect">
+                    <option value="">Sélectionner un laboratoire</option>
+                </select>
+            }
+        </div>
+        <div class="flex flex-col gap-5">
+            <label asp-for="IdAnalyse" class="kt-form-label"></label>
+            <select asp-for="IdAnalyse" class="kt-select w-100 js-example-basic-single" asp-items="ViewBag.Analyses" id="analyseSelect">
+                <option value="">Sélectionner une analyse</option>
+            </select>
+        </div>
+        <div class="grid grid-cols-3 gap-5 w-full">
+            <div></div>
+            <div></div>
+            <div class="flex justify-end items-end gap-5">
+                <button type="submit" name="submitAction" value="addRow" class="kt-btn kt-btn-primary">+</button>
+                <button type="submit" name="submitAction" value="removeRow" class="kt-btn kt-btn-danger" formnovalidate
+                    style="background-color: #dc3545; color: white;">-</button>
+            </div>
+        </div>
+
+        <!-- Tableau dynamique -->
+        <div>
+            <div class="kt-scrollable-x-auto mb-5">
+                <table class="kt-table table-auto kt-table-border min-w-full">
+                    <thead>
+                        <tr>
+                            <th><span class="kt-table-col-label font-bold">Nom</span></th>
+                            <th><span class="kt-table-col-label font-bold">Code</span></th>
+                            <th><span class="kt-table-col-label font-bold">Masquer</span></th>
+                            <th><span class="kt-table-col-label font-bold"></span></th>
+                            <th><span class="kt-table-col-label font-bold">Résultat Standard</span></th>
+                            <th><span class="kt-table-col-label font-bold">Résultat SI</span></th>
+                            <th><span class="kt-table-col-label font-bold">Facteur Conversion</span></th>
+                            <th><span class="kt-table-col-label font-bold">Ordre Affichage</span></th>
+                            @* <th><span class="kt-table-col-label font-bold">Value builder</span></th> *@
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Parametres.Count; i++)
+                        {
+                            <tr>
+                                <input type="hidden" name="Parametres[@i].Parametreid" value="@Model.Parametres[i].Parametreid" />
+                                <td><input asp-for="Parametres[@i].Nom" class="kt-input w-100" /></td>
+                                <td><input asp-for="Parametres[@i].Code" class="kt-input w-100" /></td>
+                                <td class="text-center">
+                                    <input asp-for="Parametres[@i].Masquer" type="checkbox" class="form-check-input" />
+                                </td>
+                                <td>
+                                    <div class="flex flex-col gap-3">
+                                        <div class="flex flex-col gap-3">
+                                            <label class="kt-form-label text-mono" asp-for="Parametres[@i].Builder.Type"></label>
+                                            <select id="selectType_@i" asp-for="Parametres[@i].Builder.Type" class="kt-select w-100 js-example-basic-single"
+                                                    asp-items="ViewBag.TypeParametres">
+                                                <option value="">---</option>
+                                            </select>
+                                        </div>
+                                        <div id="divValeur_@i" class="flex flex-col gap-3" style="display: none;">
+                                            <label class="kt-form-label text-mono" asp-for="Parametres[@i].Builder.Valeur"></label>
+                                            <textarea class="kt-input w-100" asp-for="Parametres[@i].Builder.Valeur" placeholder="" style="height: 6em; line-height: 1.5em;"></textarea>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="flex flex-col gap-3">
+                                        <input asp-for="Parametres[@i].ResultatStandard" class="kt-input w-100" />
+                                        <select asp-for="Parametres[@i].UniteStandard" class="kt-select w-100"
+                                            asp-items="ViewBag.Unites">
+                                            <option value="">---</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="flex flex-col gap-3">
+                                        <input asp-for="Parametres[@i].ResultatSI" class="kt-input w-100" />
+                                        <select asp-for="Parametres[@i].UniteSI" class="kt-select w-100"
+                                            asp-items="ViewBag.Unites">
+                                            <option value="">---</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td><input asp-for="Parametres[@i].FacteurConversion" class="kt-input w-100" /></td>
+                                <td><input asp-for="Parametres[@i].OrdreAffichage" class="kt-input w-100" type="number" />
+                                </td>
+                                @* <td><input asp-for="Parametres[@i].Valuebuilder" class="kt-input w-100" /></td> *@
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12 text-end">
+                <button type="submit" name="submitAction" value="save"
+                    class="kt-btn kt-btn-primary">Enregistrer</button>
+            </div>
+        </div>
+</form>
+
+@section Scripts {
+    <script src="~/js/app/parametre/create.js"></script>
+
+    <script>
+        $(function() {
+
+            var count = @Html.Raw(Model.Parametres.Count);
+
+            for (let i = 0; i < count; i++) {
+
+                console.log(i);
+
+                $(`#selectType_${i}`).on('change', function() {
+
+                    var type = $(`#selectType_${i}`).val();
+
+                    console.log(type);
+                    console.log(i);
+
+                    if (type === 'Texte') {
+
+                        hideDivValeur(i);
+                    } else if (type === 'Liste') {
+
+                        showDivValeur(i);
+                    } else if (type === 'Formule') {
+
+                        showDivValeur(i);
+                    }
+                })
+                .trigger('change');
+            }
+
+            function showDivValeur(i) {
+                $(`#divValeur_${i}`).show();
+            }
+
+            function hideDivValeur(i) {
+                $(`#divValeur_${i}`).hide();
+            }
+
+        })
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize laboratory-analysis filtering
+            if (typeof KTParametreCreate !== 'undefined') {
+                KTParametreCreate.init();
+            }
+            
+            // Forcer la soumission pour le bouton de suppression
+            document.querySelectorAll('button[value="removeRow"]').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    // Désactiver temporairement la validation HTML5
+                    const form = this.closest('form');
+                    if (form) {
+                        form.noValidate = true;
+                        // Rétablir la validation après soumission
+                        setTimeout(() => {
+                            form.noValidate = false;
+                        }, 100);
+                    }
+                });
+            });
+        });
+    </script>
+}

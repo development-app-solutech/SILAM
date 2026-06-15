@@ -1,0 +1,36 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Profil";
+}
+<div class="grid grid-cols-2 gap-5 mb-2">
+    <div>
+        <h1 class="font-bold">Profil</h1>
+    </div>
+    @* <div class="text-end">
+        <a asp-page="/Account/Manage/ChangePassword" class="text-primary">Changer le mot de passe</a>
+    </div> *@
+</div>
+<div class="flex items-center gap-2 mb-4">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+<div class="min-w-full mb-5">
+    <form method="post" class="flex flex-col gap-5 max-w-lg mx-auto">
+        <partial name="_StatusMessage" for="StatusMessage" />
+        <div class="flex flex-col gap-3">
+            <label class="kt-form-label text-mono">Nom d'utilisateur</label>
+            <input class="kt-input bg-gray-100 text-gray-500" value="@Model.NomUtilisateur" readonly>
+        </div>
+        <div class="flex flex-col gap-3">
+            <label class="kt-form-label text-mono" asp-for="NumeroTelephone">Numéro de téléphone</label>
+            <input class="kt-input" asp-for="NumeroTelephone" placeholder="Entrer le numéro de téléphone">
+            <span asp-validation-for="NumeroTelephone" class="text-red-500"></span>
+        </div>
+        <div class="flex justify-end mt-6 space-x-3">
+            <button class="kt-btn kt-btn-primary" type="submit">Enregistrer</button>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

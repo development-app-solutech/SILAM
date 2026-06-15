@@ -1,0 +1,381 @@
+/* ==============================================
+   SILAM - Modern Login Page Design
+   Medical Dashboard Login Styling
+   ============================================== */
+
+/* Full-screen background with medical theme */
+.login-modern-bg {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Animated background particles */
+.login-modern-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(103, 193, 245, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(44, 95, 117, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(79, 168, 216, 0.05) 0%, transparent 50%);
+    animation: backgroundFloat 20s ease-in-out infinite;
+}
+
+/* Medical equipment silhouette overlay */
+.login-modern-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('/img/prolab_login_img.jpg') no-repeat center center;
+    background-size: cover;
+    opacity: 0.03;
+    z-index: 1;
+}
+
+/* Main login container */
+.login-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+/* Modern glassmorphism login card */
+.login-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.1),
+        0 8px 32px rgba(44, 95, 117, 0.15);
+    padding: 3rem 2rem;
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    animation: slideInUp 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+/* Decorative elements */
+.login-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #67C1F5 0%, #4FA8D8 50%, #2C5F75 100%);
+    border-radius: 24px 24px 0 0;
+}
+
+/* Logo section */
+.login-logo {
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.logo-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(44, 95, 117, 0.2);
+    border: 2px solid rgba(103, 193, 245, 0.3);
+    object-fit: cover;
+}
+
+.app-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #2C5F75 0%, #67C1F5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.app-subtitle {
+    font-size: 0.9rem;
+    color: #64748b;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.5px;
+}
+
+.access-notice {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e97316;
+    margin-bottom: 2rem;
+    padding: 0.75rem 1rem;
+    background: rgba(251, 146, 60, 0.1);
+    border-radius: 12px;
+    border: 1px solid rgba(251, 146, 60, 0.2);
+}
+
+/* Form styling */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-input {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border: 2px solid rgba(203, 213, 225, 0.5);
+    border-radius: 16px;
+    font-size: 1rem;
+    background: rgba(248, 250, 252, 0.8);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: #334155;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #67C1F5;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 
+        0 0 0 4px rgba(103, 193, 245, 0.1),
+        0 8px 32px rgba(103, 193, 245, 0.15);
+    transform: translateY(-1px);
+}
+
+.form-input::placeholder {
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+/* Floating label effect */
+.form-input:focus::placeholder {
+    opacity: 0.7;
+    transform: translateY(-2px);
+}
+
+/* Login button */
+.login-button {
+    background: linear-gradient(135deg, #67C1F5 0%, #4FA8D8 100%);
+    border: none;
+    border-radius: 16px;
+    padding: 1.25rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(103, 193, 245, 0.3);
+}
+
+.login-button:hover {
+    background: linear-gradient(135deg, #4FA8D8 0%, #2C5F75 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(103, 193, 245, 0.4);
+}
+
+.login-button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 16px rgba(103, 193, 245, 0.3);
+}
+
+/* Button loading state */
+.login-button.loading {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.login-button.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: buttonSpin 1s linear infinite;
+}
+
+/* Forgot password link */
+.forgot-password {
+    color: #e97316;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+.forgot-password:hover {
+    color: #ea580c;
+    transform: translateY(-1px);
+}
+
+/* Footer section */
+.login-footer {
+    position: absolute;
+    bottom: 2rem;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.8rem;
+    z-index: 2;
+}
+
+.login-footer a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.login-footer a:hover {
+    color: #67C1F5;
+}
+
+/* Animations */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes backgroundFloat {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    33% {
+        transform: translate(30px, -30px) rotate(120deg);
+    }
+    66% {
+        transform: translate(-20px, 20px) rotate(240deg);
+    }
+}
+
+@keyframes buttonSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+    .login-card {
+        padding: 2rem 1.5rem;
+        margin: 1rem;
+        border-radius: 20px;
+    }
+    
+    .app-title {
+        font-size: 2rem;
+    }
+    
+    .logo-image {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .form-input {
+        padding: 0.875rem 1rem;
+        font-size: 0.95rem;
+    }
+    
+    .login-button {
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        padding: 1rem 0.5rem;
+    }
+    
+    .app-title {
+        font-size: 1.75rem;
+    }
+    
+    .logo-container {
+        gap: 0.75rem;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .login-card {
+        background: rgba(255, 255, 255, 1);
+        border: 2px solid #334155;
+    }
+    
+    .form-input {
+        border: 2px solid #64748b;
+    }
+    
+    .form-input:focus {
+        border-color: #2C5F75;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .login-card {
+        animation: none;
+    }
+    
+    .login-modern-bg::before {
+        animation: none;
+    }
+    
+    .login-button {
+        transition: none;
+    }
+}
+
+/* Print styles */
+@media print {
+    .login-modern-bg {
+        background: white;
+    }
+    
+    .login-card {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+}

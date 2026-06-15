@@ -1,0 +1,76 @@
+@model ProlabWeb.Db.Unite
+
+@{
+    ViewData["Title"] = "Modifier une unité";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="grid grid-cols-2 gap-5 mb-2">
+    <div>
+        <h1 class="font-bold">Modifier une unité</h1>
+    </div>
+    <div class="text-end">
+        <a asp-action="Index" class="text-primary">Retour à la liste</a>
+    </div>
+</div>
+<div class="flex items-center gap-2 mb-4">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+<div class="min-w-full mb-5">
+    <form asp-action="Edit" method="post" class="flex flex-col gap-5">
+        @Html.AntiForgeryToken()
+        @if (!ViewData.ModelState.IsValid && ViewData.ModelState.Values.SelectMany(v => v.Errors).Any())
+        {
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <li>@error.ErrorMessage</li>
+                    }
+                </ul>
+            </div>
+        }
+        <div asp-validation-summary="ModelOnly" class="text-red-500"></div>
+
+        <!-- Champ Code masqué - ne doit pas être modifié -->
+        <input type="hidden" asp-for="Code" />
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div class="flex flex-col gap-5">
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Code"></label>
+                    <input class="kt-input" asp-for="Code" placeholder="Code de l'unité" type="text" readonly>
+                    <small class="text-gray-500">Le code de l'unité ne peut pas être modifié</small>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Name"></label>
+                    <input class="kt-input" asp-for="Name" placeholder="Nom de l'unité" type="text">
+                    <span asp-validation-for="Name" class="text-red-500"></span>
+                </div>
+            </div>
+            <div class="flex flex-col gap-5">
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Isage"></label>
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" name="Isage" value="true" @(Model.Isage == true ? "checked" : "") class="form-check-input" />
+                        <input type="hidden" name="Isage" value="false" />
+                        <span class="text-sm text-gray-600">Unité liée à l'âge</span>
+                    </div>
+                    <span asp-validation-for="Isage" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Isageday"></label>
+                    <input class="kt-input" asp-for="Isageday" placeholder="Nombre de jours" type="number">
+                    <span asp-validation-for="Isageday" class="text-red-500"></span>
+                </div>
+            </div>
+        </div>
+        <div class="inline-flex justify-start grow">
+            <button type="submit" class="kt-btn kt-btn-primary">
+                <span class="material-symbols-outlined">
+                    save
+                </span> Enregistrer
+            </button>
+        </div>
+    </form>
+</div>

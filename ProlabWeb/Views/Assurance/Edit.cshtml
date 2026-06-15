@@ -1,0 +1,58 @@
+@model ProlabWeb.ViewModels.AssuranceEditVM
+
+@{
+    ViewData["Title"] = "Modifier une assurance";
+}
+
+<div class="grid grid-cols-2 gap-5">
+    <div>
+        <h1 class="font-bold">Modification d'une assurance</h1>
+    </div>
+    <div class="text-end">
+        <a asp-action="Index" class="text-primary">Retour à la liste</a>
+    </div>
+</div>
+<div class="flex items-center gap-2">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+<div class="min-w-full mb-5">
+    <form asp-action="Edit" class="flex flex-col gap-5" method="post">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-red-500"></div>
+        <input type="hidden" asp-for="Codeassurance" />
+        <div class="grid grid-cols-2 gap-10">
+            <div class="flex flex-col gap-5">
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Nom"></label>
+                    <input class="kt-input" asp-for="Nom" placeholder="" type="text">
+                    <span asp-validation-for="Nom" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Description"></label>
+                    <input class="kt-input" asp-for="Description" placeholder="" type="text">
+                    <span asp-validation-for="Description" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Codetypeassurance"></label>
+                    <select class="kt-select w-100 js-example-basic-single" asp-for="Codetypeassurance" asp-items="ViewBag.Codetypeassurance">
+                        <option value="">Sélectionner un type d'assurance</option>
+                    </select>
+                    <span asp-validation-for="Codetypeassurance" class="text-red-500"></span>
+                </div>
+                <label class="kt-checkbox-group kt-form-label text-mono">
+                    <input class="kt-checkbox kt-checkbox-sm" asp-for="Isactive" type="checkbox">
+                    <span class="kt-checkbox-label">
+                        @Html.DisplayNameFor(model => model.Isactive)
+                    </span>
+                </label>
+            </div>
+        </div>
+        <div class="flex gap-3 mt-5">
+            <input type="submit" value="Enregistrer" class="kt-btn kt-btn-primary" />
+            <a asp-action="Index" class="kt-btn kt-btn-secondary">Annuler</a>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

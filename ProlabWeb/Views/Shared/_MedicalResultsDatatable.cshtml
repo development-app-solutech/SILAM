@@ -1,0 +1,75 @@
+@model ProlabWeb.Models.MedicalResultsViewModel
+
+<div class="medical-dashboard fade-in">
+    
+    <!-- Statistics Cards -->
+    <div class="statistics-container">
+        @foreach (var stat in Model.Statistics)
+        {
+            <div class="stat-card @stat.BackgroundColor">
+                <div class="stat-card-header">
+                    <h3 class="stat-card-title">@stat.Title</h3>
+                    @if (!string.IsNullOrEmpty(stat.IconClass))
+                    {
+                        <i class="stat-card-icon @stat.IconClass"></i>
+                    }
+                </div>
+                <div class="stat-card-count">@stat.Count</div>
+                <button type="button" class="stat-card-button">@stat.ButtonText</button>
+            </div>
+        }
+    </div>
+
+    <!-- Results Table -->
+    <div class="results-container">
+        <div class="results-header">
+            <h2 class="results-title">@Model.Title</h2>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="responsive-table">
+                <thead>
+                    <tr>
+                        <th>Numéro demande</th>
+                        <th>Date</th>
+                        <th>Patient</th>
+                        <th>Prescripteur</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var result in Model.Results)
+                    {
+                        <tr>
+                            <td data-label="Numéro demande">@result.NumeroCommande</td>
+                            <td data-label="Date">@result.Date</td>
+                            <td data-label="Patient">
+                                <div class="patient-info">
+                                    <span class="patient-name">@result.Patient</span>
+                                    @if (!string.IsNullOrEmpty(result.PatientId))
+                                    {
+                                        <span class="patient-id">@result.PatientId</span>
+                                    }
+                                </div>
+                            </td>
+                            <td data-label="Prescripteur">@result.Prescripteur</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Company Info -->
+    <div class="company-info">
+        @Model.CompanyInfo
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/css/medical-results-datatable.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script src="~/js/medical-results-datatable.js"></script>
+}

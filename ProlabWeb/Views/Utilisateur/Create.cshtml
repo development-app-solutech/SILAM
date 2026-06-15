@@ -1,0 +1,146 @@
+﻿@model ProlabWeb.ViewModels.UtilisateurCreateVM
+
+@{
+    ViewData["Title"] = "Créer un utilisateur";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var matriculeAutofocus = ViewData.ModelState["Matricule"]?.Errors.Count > 0 ? "autofocus" : "";
+    var codesexeAutofocus = ViewData.ModelState["Codesexe"]?.Errors.Count > 0 ? "autofocus" : "";
+}
+
+<style>
+    .required::after {
+        content: " *";
+        color: #dc2626;
+        font-weight: bold;
+    }
+</style>
+
+<div class="grid grid-cols-2 gap-5 mb-2">
+    <div>
+        <h1 class="font-bold">Créer un utilisateur</h1>
+    </div>
+    <div class="text-end">
+        <a asp-action="Index" class="text-primary">Retour à la liste</a>
+    </div>
+</div>
+<div class="flex items-center gap-2 mb-4">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+<div class="min-w-full mb-5">
+    <form asp-action="Create" method="post" class="flex flex-col gap-5">
+        @Html.AntiForgeryToken()
+        @if (!ViewData.ModelState.IsValid && ViewData.ModelState.Values.SelectMany(v => v.Errors).Any())
+        {
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <li>@error.ErrorMessage</li>
+                    }
+                </ul>
+            </div>
+        }
+        <div asp-validation-summary="ModelOnly" class="text-red-500"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div class="flex flex-col gap-5">
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono required" asp-for="Nom">Nom</label>
+                    <input class="kt-input" asp-for="Nom" placeholder="Nom" type="text">
+                    <span asp-validation-for="Nom" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono required" asp-for="Prenom">Prénom</label>
+                    <input class="kt-input" asp-for="Prenom" placeholder="Prénom" type="text">
+                    <span asp-validation-for="Prenom" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono required" asp-for="Codesexe">Genre</label>
+                    <select class="kt-input" asp-for="Codesexe">
+                        <option value="">-- Sélectionner --</option>
+                        <option value="M">Masculin</option>
+                        <option value="F">Féminin</option>
+                    </select>
+                    <span asp-validation-for="Codesexe" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono required" asp-for="Datenaissance">Date de naissance</label>
+                    <input class="kt-input" asp-for="Datenaissance" placeholder="Date de naissance" type="date">
+                    <span asp-validation-for="Datenaissance" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono required" asp-for="Nationnalite">Nationalité</label>
+                    <select class="kt-input" asp-for="Nationnalite" asp-items="ViewBag.country" id="select-nationnalite">
+                        <option value="">-- Sélectionner --</option>
+                    </select>
+                    <span asp-validation-for="Nationnalite" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono required" asp-for="Codesite">Site</label>
+                    <select class="kt-input" asp-for="Codesite" asp-items="ViewBag.sites">
+                        <option value="">-- Sélectionner un site --</option>
+                    </select>
+                    <span asp-validation-for="Codesite" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono required" asp-for="Matricule">Matricule</label>
+                    <input class="kt-input" asp-for="Matricule" placeholder="Matricule" type="text">
+                    <span asp-validation-for="Matricule" class="text-red-500"></span>
+                </div>
+            </div>
+            <div class="flex flex-col gap-5">
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Idinh">ID INH</label>
+                    <input class="kt-input" asp-for="Idinh" placeholder="Idinh" type="text">
+                    <span asp-validation-for="Idinh" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Tel1">Téléphone 1</label>
+                    <input class="kt-input" asp-for="Tel1" placeholder="Téléphone 1" type="text">
+                    <span asp-validation-for="Tel1" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Tel2">Téléphone 2</label>
+                    <input class="kt-input" asp-for="Tel2" placeholder="Téléphone 2" type="text">
+                    <span asp-validation-for="Tel2" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono required" asp-for="Mob1">Mobile 1</label>
+                    <input class="kt-input" asp-for="Mob1" placeholder="Mobile 1" type="text">
+                    <span asp-validation-for="Mob1" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Mob2">Mobile 2</label>
+                    <input class="kt-input" asp-for="Mob2" placeholder="Mobile 2" type="text">
+                    <span asp-validation-for="Mob2" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono required" asp-for="Email">Email</label>
+                    <input class="kt-input" asp-for="Email" placeholder="Email" type="email">
+                    <span asp-validation-for="Email" class="text-red-500"></span>
+                </div>
+            </div>
+        </div>
+        <div class="inline-flex justify-start grow">
+            <button type="submit" class="kt-btn kt-btn-primary">
+                <span class="material-symbols-outlined">
+                    save
+                </span> Enregistrer
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#select-nationnalite').select2({
+                placeholder: 'Sélectionner une nationalité',
+                allowClear: true,
+                width: '100%'
+            });
+        });
+    </script>
+}

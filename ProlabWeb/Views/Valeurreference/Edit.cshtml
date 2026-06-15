@@ -1,0 +1,204 @@
+@model ProlabWeb.ViewModels.ValeurreferenceEditVM
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+@* <h1>Edit</h1>
+
+<h4>Valeurreference</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Valeurreferenceid" />
+            <div class="form-group">
+                <label asp-for="Idanalyse" class="control-label"></label>
+                <select asp-for="Idanalyse" class="form-control" asp-items="ViewBag.Idanalyse"></select>
+                <span asp-validation-for="Idanalyse" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sexeautorisecode" class="control-label"></label>
+                <select asp-for="Sexeautorisecode" class="form-control" asp-items="ViewBag.Sexeautorisecode"></select>
+                <span asp-validation-for="Sexeautorisecode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Agedebut" class="control-label"></label>
+                <input asp-for="Agedebut" class="form-control" />
+                <span asp-validation-for="Agedebut" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Agefin" class="control-label"></label>
+                <input asp-for="Agefin" class="form-control" />
+                <span asp-validation-for="Agefin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Codeunitagedebut" class="control-label"></label>
+                <select asp-for="Codeunitagedebut" class="form-control" asp-items="ViewBag.Codeunitagedebut"></select>
+                <span asp-validation-for="Codeunitagedebut" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Codeunitagefin" class="control-label"></label>
+                <select asp-for="Codeunitagefin" class="form-control" asp-items="ViewBag.Codeunitagefin"></select>
+                <span asp-validation-for="Codeunitagefin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Referencefromvalue" class="control-label"></label>
+                <input asp-for="Referencefromvalue" class="form-control" />
+                <span asp-validation-for="Referencefromvalue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Referencetovalue" class="control-label"></label>
+                <input asp-for="Referencetovalue" class="form-control" />
+                <span asp-validation-for="Referencetovalue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Codeunitreference" class="control-label"></label>
+                <select asp-for="Codeunitreference" class="form-control" asp-items="ViewBag.Codeunitreference"></select>
+                <span asp-validation-for="Codeunitreference" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Referencefromvaluesi" class="control-label"></label>
+                <input asp-for="Referencefromvaluesi" class="form-control" />
+                <span asp-validation-for="Referencefromvaluesi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Referencetovaluesi" class="control-label"></label>
+                <input asp-for="Referencetovaluesi" class="form-control" />
+                <span asp-validation-for="Referencetovaluesi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Codeunitreferencesi" class="control-label"></label>
+                <select asp-for="Codeunitreferencesi" class="form-control" asp-items="ViewBag.Codeunitreferencesi"></select>
+                <span asp-validation-for="Codeunitreferencesi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Titre" class="control-label"></label>
+                <input asp-for="Titre" class="form-control" />
+                <span asp-validation-for="Titre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+ *@
+
+<div class="grid grid-cols-2 gap-5">
+    <div>
+        <h1 class="font-bold">Modification Valeur de référence</h1>
+    </div>
+    <div class="text-end">
+        <a asp-action="Index" class="text-primary">Retour à liste</a>
+    </div>
+</div>
+<div class="flex items-center gap-2">
+    <span class="border-t border-border border-primary w-full">
+    </span>
+</div>
+
+<div class="min-w-full mb-5">
+
+    <form asp-action="Edit" class="flex flex-col gap-5" id="" method="post">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-red-500"></div>
+        <input type="hidden" asp-for="Valeurreferenceid" />
+        <div class="flex flex-col gap-3">
+            <div class="flex flex-col gap-3">
+                <label class="kt-form-label text-mono" asp-for="Idanalyse"></label>
+                <select class="kt-select w-100 js-example-basic-single" asp-for="Idanalyse" asp-items="@ViewBag.Idanalyse"></select>
+                <span asp-validation-for="Idanalyse" class="text-red-500"></span>
+            </div>
+            <div class="flex flex-col gap-3">
+                <label class="kt-form-label text-mono" asp-for="Sexeautorisecode"></label>
+                <select class="kt-select w-100 js-example-basic-single" asp-for="Sexeautorisecode" asp-items="@ViewBag.Sexeautorisecode"></select>
+                <span asp-validation-for="Sexeautorisecode" class="text-red-500"></span>
+            </div>
+            <fieldset style="border: 1px dashed #FF5722; padding: 10px;">
+                <legend>Age</legend>
+                <div class="flex flex-col gap-3">
+                    <div class="grid grid-cols-2 gap-5" style="row-gap:1rem;">
+                        <label class="kt-form-label text-mono" asp-for="Agedebut"></label>
+                        <div></div>
+                        <input class="kt-input" asp-for="Agedebut" placeholder="" type="number">
+                        <select class="kt-select w-100 js-example-basic-single" asp-for="Codeunitagedebut" asp-items="@ViewBag.Codeunitagedebut"></select>
+                        <span asp-validation-for="Agedebut" class="text-red-500"></span>
+                        <span asp-validation-for="Codeunitagedebut" class="text-red-500"></span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-5" style="row-gap:1rem;">
+                        <label class="kt-form-label text-mono" asp-for="Agefin"></label>
+                        <div></div>
+                        <input class="kt-input" asp-for="Agefin" placeholder="" type="number">
+                        <select class="kt-select w-100 js-example-basic-single" asp-for="Codeunitagefin" asp-items="@ViewBag.Codeunitagefin"></select>
+                        <span asp-validation-for="Agefin" class="text-red-500"></span>
+                        <span asp-validation-for="Codeunitagefin" class="text-red-500"></span>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset style="border: 1px dashed #FF5722; padding: 10px;">
+                <legend>Référence standard</legend>
+                <div class="flex flex-col gap-3">
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Titre"></label>
+                        <input class="kt-input" asp-for="Titre" placeholder="" type="text">
+                        <span asp-validation-for="Titre" class="text-red-500"></span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-5" style="row-gap:1rem;">
+                        <label class="kt-form-label text-mono" asp-for="Referencefromvalue"></label>
+                        <label class="kt-form-label text-mono" asp-for="Referencetovalue"></label>
+                        <div></div>
+                        <input class="kt-input" asp-for="Referencefromvalue" placeholder="" type="text">
+                        <input class="kt-input" asp-for="Referencetovalue" placeholder="" type="text">
+                        <select class="kt-select w-100 js-example-basic-single" asp-for="Codeunitreference" asp-items="@ViewBag.Codeunitreference"></select>
+                        <span asp-validation-for="Referencefromvalue" class="text-red-500"></span>
+                        <span asp-validation-for="Referencetovalue" class="text-red-500"></span>
+                        <span asp-validation-for="Codeunitreference" class="text-red-500"></span>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset style="border: 1px dashed #FF5722; padding: 10px;">
+                <legend>Référence SI</legend>
+                <div class="grid grid-cols-3 gap-5" style="row-gap:1rem;">
+                    <label class="kt-form-label text-mono" asp-for="Referencefromvaluesi"></label>
+                    <label class="kt-form-label text-mono" asp-for="Referencetovaluesi"></label>
+                    <div></div>
+                    <input class="kt-input" asp-for="Referencefromvaluesi" placeholder="" type="text">
+                    <input class="kt-input" asp-for="Referencetovaluesi" placeholder="" type="text">
+                    <select class="kt-select w-100 js-example-basic-single" asp-for="Codeunitreferencesi" asp-items="@ViewBag.Codeunitreferencesi"></select>
+                    <span asp-validation-for="Referencefromvaluesi" class="text-red-500"></span>
+                    <span asp-validation-for="Referencetovaluesi" class="text-red-500"></span>
+                    <span asp-validation-for="Codeunitreferencesi" class="text-red-500"></span>
+                </div>
+            </fieldset>
+        </div>
+        <div class="inline-flex justify-start grow">
+            <button type="submit" class="kt-btn kt-btn-primary">
+                <span class="material-symbols-outlined">
+                    save
+                </span> Enregistrer
+            </button>
+        </div>
+    </form>
+
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function() {
+
+            $('.js-example-basic-single').select2({
+                // theme: "classic",
+                width: '100%'
+            });
+
+        });
+    </script>
+
+}

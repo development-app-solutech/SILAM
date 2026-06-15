@@ -1,0 +1,579 @@
+@model ProlabWeb.ViewModels.EnteteDemandeEditVM
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+@* <h1>Edit</h1>
+
+<h4>Entetedemande</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Entetedemandeid" />
+            <div class="form-group">
+                <label asp-for="Patientid" class="control-label"></label>
+                <select asp-for="Patientid" class="form-control" asp-items="ViewBag.Patientid"></select>
+                <span asp-validation-for="Patientid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Prescripteurid" class="control-label"></label>
+                <select asp-for="Prescripteurid" class="form-control" asp-items="ViewBag.Prescripteurid"></select>
+                <span asp-validation-for="Prescripteurid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Policeassuranceid" class="control-label"></label>
+                <select asp-for="Policeassuranceid" class="form-control" asp-items="ViewBag.Policeassuranceid"></select>
+                <span asp-validation-for="Policeassuranceid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Numero" class="control-label"></label>
+                <input asp-for="Numero" class="form-control" />
+                <span asp-validation-for="Numero" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Codesite" class="control-label"></label>
+                <select asp-for="Codesite" class="form-control" asp-items="ViewBag.Codesite"></select>
+                <span asp-validation-for="Codesite" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+ *@
+
+<div class="grid grid-cols-2 gap-5">
+    <div>
+        <h1 class="font-bold">Modification demande d&acute;analyse</h1>
+    </div>
+    <div class="text-end">
+        <a asp-action="Index" class="text-primary">Retour à la liste</a>
+    </div>
+</div>
+<div class="flex items-center gap-2">
+    <span class="border-t border-border border-primary w-full">
+    </span>
+</div>
+
+<div class="min-w-full mb-5">
+
+    <form asp-action="Edit" class="flex flex-col gap-5" id="" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-red-500"></div>
+        <input hidden asp-for="Entetedemandeid" />
+        <input hidden asp-for="Numero" />
+        <input hidden asp-for="Patientid" />
+        <input hidden asp-for="Prescripteurid" />
+        <input hidden asp-for="Codesite" />
+        <input hidden asp-for="Utilisateurid" />
+        <div class="flex flex-col gap-5">
+            <div class="grid grid-cols-2 gap-10" style="grid-template-columns: 1fr 1fr;">
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Codesite"></label>
+                    <select class="kt-select w-100 js-example-basic-single" asp-for="Codesite" asp-items="@ViewBag.Codesite" disabled>
+                    </select>
+                    <span asp-validation-for="Codesite" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Utilisateurid"></label>
+                    <select class="kt-select w-100 js-example-basic-single" asp-for="Utilisateurid" asp-items="@ViewBag.Utilisateurid" disabled>
+                    </select>
+                    <span asp-validation-for="Utilisateurid" class="text-red-500"></span>
+                </div>
+                <div class="grid grid-cols-1 gap-5">
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Partenaireid"></label>
+                        <select class="kt-select w-100 js-example-basic-single" asp-for="Partenaireid" asp-items="@ViewBag.Partenaireid">
+                        </select>
+                        <span asp-validation-for="Partenaireid" class="text-red-500"></span>
+                    </div>
+                    <fieldset id="fieldsetPatient" style="border: 1px dashed #FF5722; padding: 15px;">
+                        <legend>Patient</legend>
+                        <div class="flex flex-col gap-5" id="divPatient">
+                            <div class="flex items-center justify-center relative w-full h-[180px] mb-4 shadow-none">
+                                <img alt="" class="h-[180px] shrink-0 cursor-pointer" src="@(!string.IsNullOrWhiteSpace(Model.Patient.PhotoBase64) ? Model.Patient.PhotoBase64 : "/img/photo_patient_default.png")" id="imgImage" />
+                                <input type="file" asp-for="Patient.File" accept="image/*" hidden />
+                                <input type="text" asp-for="Patient.Filename" hidden />
+                            </div>
+                            <div class="flex flex-row justify-center items-center gap-3">
+                                <button type="button" class="kt-btn kt-btn-outline kt-btn-sm ms-1" id="btnSelectImage">
+                                    <span class="material-symbols-outlined">
+                                        attach_file_add
+                                    </span>
+                                    Choisir
+                                </button>
+                                <button type="button" class="kt-btn kt-btn-destructive kt-btn-sm ms-1" id="btnCancelImage">
+                                    <span class="material-symbols-outlined">
+                                        cancel
+                                    </span>
+                                    Annuler
+                                </button>
+                            </div>
+                            <div class="flex flex-col gap-3">
+                                <label class="kt-form-label text-mono" asp-for="Patient.Nom">
+                                </label>
+                                <input class="kt-input" asp-for="Patient.Nom" placeholder="" type="text">
+                                <span asp-validation-for="Patient.Nom" class="text-red-500"></span>
+                            </div>
+                            <div class="flex flex-col gap-3">
+                                <label class="kt-form-label text-mono" asp-for="Patient.Prenom">
+                                </label>
+                                <input class="kt-input" asp-for="Patient.Prenom" placeholder="" type="text">
+                                <span asp-validation-for="Patient.Prenom" class="text-red-500"></span>
+                            </div>
+                            <div class="flex flex-col gap-3">
+                                <label class="kt-form-label text-mono" asp-for="Patient.Code">
+                                </label>
+                                <input class="kt-input" asp-for="Patient.Code" placeholder="" type="text" readonly>
+                                <span asp-validation-for="Patient.Code" class="text-red-500"></span>
+                            </div>
+                            <div class="flex flex-col gap-3">
+                                <label class="kt-form-label text-mono" asp-for="Patient.Nomusage">
+                                </label>
+                                <input class="kt-input" asp-for="Patient.Nomusage" placeholder="" type="text">
+                                <span asp-validation-for="Patient.Nomusage" class="text-red-500"></span>
+                            </div>
+                            <div class="grid grid-cols-3 gap-5">
+                                <div class="flex flex-col gap-3">
+                                    <label class="kt-form-label text-mono" asp-for="Patient.Codesexe"></label>
+                                    <select class="kt-select w-100 js-example-basic-single" asp-for="Patient.Codesexe" asp-items="@ViewBag.Codesexe">
+                                    </select>
+                                    <span asp-validation-for="Patient.Codesexe" class="text-red-500"></span>
+                                </div>
+                                <div class="flex flex-col gap-3">
+                                    <label class="kt-form-label text-mono" asp-for="Patient.Datenaissance">
+                                    </label>
+                                    <input class="kt-input" asp-for="Patient.Datenaissance" placeholder="" type="date">
+                                    <span asp-validation-for="Patient.Datenaissance" class="text-red-500"></span>
+                                </div>
+                                <div class="flex flex-col gap-3">
+                                    <label class="kt-form-label text-mono" asp-for="Patient.Codetypepeau"></label>
+                                    <select class="kt-select w-100 js-example-basic-single" asp-for="Patient.Codetypepeau" asp-items="@ViewBag.Codetypepeau">
+                                    </select>
+                                    <span asp-validation-for="Patient.Codetypepeau" class="text-red-500"></span>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-3">
+                                <label class="kt-form-label text-mono" asp-for="Patient.Lieunaissance">
+                                </label>
+                                <input class="kt-input" asp-for="Patient.Lieunaissance" placeholder="" type="text">
+                                <span asp-validation-for="Patient.Lieunaissance" class="text-red-500"></span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-5">
+                                <div class="flex flex-col gap-3">
+                                    <label class="kt-form-label text-mono" asp-for="Patient.Codetypedocumentidentite"></label>
+                                    <select class="kt-select w-100 js-example-basic-single" asp-for="Patient.Codetypedocumentidentite" asp-items="@ViewBag.Codetypedocumentidentite">
+                                    </select>
+                                    <span asp-validation-for="Patient.Codetypedocumentidentite" class="text-red-500"></span>
+                                </div>
+                                <div class="flex flex-col gap-3">
+                                    <label class="kt-form-label text-mono" asp-for="Patient.Numerodocumentidentite">
+                                    </label>
+                                    <input class="kt-input" asp-for="Patient.Numerodocumentidentite" placeholder="" type="text">
+                                    <span asp-validation-for="Patient.Numerodocumentidentite" class="text-red-500"></span>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-3">
+                                <label class="kt-form-label text-mono" asp-for="Patient.Adresse">
+                                </label>
+                                <input class="kt-input" asp-for="Patient.Adresse" placeholder="" type="text">
+                                <span asp-validation-for="Patient.Adresse" class="text-red-500"></span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-5">
+                                <div class="flex flex-col gap-3">
+                                    <label class="kt-form-label text-mono" asp-for="Patient.Tel">
+                                    </label>
+                                    <input class="kt-input" asp-for="Patient.Tel" placeholder="" type="tel">
+                                    <span asp-validation-for="Patient.Tel" class="text-red-500"></span>
+                                </div>
+                                <div class="flex flex-col gap-3">
+                                    <label class="kt-form-label text-mono" asp-for="Patient.Email">
+                                    </label>
+                                    <input class="kt-input" asp-for="Patient.Email" placeholder="" type="email">
+                                    <span asp-validation-for="Patient.Email" class="text-red-500"></span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-5">
+                                <div class="flex flex-col gap-3">
+                                    <label class="kt-form-label text-mono" asp-for="Patient.Ville"></label>
+                                    <input class="kt-input" asp-for="Patient.Ville" placeholder="" type="text">
+                                    <span asp-validation-for="Patient.Ville" class="text-red-500"></span>
+                                </div>
+                                <div class="flex flex-col gap-3">
+                                    <label class="kt-form-label text-mono" asp-for="Patient.Quartier">
+                                    </label>
+                                    <input class="kt-input" asp-for="Patient.Quartier" placeholder="" type="text">
+                                    <span asp-validation-for="Patient.Quartier" class="text-red-500"></span>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-3">
+                                <label class="kt-form-label text-mono" asp-for="Patient.Renseignementclinique">
+                                </label>
+                                <textarea class="kt-input summernote" asp-for="Patient.Renseignementclinique" placeholder=""></textarea>
+                                <span asp-validation-for="Patient.Renseignementclinique" class="text-red-500"></span>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="flex flex-col gap-5">
+                    <fieldset id="fieldsetAnalyse" style="border: 1px dashed #FF5722; padding: 15px;">
+                        <legend>Analyses</legend>
+                        <div class="flex flex-col gap-5">
+                            <div class="flex flex-col gap-3">
+                                <label class="kt-form-label text-mono" asp-for="IdsCategorie"></label>
+                                <select class="kt-select w-100 js-example-basic-multiple" asp-for="IdsCategorie" asp-items="@ViewBag.IdsCategorie" multiple="multiple">
+                                </select>
+                                <span asp-validation-for="IdsCategorie" class="text-red-500"></span>
+                            </div>
+                            <div class="flex flex-col gap-3">
+                                <label class="kt-form-label text-mono" asp-for="IdsAnalyse"></label>
+                                <select class="kt-select w-100 js-example-basic-multiple" asp-for="IdsAnalyse" asp-items="@ViewBag.IdsAnalyse" multiple="multiple">
+                                </select>
+                                <span asp-validation-for="IdsAnalyse" class="text-red-500"></span>
+                            </div>
+                            <div class="flex flex-col gap-3 items-end">
+                                <strong id="analyseTotalDisplay">Total: 0 FCFA</strong>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset id="fieldsetAssurance" style="border: 1px dashed #FF5722; padding: 15px;">
+                        <legend>Assurance</legend>
+                        <div class="flex flex-col gap-5">
+                            <label class="kt-checkbox-group kt-form-label text-mono">
+                                <input class="kt-checkbox kt-checkbox-sm" asp-for="EstAssure" type="checkbox">
+                                <span class="kt-checkbox-label">
+                                    @Html.DisplayNameFor(model => model.EstAssure)
+                                </span>
+                            </label>
+                            <div class="flex flex-col gap-3">
+                                <label class="kt-form-label text-mono" asp-for="Codeassurance"></label>
+                                <select class="kt-select w-100 js-example-basic-single" asp-for="Codeassurance" asp-items="@ViewBag.Codeassurance">
+                                </select>
+                                <span asp-validation-for="Codeassurance" class="text-red-500"></span>
+                            </div>
+                            <div class="flex flex-col gap-3">
+                                <label class="kt-form-label text-mono" asp-for="Policeassuranceid"></label>
+                                <select class="kt-select w-100 js-example-basic-single" asp-for="Policeassuranceid" asp-items="@ViewBag.Policeassuranceid">
+                                </select>
+                                <span asp-validation-for="Policeassuranceid" class="text-red-500"></span>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset id="fieldsetPrescripteur" style="border: 1px dashed #FF5722; padding: 15px;">
+                        <legend>Prescripteur</legend>
+                        <div class="flex flex-col gap-5">
+                            <div class="flex flex-col gap-3">
+                                <label class="kt-form-label text-mono" asp-for="Prescripteur.Nom">
+                                </label>
+                                <input class="kt-input" asp-for="Prescripteur.Nom" placeholder="" type="text">
+                                <span asp-validation-for="Prescripteur.Nom" class="text-red-500"></span>
+                            </div>
+                            <div class="flex flex-col gap-3">
+                                <label class="kt-form-label text-mono" asp-for="Prescripteur.Description">
+                                </label>
+                                <textarea class="kt-input summernote" asp-for="Prescripteur.Description" placeholder=""></textarea>
+                                <span asp-validation-for="Prescripteur.Description" class="text-red-500"></span>
+                            </div>
+                            <div class="flex flex-col gap-3">
+                                <label class="kt-form-label text-mono" asp-for="Prescripteur.Adresse">
+                                </label>
+                                <input class="kt-input" asp-for="Prescripteur.Adresse" placeholder="" type="text">
+                                <span asp-validation-for="Prescripteur.Adresse" class="text-red-500"></span>
+                            </div>
+                            <div class="flex flex-col gap-3">
+                                <label class="kt-form-label text-mono" asp-for="Prescripteur.Tel">
+                                </label>
+                                <input class="kt-input" asp-for="Prescripteur.Tel" placeholder="" type="tel">
+                                <span asp-validation-for="Prescripteur.Tel" class="text-red-500"></span>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="inline-flex justify-start grow">
+                    <button type="submit" class="kt-btn kt-btn-primary">
+                        <span class="material-symbols-outlined">
+                            save
+                        </span> Enregistrer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function() {
+
+            var defaultImage = '/img/photo_patient_default.png';
+            var previewImage = document.querySelector('#imgImage');
+            var fileImage = document.querySelector('[name="Patient.File"]');
+            var filenameImage = document.querySelector('[name="Patient.Filename"]');
+            var choisirImage = document.querySelector('#btnSelectImage');
+            var annulerImage = document.querySelector('#btnCancelImage');
+
+            var patient = document.querySelector('[name="Patientid"]');
+            var estassure =  document.querySelector('[name="EstAssure"]');
+            var prescripteur = document.querySelector('[name="Prescripteurid"]');
+
+            var divPatient = document.querySelector('#divPatient');
+            var fieldsetAssurance = document.querySelector('#fieldsetAssurance');
+            var fieldsetPrescripteur = document.querySelector('#fieldsetPrescripteur');
+
+            function setDefaultImage() {
+                $(previewImage).attr('src', defaultImage);
+                $(fileImage).val('');
+                $(filenameImage).val('');
+            }
+
+            function resetPatient() {
+                let selectionne = $(patient).val().trim() !== '';
+                setDefaultImage();
+                $(divPatient).find('input').val('');
+                $(divPatient).find('select').not('[name="Patientid"]').val(null).trigger('change');
+                $(divPatient).find('textarea[name="Patient.Renseignementclinique"]').summernote('code', '');
+            }
+            function togglePatient() {
+                let selectionne = $(patient).val().trim() !== '';
+                $(divPatient).find('input').prop('disabled', selectionne);
+                $(divPatient).find('button').prop('disabled', selectionne);
+                $(divPatient).find('select').not('[name="Patientid"]').prop('disabled', selectionne);
+                $(divPatient).find('textarea[name="Patient.Renseignementclinique"]').summernote(selectionne ? 'disable' : 'enable');
+            }
+
+            function resetAssurance() {
+                let coche = $(estassure).is(':checked');
+                $(fieldsetAssurance).find('select').val(null).trigger('change');
+            }
+            function toggleAssurance() {
+                let coche = $(estassure).is(':checked');
+                $(fieldsetAssurance).find('select').prop('disabled', !coche);
+            }
+
+            function resetPrescripteur() {
+                let selectionne = $(prescripteur).val().trim() !== '';
+                $(fieldsetPrescripteur).find('input').val('');
+                $(fieldsetPrescripteur).find('textarea[name="Prescripteur.Description"]').summernote('code', '');
+            }
+            function togglePrescripteur() {
+                let selectionne = $(prescripteur).val().trim() !== '';
+                $(fieldsetPrescripteur).find('input').prop('disabled', selectionne);
+                $(fieldsetPrescripteur).find('textarea[name="Prescripteur.Description"]').summernote(selectionne ? 'disable' : 'enable');
+            }
+
+            function extractPriceFromOptionText(optionText) {
+                if (!optionText) return 0;
+
+                // Format attendu: "Nom (12 000)"
+                const match = optionText.match(/\(([^)]+)\)\s*$/);
+                if (!match) return 0;
+
+                const digitsOnly = match[1].replace(/[^\d]/g, '');
+                const parsed = parseInt(digitsOnly, 10);
+                return Number.isNaN(parsed) ? 0 : parsed;
+            }
+
+            function sumSelectedOptions(selectName) {
+                let total = 0;
+                $(`[name="${selectName}"] option:selected`).each(function () {
+                    const optionValue = $(this).val();
+                    if (!optionValue) return;
+                    total += extractPriceFromOptionText($(this).text());
+                });
+                return total;
+            }
+
+            function updateAnalyseTotal() {
+                const totalCategories = sumSelectedOptions('IdsCategorie');
+                const totalAnalyses = sumSelectedOptions('IdsAnalyse');
+                const total = totalCategories + totalAnalyses;
+
+                $('#analyseTotalDisplay').text(`Total: ${total.toLocaleString('fr-FR')} FCFA`);
+            }
+
+            togglePatient();
+            toggleAssurance();
+            togglePrescripteur();
+
+            $(patient).on('change', function() {
+
+                let id = $(this).val();
+
+                $.ajax({
+                    url: `/Patient/GetPatient?id=${id}`,
+                    type: 'GET',
+                    dataType: 'json',
+                    beforeSend: function() {
+                        console.log('before');
+                        resetPatient();
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            let data = JSON.parse(response.data);
+                            console.log('data', data);
+
+                            $('[name="Patient.Nom"]').val(data.Nom);
+                            $('[name="Patient.Prenom"]').val(data.Prenom);
+                            $('[name="Patient.Nomusage"]').val(data.Nomusage);
+                            $('[name="Patient.Codesexe"]').val(data.Codesexe).trigger('change');
+                            $('[name="Patient.Codetypepeau"]').val(data.Codetypepeau).trigger('change');
+                            $('[name="Patient.Datenaissance"]').val(data.Datenaissance);
+                            $('[name="Patient.Lieunaissance"]').val(data.Lieunaissance);
+                            $('[name="Patient.Codetypedocumentidentite"]').val(data.Codetypedocumentidentite).trigger('change');
+                            $('[name="Patient.Numerodocumentidentite"]').val(data.Numerodocumentidentite);
+                            $('[name="Patient.Adresse"]').val(data.Adresse);
+                            $('[name="Patient.Tel"]').val(data.Tel);
+                            $('[name="Patient.Email"]').val(data.Email);
+                            $('[name="Patient.Ville"]').val(data.Ville);
+                            $('[name="Patient.Quartier"]').val(data.Quartier);
+                            $('[name="Patient.Renseignementclinique"]').summernote('code', data.Renseignementclinique);
+                            $(previewImage).attr('src', data.PhotoBase64);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Request failed:', status, error);
+                    },
+                    complete: function(xhr, status) {
+                        togglePatient();
+                    }
+                });
+            });
+
+            $(estassure).on('change', function() {
+                resetAssurance();
+                toggleAssurance();
+            });
+
+            $('[name="Codeassurance"]').on('change', function() {
+
+                let id = $(this).val();
+
+                $.ajax({
+                    url: `/Policeassurance/GetPoliceassuranceByAssurance?id=${id}`,
+                    type: 'GET',
+                    dataType: 'json',
+                    beforeSend: function() {
+                        console.log('before');
+
+                        $('[name="Policeassuranceid"]').empty();
+                        $('[name="Policeassuranceid"]').append('<option value="">---</option>');
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            let data = JSON.parse(response.data);
+                            console.log('data', data);
+
+                            $.each(data, function(index, value) {
+                                $('[name="Policeassuranceid"]').append(`<option value="${value.Value}">${value.Text}</option>`);
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Request failed:', status, error);
+                    },
+                    complete: function(xhr, status) {
+                    }
+                });
+            });
+
+            $(prescripteur).on('change', function() {
+
+                let id = $(this).val();
+
+                $.ajax({
+                    url: `/Prescripteur/GetPrescripteur?id=${id}`,
+                    type: 'GET',
+                    dataType: 'json',
+                    beforeSend: function() {
+                        console.log('before');
+                        resetPrescripteur();
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            let data = JSON.parse(response.data);
+                            console.log('data', data);
+
+                            $('[name="Prescripteur.Nom"]').val(data.Nom);
+                            $('[name="Prescripteur.Description"]').summernote('code', data.Description);
+                            $('[name="Prescripteur.Adresse"]').val(data.Adresse);
+                            $('[name="Prescripteur.Tel"]').val(data.Tel);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Request failed:', status, error);
+                    },
+                    complete: function(xhr, status) {
+                        togglePrescripteur();
+                    }
+                });
+            });
+
+            $(choisirImage).on('click', function(e) {
+                e.preventDefault();
+                $(fileImage).click();
+            });
+
+            $(fileImage).on('change', function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        $(previewImage).attr('src', e.target.result); // Set image preview
+                        $(filenameImage).val(file.name);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            $(previewImage).on('error', function () {
+                setDefaultImage();
+            });
+
+            $(annulerImage).on('click', function (e) {
+                e.preventDefault();
+                setDefaultImage();
+            });
+
+            $('.js-example-basic-single').select2({
+                // theme: "classic",
+                width: '100%'
+            });
+
+            $('.js-example-basic-multiple').select2({
+                // theme: "classic",
+                width: '100%'
+            });
+
+            $('[name="IdsCategorie"], [name="IdsAnalyse"]').on('change', updateAnalyseTotal);
+            updateAnalyseTotal();
+
+            $('.summernote').summernote({
+                placeholder: '',
+                tabsize: 2,
+                height: 120,
+                toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+                ]
+            });
+
+        });
+    </script>
+
+}

@@ -1,0 +1,198 @@
+﻿@model ProlabWeb.ViewModels.EntetematerielapproCreateVM
+@{
+    ViewData["Title"] = "Création Approvisionnement Matériel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="grid grid-cols-2 gap-5 mb-5">
+    <div>
+        <h1 class="font-bold">@ViewData["Title"]</h1>
+    </div>
+    <div class="text-end">
+        <a asp-action="Index" class="text-primary">Retour à la liste</a>
+    </div>
+</div>
+<div class="flex items-center gap-2 mb-5">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+
+<div class="min-w-full mb-5">
+    <form asp-action="Create" method="post" class="flex flex-col gap-5">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-red-500"></div>
+        <div class="grid grid-cols-2 gap-10">
+            <div class="flex flex-col gap-5">
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Date"></label>
+                    <input class="kt-input" asp-for="Date" type="date" placeholder="jj/mm/aaaa" />
+                    @if (ViewBag.Action == "save" || ViewBag.Action == "addRow")
+                    {
+                        <span asp-validation-for="Date" class="text-red-500"></span>
+                    }
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Numero"></label>
+                    <input class="kt-input" asp-for="Numero" type="text">
+                    @if (ViewBag.Action == "save" || ViewBag.Action == "addRow")
+                    {
+                        <span asp-validation-for="Numero" class="text-red-500"></span>
+                    }
+                </div>
+            </div>
+            <div class="flex flex-col gap-5">
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Fournisseurid"></label>
+                    <select class="kt-select w-100 js-example-basic-single" asp-for="Fournisseurid"
+                        asp-items="@(ViewData["Fournisseurid"] as List<SelectListItem>)">
+                    </select>
+                    @if (ViewBag.Action == "save" || ViewBag.Action == "addRow")
+                    {
+                        <span asp-validation-for="Fournisseurid" class="text-red-500"></span>
+                    }
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Utilisateurid"></label>
+                    <select class="kt-select w-100 js-example-basic-single" asp-for="Utilisateurid"
+                        asp-items="@(ViewData["Utilisateurid"] as List<SelectListItem>)">
+                    </select>
+                    @if (ViewBag.Action == "save" || ViewBag.Action == "addRow")
+                    {
+                        <span asp-validation-for="Utilisateurid" class="text-red-500"></span>
+                    }
+                </div>
+            </div>
+        </div>
+        <!-- Barre de recherche et boutons + / - -->
+        <div class="grid grid-cols-3 gap-4 mb-4 items-center">
+            <div>
+                <label class="kt-input border-t border-primary">
+                    <span class="material-symbols-outlined">
+                        search
+                    </span>
+                    <input class="kt-input" placeholder="Recherche matériel..." type="text">
+                </label>
+            </div>
+            <div></div>
+            <div class="flex justify-center gap-5">
+                <button type="submit" name="submitAction" value="addRow" class="kt-btn kt-btn-primary">+</button>
+                <button type="submit" name="submitAction" value="removeRow" class="kt-btn" formnovalidate
+                    style="background-color: #dc3545; color: white; border-color: #dc3545;">-</button>
+            </div>
+        </div>
+        <!-- Tableau dynamique -->
+        <div class="kt-scrollable-x-auto mb-5">
+            <table class="kt-table table-auto kt-table-border min-w-full">
+                <thead>
+                    <tr>
+                        <th><span class="kt-table-col-label font-bold">Matériel</span></th>
+                        <th><span class="kt-table-col-label font-bold">Quantité</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Materiels.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="2" class="text-center text-gray-500 py-4">
+                                <em>Remplissez d'abord tous les champs ci-dessus (Date, Numéro, Fournisseur, Utilisateur),
+                                    puis cliquez sur le bouton "+" pour ajouter des matériels</em>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @for (int i = 0; i < Model.Materiels.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    <select asp-for="Materiels[@i].Materielid" asp-items="ViewBag.Materiels" class="kt-input">
+                                        <option value="">--</option>
+                                    </select>
+                                    @if (ViewBag.Action == "save")
+                                    {
+                                        <span asp-validation-for="Materiels[@i].Materielid" class="text-red-500"></span>
+                                    }
+                                </td>
+                                <td>
+                                    <input asp-for="Materiels[@i].Quantite" class="kt-input" type="number" min="0" />
+                                    @if (ViewBag.Action == "save")
+                                    {
+                                        <span asp-validation-for="Materiels[@i].Quantite" class="text-red-500"></span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- Boutons Créer et Retour sous le tableau -->
+        <div class="flex gap-5 mt-5">
+            <button type="submit" name="submitAction" value="save" class="kt-btn kt-btn-primary">Créer</button>
+            <a asp-action="Index" class="kt-btn kt-btn-secondary">Retour</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Fonction pour mettre à jour les options disponibles
+        function updateMaterialOptions() {
+            const materialSelects = document.querySelectorAll('select[name*="Materielid"]');
+            const selectedMaterials = new Set();
+
+            // Collecter tous les matériels sélectionnés
+            materialSelects.forEach(select => {
+                if (select.value && select.value !== '') {
+                    selectedMaterials.add(select.value);
+                }
+            });
+
+            // Mettre à jour chaque liste déroulante
+            materialSelects.forEach(select => {
+                const currentValue = select.value;
+                const options = select.querySelectorAll('option');
+
+                options.forEach(option => {
+                    if (option.value === '' || option.value === currentValue) {
+                        // Toujours afficher l'option vide et l'option actuellement sélectionnée
+                        option.style.display = '';
+                        option.disabled = false;
+                    } else if (selectedMaterials.has(option.value)) {
+                        // Masquer et désactiver les matériels déjà sélectionnés ailleurs
+                        option.style.display = 'none';
+                        option.disabled = true;
+                    } else {
+                        // Afficher et activer les matériels disponibles
+                        option.style.display = '';
+                        option.disabled = false;
+                    }
+                });
+            });
+        }
+
+        // Écouter les changements sur tous les selects de matériel
+        document.addEventListener('change', function (e) {
+            if (e.target.name && e.target.name.includes('Materielid')) {
+                updateMaterialOptions();
+            }
+        });
+
+        // Initialiser au chargement de la page
+        updateMaterialOptions();
+
+        // Forcer la soumission pour le bouton de suppression
+        document.querySelectorAll('button[value="removeRow"]').forEach(button => {
+            button.addEventListener('click', function (e) {
+                // Désactiver temporairement la validation HTML5
+                const form = this.closest('form');
+                if (form) {
+                    form.noValidate = true;
+                    // Rétablir la validation après soumission
+                    setTimeout(() => {
+                        form.noValidate = false;
+                    }, 100);
+                }
+            });
+        });
+    });
+</script>

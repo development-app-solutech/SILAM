@@ -1,0 +1,32 @@
+@model ProlabWeb.Db.Methode
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="kt-card p-6 bg-white rounded-xl shadow-md max-w-lg">
+    <h1 class="text-2xl font-semibold text-mono mb-2">Delete Methode</h1>
+    <h3 class="text-lg font-medium mb-4 text-danger">Are you sure you want to delete this?</h3>
+    <h4 class="text-lg font-medium mb-4">Methode</h4>
+    <hr class="mb-4" />
+    <dl class="grid grid-cols-3 gap-y-4 gap-x-2 mb-6">
+        <dt class="font-medium text-gray-600">@Html.DisplayNameFor(model => model.Nom)</dt>
+        <dd class="col-span-2">@Html.DisplayFor(model => model.Nom)</dd>
+        <dt class="font-medium text-gray-600">@Html.DisplayNameFor(model => model.Isactive)</dt>
+        <dd class="col-span-2">
+            @if (Model.Isactive)
+            {
+                <span class="inline-block px-2 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full">Active</span>
+            }
+            else
+            {
+                <span class="inline-block px-2 py-1 text-xs font-semibold text-red-800 bg-red-100 rounded-full">Inactive</span>
+            }
+        </dd>
+    </dl>
+    <form asp-action="Delete" class="flex items-center gap-2 mt-4">
+        <input type="hidden" asp-for="Idmethode" />
+        <input type="submit" value="Delete" class="kt-btn kt-btn-danger" />
+        <a asp-action="Index" class="kt-btn kt-btn-light">Back to List</a>
+    </form>
+</div>

@@ -1,0 +1,243 @@
+﻿@model ProlabWeb.ViewModels.UtilisateurEditVM
+
+@{
+    ViewData["Title"] = "Modifier un utilisateur";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .required::after {
+        content: " *";
+        color: #dc2626;
+        font-weight: bold;
+    }
+</style>
+
+<div class="grid grid-cols-2 gap-5 mb-2">
+    <div>
+        <h1 class="font-bold">Modifier un utilisateur</h1>
+    </div>
+    <div class="text-end">
+        <a asp-action="Index" class="text-primary">Retour à la liste</a>                    
+    </div>
+</div>
+<div class="flex items-center gap-2 mb-4">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+
+<div class="min-w-full mb-5">
+    @if (TempData["InfoMessage"] != null)
+    {
+        <div class="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-blue-600">info</span>
+                <p class="text-sm text-blue-800">@TempData["InfoMessage"]</p>
+            </div>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-red-600">error</span>
+                <p class="text-sm text-red-800">@TempData["ErrorMessage"]</p>
+            </div>
+        </div>
+    }
+    @if (TempData["RoleUpdateMessage"] != null)
+    {
+        <div class="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-green-600">check_circle</span>
+                <p class="text-sm text-green-800">@TempData["RoleUpdateMessage"]</p>
+            </div>
+        </div>
+    }
+
+    <form id="editForm" asp-action="Edit" method="post" enctype="multipart/form-data" class="flex flex-col gap-5">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Utilisateurid" />
+        <input type="hidden" asp-for="UserId" />
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div class="flex flex-col gap-5">
+                <!-- Informations personnelles gauche -->
+                <div class="flex flex-col gap-3">
+                    <label asp-for="Nom" class="kt-form-label text-mono required"></label>
+                    <input asp-for="Nom" class="kt-input" placeholder="Nom" />
+                    <span asp-validation-for="Nom" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label asp-for="Prenom" class="kt-form-label text-mono required"></label>
+                    <input asp-for="Prenom" class="kt-input" placeholder="Prénom" />
+                    <span asp-validation-for="Prenom" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono required" asp-for="Codesexe"></label>
+                    <select class="kt-input" asp-for="Codesexe">
+                        <option value="">-- Sélectionner --</option>
+                        <option value="M">Masculin</option>
+                        <option value="F">Féminin</option>
+                    </select>
+                    <span asp-validation-for="Codesexe" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label asp-for="Datenaissance" class="kt-form-label text-mono required"></label>
+                    <input asp-for="Datenaissance" type="date" class="kt-input" />
+                    <span asp-validation-for="Datenaissance" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label asp-for="Nationnalite" class="kt-form-label text-mono required"></label>
+                    <select asp-for="Nationnalite" asp-items="Model.Pays" class="kt-input select2"></select>
+                    <span asp-validation-for="Nationnalite" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label asp-for="Codesite" class="kt-form-label text-mono required"></label>
+                    <select asp-for="Codesite" asp-items="Model.Sites" class="kt-input select2"></select>
+                    <span asp-validation-for="Codesite" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label asp-for="Matricule" class="kt-form-label text-mono required"></label>
+                    <input asp-for="Matricule" class="kt-input" placeholder="Matricule" />
+                    <span asp-validation-for="Matricule" class="text-red-500"></span>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-5">
+                <!-- Informations personnelles droite -->
+                <div class="flex flex-col gap-3">
+                    <label asp-for="Idinh" class="kt-form-label text-mono"></label>
+                    <input asp-for="Idinh" class="kt-input" placeholder="Idinh" />
+                    <span asp-validation-for="Idinh" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label asp-for="Tel1" class="kt-form-label text-mono"></label>
+                    <input asp-for="Tel1" class="kt-input" placeholder="Téléphone 1" />
+                    <span asp-validation-for="Tel1" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label asp-for="Tel2" class="kt-form-label text-mono"></label>
+                    <input asp-for="Tel2" class="kt-input" placeholder="Téléphone 2" />
+                    <span asp-validation-for="Tel2" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label asp-for="Mob1" class="kt-form-label text-mono required"></label>
+                    <input asp-for="Mob1" class="kt-input" placeholder="Mobile 1" />
+                    <span asp-validation-for="Mob1" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label asp-for="Mob2" class="kt-form-label text-mono"></label>
+                    <input asp-for="Mob2" class="kt-input" placeholder="Mobile 2" />
+                    <span asp-validation-for="Mob2" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label asp-for="Email" class="kt-form-label text-mono required"></label>
+                    <input asp-for="Email" type="email" class="kt-input" placeholder="Email" />
+                    <span asp-validation-for="Email" class="text-red-500"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Roles Section -->
+        <h2 class="text-lg font-semibold text-gray-900 mb-4">Rôles</h2>
+        @if (string.IsNullOrEmpty(Model.UserId))
+        {
+            <p class="text-xs text-red-500 mt-1">⚠️ Aucun utilisateur Identity trouvé pour cet email</p>
+        }
+        else if (Model.AvailableRoles != null && Model.AvailableRoles.Any())
+        {
+            <div class="flex flex-col gap-2" id="rolesList">
+                @foreach (var role in Model.AvailableRoles)
+                {
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox"
+                               name="SelectedRoleIds"
+                               value="@role.Id"
+                               @(role.IsSelected ? "checked" : "")
+                               class="role-checkbox w-4 h-4 mt-1 mr-3 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                               data-role-name="@role.Name" />
+                        <span class="font-medium text-gray-900">@role.Name</span>
+                    </label>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="text-center py-8 text-gray-500">
+                <span class="material-symbols-outlined text-4xl mb-2 block">admin_panel_settings</span>
+                <p>Aucun rôle disponible</p>
+            </div>
+        }
+
+        <!-- Signature Section - Affichage et upload pour les biologistes -->
+        <div id="signatureSection" class="mt-8" style="display: none;">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Signature du Biologiste</h3>
+            
+            <!-- Signature actuelle -->
+            @if (Model.HasCurrentSignature)
+            {
+                <div class="mb-4">
+                    <label class="kt-form-label text-mono">Signature actuelle :</label>
+                    <div class="p-4 border border-green-300 rounded-lg bg-green-50">
+                        <img src="@Model.CurrentSignatureBase64" alt="Signature du biologiste" class="max-h-32 border rounded" />
+                        <p class="text-green-600 text-sm mt-2">✓ Signature enregistrée</p>
+                    </div>
+                </div>
+            }
+            
+            <!-- Upload d'une nouvelle signature -->
+            <div class="mb-4">
+                <label class="kt-form-label text-mono">@(Model.HasCurrentSignature ? "Remplacer la signature :" : "Uploader une signature :")</label>
+                <div class="p-4 border border-gray-300 rounded-lg">
+                    <input type="file" name="SignatureFile" accept="image/*" class="kt-input" />
+                    <p class="text-gray-600 text-sm mt-2">
+                        Formats acceptés : PNG, JPG, JPEG. Taille maximale : 2MB.
+                    </p>
+                    @if (!Model.HasCurrentSignature)
+                    {
+                        <p class="text-orange-600 text-sm mt-1">
+                            ⚠️ Si aucune signature n'est uploadée, le biologiste devra créer sa signature lors de sa première validation.
+                        </p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-6 flex justify-end">
+            <button type="submit" form="editForm"
+                    class="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Enregistrer
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+            
+            // Gestion de l'affichage conditionnel de la section signature (affichage seulement)
+            function toggleSignatureSection() {
+                const biologisteChecked = $('.role-checkbox[data-role-name="Biologiste"]').is(':checked');
+                if (biologisteChecked) {
+                    $('#signatureSection').show();
+                } else {
+                    $('#signatureSection').hide();
+                }
+            }
+            
+            // Écouter les changements sur les checkboxes de rôles
+            $('.role-checkbox').on('change', function() {
+                toggleSignatureSection();
+            });
+            
+            // Affichage initial
+            toggleSignatureSection();
+        });
+    </script>
+}

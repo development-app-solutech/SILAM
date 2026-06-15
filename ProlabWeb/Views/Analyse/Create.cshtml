@@ -1,0 +1,315 @@
+@model ProlabWeb.ViewModels.AnalyseCreateVM
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+@*<hr />
+ <div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-red-500"></div>
+            <div class="form-group">
+                <label asp-for="Idanalyse" class="control-label"></label>
+                <input asp-for="Idanalyse" class="form-control" />
+                <span asp-validation-for="Idanalyse" class="text-red-500"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Codeparametre" class="control-label"></label>
+                <input asp-for="Codeparametre" class="form-control" />
+                <span asp-validation-for="Codeparametre" class="text-red-500"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Aliascodeautomate" class="control-label"></label>
+                <input asp-for="Aliascodeautomate" class="form-control" />
+                <span asp-validation-for="Aliascodeautomate" class="text-red-500"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-red-500"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Formuleautomate" class="control-label"></label>
+                <input asp-for="Formuleautomate" class="form-control" />
+                <span asp-validation-for="Formuleautomate" class="text-red-500"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Decimalresultatstandard" class="control-label"></label>
+                <input asp-for="Decimalresultatstandard" class="form-control" />
+                <span asp-validation-for="Decimalresultatstandard" class="text-red-500"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Decimalresultatsi" class="control-label"></label>
+                <input asp-for="Decimalresultatsi" class="form-control" />
+                <span asp-validation-for="Decimalresultatsi" class="text-red-500"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Commentaire" class="control-label"></label>
+                <input asp-for="Commentaire" class="form-control" />
+                <span asp-validation-for="Commentaire" class="text-red-500"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Prix" class="control-label"></label>
+                <input asp-for="Prix" class="form-control" />
+                <span asp-validation-for="Prix" class="text-red-500"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Codeunite" class="control-label"></label>
+                <select asp-for="Codeunite" class ="form-control" asp-items="ViewBag.Codeunite"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Codeunitesi" class="control-label"></label>
+                <select asp-for="Codeunitesi" class ="form-control" asp-items="ViewBag.Codeunitesi"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Facteurconversionsi" class="control-label"></label>
+                <input asp-for="Facteurconversionsi" class="form-control" />
+                <span asp-validation-for="Facteurconversionsi" class="text-red-500"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Idanalyseparent" class="control-label"></label>
+                <select asp-for="Idanalyseparent" class ="form-control" asp-items="ViewBag.Idanalyseparent"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Indicederev" class="control-label"></label>
+                <input asp-for="Indicederev" class="form-control" />
+                <span asp-validation-for="Indicederev" class="text-red-500"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Codification" class="control-label"></label>
+                <input asp-for="Codification" class="form-control" />
+                <span asp-validation-for="Codification" class="text-red-500"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+ *@
+
+
+<div class="grid grid-cols-2 gap-5">
+    <div>
+        <h1 class="font-bold">Création Analyse</h1>
+    </div>
+    <div class="text-end">
+        <a asp-action="Index" class="text-primary">Retour à liste</a>
+    </div>
+</div>
+<div class="flex items-center gap-2">
+    <span class="border-t border-border border-primary w-full">
+    </span>
+</div>
+
+<div class="min-w-full mb-5">
+
+    <form asp-action="Create" class="flex flex-col gap-5" id="" method="post">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-red-500"></div>
+        <div class="grid grid-cols-2 gap-10">
+            <div class="flex flex-col gap-5">
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Idlaboratoire"></label>
+                    <select class="kt-select w-100 js-example-basic-single" asp-for="Idlaboratoire" asp-items="@ViewBag.Idlaboratoire">
+                    </select>
+                    <span asp-validation-for="Idlaboratoire" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Nom">
+                    </label>
+                    <input class="kt-input" asp-for="Nom" placeholder="" type="text">
+                    <span asp-validation-for="Nom" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Codeparametre">
+                    </label>
+                    <input class="kt-input" asp-for="Codeparametre" placeholder="" type="text">
+                    <span asp-validation-for="Codeparametre" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Idanalyseparent"></label>
+                    <select class="kt-select w-100 js-example-basic-single" asp-for="Idanalyseparent" asp-items="@ViewBag.Idanalyseparent">
+                    </select>
+                    <span asp-validation-for="Idanalyseparent" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Aliascodeautomate">
+                    </label>
+                    <input class="kt-input" asp-for="Aliascodeautomate" placeholder="" type="text">
+                    <span asp-validation-for="Aliascodeautomate" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Description">
+                    </label>
+                    <textarea class="kt-input summernote" asp-for="Description" placeholder=""></textarea>
+                    <span asp-validation-for="Description" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Prix">
+                    </label>
+                    <input class="kt-input" asp-for="Prix" placeholder="" type="number">
+                    <span asp-validation-for="Prix" class="text-red-500"></span>
+                </div>
+                <div class="grid grid-cols-2 gap-5">
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Codeunite"></label>
+                        <select class="kt-select w-100 js-example-basic-single" asp-for="Codeunite" asp-items="@ViewBag.Codeunite">
+                        </select>
+                        <span asp-validation-for="Codeunite" class="text-red-500"></span>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Codeunitesi"></label>
+                        <select class="kt-select w-100 js-example-basic-single" asp-for="Codeunitesi" asp-items="@ViewBag.Codeunitesi">
+                        </select>
+                        <span asp-validation-for="Codeunitesi" class="text-red-500"></span>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Facteurconversionsi">
+                    </label>
+                    <input class="kt-input" asp-for="Facteurconversionsi" placeholder="" type="text">
+                    <span asp-validation-for="Facteurconversionsi" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Ordreaffichage">
+                    </label>
+                    <input class="kt-input" asp-for="Ordreaffichage" placeholder="" type="number">
+                    <span asp-validation-for="Ordreaffichage" class="text-red-500"></span>
+                </div>
+                <label class="kt-checkbox-group kt-form-label text-mono">
+                    <input class="kt-checkbox kt-checkbox-sm" asp-for="Isactive" type="checkbox">
+                    <span class="kt-checkbox-label">
+                        @Html.DisplayNameFor(model => model.Isactive)
+                    </span>
+                </label>
+            </div>
+            <div class="flex flex-col gap-5">
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Indicederev">
+                    </label>
+                    <input class="kt-input" asp-for="Indicederev" placeholder="" type="text">
+                    <span asp-validation-for="Indicederev" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Codification">
+                    </label>
+                    <input class="kt-input" asp-for="Codification" placeholder="" type="text">
+                    <span asp-validation-for="Codification" class="text-red-500"></span>
+                </div>
+                <label class="kt-checkbox-group kt-form-label text-mono">
+                    <input class="kt-checkbox kt-checkbox-sm" asp-for="Avecautomate" type="checkbox">
+                    <span class="kt-checkbox-label">
+                        @Html.DisplayNameFor(model => model.Avecautomate)
+                    </span>
+                </label>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Idautomate"></label>
+                    <select class="kt-select w-100 js-example-basic-single" asp-for="Idautomate" asp-items="@ViewBag.Idautomate">
+                    </select>
+                    <span asp-validation-for="Idautomate" class="text-red-500"></span>
+                </div>
+                <label class="kt-checkbox-group kt-form-label text-mono">
+                    <input class="kt-checkbox kt-checkbox-sm" asp-for="Affichermachineresultat" type="checkbox">
+                    <span class="kt-checkbox-label">
+                        @Html.DisplayNameFor(model => model.Affichermachineresultat)
+                    </span>
+                </label>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Formuleautomate">
+                    </label>
+                    <input class="kt-input" asp-for="Formuleautomate" placeholder="" type="text">
+                    <span asp-validation-for="Formuleautomate" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Decimalresultatstandard">
+                    </label>
+                    <input class="kt-input" asp-for="Decimalresultatstandard" placeholder="" type="number">
+                    <span asp-validation-for="Decimalresultatstandard" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Decimalresultatsi">
+                    </label>
+                    <input class="kt-input" asp-for="Decimalresultatsi" placeholder="" type="number">
+                    <span asp-validation-for="Decimalresultatsi" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="IdsMethode"></label>
+                    <select class="kt-select w-100 js-example-basic-multiple" asp-for="IdsMethode" asp-items="@ViewBag.IdsMethode" multiple="multiple">
+                    </select>
+                    <span asp-validation-for="IdsMethode" class="text-red-500"></span>
+                </div>
+                <label class="kt-checkbox-group kt-form-label text-mono">
+                    <input class="kt-checkbox kt-checkbox-sm" asp-for="Affichermethodresultat" type="checkbox">
+                    <span class="kt-checkbox-label">
+                        @Html.DisplayNameFor(model => model.Affichermethodresultat)
+                    </span>
+                </label>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Commentaire">
+                    </label>
+                    <textarea class="kt-input summernote" asp-for="Commentaire" placeholder=""></textarea>
+                    <span asp-validation-for="Commentaire" class="text-red-500"></span>
+                </div>
+                <label class="kt-checkbox-group kt-form-label text-mono">
+                    <input class="kt-checkbox kt-checkbox-sm" asp-for="Accredite" type="checkbox">
+                    <span class="kt-checkbox-label">
+                        @Html.DisplayNameFor(model => model.Accredite)
+                    </span>
+                </label>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Idnatureechantillon"></label>
+                    <select class="kt-select w-100 js-example-basic-single" asp-for="Idnatureechantillon" asp-items="@ViewBag.Idnatureechantillon">
+                    </select>
+                    <span asp-validation-for="Idnatureechantillon" class="text-red-500"></span>
+                </div>
+            </div>
+            <div class="inline-flex justify-start grow">
+                <button type="submit" class="kt-btn kt-btn-primary">
+                    <span class="material-symbols-outlined">
+                        save
+                    </span> Enregistrer
+                </button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function() {
+
+            $('.js-example-basic-single').select2({
+                // theme: "classic",
+                width: '100%'
+            });
+
+            $('.js-example-basic-multiple').select2({
+                // theme: "classic",
+                width: '100%'
+            });
+
+            $('.summernote').summernote({
+                placeholder: '',
+                tabsize: 2,
+                height: 120,
+                toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+                ]
+            });
+
+        });
+    </script>
+}

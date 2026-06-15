@@ -1,0 +1,36 @@
+﻿@model ProlabWeb.ViewModels.UtilisateurlaboratoireCreateVM
+
+@{
+    ViewData["Title"] = "Suppression utilisateur laboratoire";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="grid grid-cols-2 gap-5 mb-5">
+    <div>
+        <h1 class="font-bold">Suppression utilisateur laboratoire</h1>
+    </div>
+    <div class="text-end">
+        <a asp-action="Index" class="text-primary">Retour à la liste</a>
+    </div>
+</div>
+<div class="flex items-center gap-2 mb-5">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+<div class="min-w-full mb-5">
+    <div class="kt-card p-5">
+        <h3 class="text-danger mb-3">Êtes-vous sûr de vouloir supprimer ce lien utilisateur/laboratoire ?</h3>
+        <dl class="grid grid-cols-2 gap-5">
+            <dt class="font-semibold">Utilisateur</dt>
+            <dd>@ViewBag.UtilisateurNom</dd>
+            <dt class="font-semibold">Laboratoire</dt>
+            <dd>@ViewBag.LaboratoireNom</dd>
+        </dl>
+        <form asp-action="Delete" method="post" class="flex gap-3 mt-5">
+            <input type="hidden" asp-for="Utilisateurlaboratoireid" />
+            <button type="submit" class="kt-btn kt-btn-danger">
+                <span class="material-symbols-outlined align-middle">delete</span> Supprimer
+            </button>
+            <a asp-action="Index" class="kt-btn kt-btn-secondary">Annuler</a>
+        </form>
+    </div>
+</div>

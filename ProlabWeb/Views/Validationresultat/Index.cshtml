@@ -1,0 +1,141 @@
+﻿@model IEnumerable<ProlabWeb.Db.Enteteresultat>
+
+@{
+    ViewData["Title"] = "Liste des résultats à valider";
+}
+
+<div class="grid grid-cols-2 gap-5">
+    <div>
+        <h1 class="font-bold">Liste des résultats à valider</h1>
+    </div>
+</div>
+<div class="flex items-center gap-2">
+    <span class="border-t border-border border-primary w-full">
+    </span>
+</div>
+
+<div class="min-w-full">
+    <div class="grid gap-5" data-kt-datatable="true" data-kt-datatable-page-size="10">
+        <div class="grid grid-cols-3 gap-5">
+            <div>
+                <label class="kt-input border-t border-primary">
+                    <span class="material-symbols-outlined">
+                        search
+                    </span>
+                    <input class="kt-input" placeholder="Recherche" type="text" data-kt-validationresultat-table-filter="search">
+                </label>
+            </div>
+            <div></div>
+            <div class="inline-flex justify-end grow gap-5">
+                <!-- Pas de bouton création ou impression ici -->
+                <button id="valider-en-lot-btn" class="kt-btn kt-btn-primary" disabled>Valider en lot</button>
+            </div>
+        </div>
+        <div class="kt-scrollable-x-auto">
+            <table id="validationresultat-table" class="kt-table table-auto kt-table-border display">
+                <thead>
+                    <tr>
+                        <th class="w-[60px]">
+                            <input class="kt-checkbox kt-checkbox-sm" id="selectAllCheckbox" type="checkbox">
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">Date</span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">Numéro</span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">Patient</span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">Prescripteur</span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">Assurance</span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">Analyse</span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">Catégorie</span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">Statut</span>
+                            </span>
+                        </th>
+                        <th class="w-[60px]"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-start">
+                                <input class="kt-checkbox kt-checkbox-sm row-checkbox" type="checkbox" value="@item.Enteteresultatid">
+                            </td>
+                            <td class="font-normal text-foreground">
+                                @item.Date.ToString("dd/MM/yyyy")
+                            </td>
+                            <td class="font-normal text-foreground">
+                                @item.Entetedemande.Numero
+                            </td>
+                            <td class="font-normal text-foreground">
+                                @item.Entetedemande.Patient.Nom @item.Entetedemande.Patient.Prenom
+                            </td>
+                            <td class="font-normal text-foreground">
+                                @item.Entetedemande.Prescripteur.Nom
+                            </td>
+                            <td class="font-normal text-foreground">
+                                @((item.Entetedemande.Policeassurance != null && item.Entetedemande.Policeassurance.CodeassuranceNavigation != null) ? item.Entetedemande.Policeassurance.CodeassuranceNavigation.Nom : "")
+                            </td>
+                            <td class="font-normal text-foreground">
+                                @item.IdanalyseNavigation.Nom
+                            </td>
+                            <td class="font-normal text-foreground">
+                                @{
+                                    var categorie = item.Entetedemande.Detaildemandes
+                                    .FirstOrDefault(d => d.Idanalyse == item.Idanalyse)?.Categorie?.Nom;
+                                }
+                                @categorie
+                            </td>
+                            <td class="text-center">
+                                @if ((item.Statut ?? "").ToLower() == "valide")
+                                {
+                                    <span class="kt-badge kt-badge-success kt-badge-outline rounded-[30px]">Validé</span>
+                                }
+                                else
+                                {
+                                    <span class="kt-badge kt-badge-destructive kt-badge-outline rounded-[30px]">Non validé</span>
+                                }
+                            </td>
+                            <td class="text-center">
+                                <a class="kt-btn kt-btn-sm kt-btn-secondary" asp-action="Details" asp-route-id="@item.Enteteresultatid">
+                                    <span class="material-symbols-outlined align-middle">visibility</span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/app/validationresultat/index.js"></script>
+}

@@ -1,0 +1,1954 @@
+@model ProlabWeb.ViewModels.AnalyseAvecOngletEditVM
+
+@{
+    ViewData["Title"] = "Modifier Analyse avec Onglets";
+}
+
+<div class="grid grid-cols-2 gap-5">
+    <div>
+        <h1 class="font-bold">Modification Analyse</h1>
+    </div>
+    <div class="text-end">
+        <a asp-action="Index" class="text-primary">Retour à liste</a>
+    </div>
+</div>
+<div class="flex items-center gap-2">
+    <span class="border-t border-border border-primary w-full">
+    </span>
+</div>
+
+<div class="min-w-full mb-5">
+    <!-- Navigation des onglets -->
+    <div class="mb-6">
+        <nav class="flex space-x-8" aria-label="Tabs">
+            <button type="button" id="tab-general" class="tab-button active whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm border-primary text-primary" aria-current="page">
+                Informations générales
+            </button>
+            <button type="button" id="tab-parametres" class="tab-button whitespace-nowrap py-2 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium text-sm">
+                Paramètres
+            </button>
+            <button type="button" id="tab-references" class="tab-button whitespace-nowrap py-2 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium text-sm">
+                Valeurs de référence
+            </button>
+            <button type="button" id="tab-tarifs" class="tab-button whitespace-nowrap py-2 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium text-sm">
+                Tarif assurance
+            </button>
+        </nav>
+    </div>
+
+    <form asp-action="Edit" class="flex flex-col gap-5" id="analyseForm" method="post">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-red-500"></div>
+        <input type="hidden" asp-for="Idanalyse" />
+
+        <!-- Onglet Informations générales -->
+        <div id="content-general" class="tab-content">
+            <div class="grid grid-cols-2 gap-10">
+                <div class="flex flex-col gap-5">
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Idlaboratoire"></label>
+                        <select class="kt-select w-100 js-example-basic-single" asp-for="Idlaboratoire" asp-items="@ViewBag.Idlaboratoire">
+                        </select>
+                        <span asp-validation-for="Idlaboratoire" class="text-red-500"></span>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Nom">
+                        </label>
+                        <input class="kt-input" asp-for="Nom" placeholder="" type="text">
+                        <span asp-validation-for="Nom" class="text-red-500"></span>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Codeparametre">
+                        </label>
+                        <input class="kt-input" asp-for="Codeparametre" placeholder="" type="text">
+                        <span asp-validation-for="Codeparametre" class="text-red-500"></span>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Idanalyseparent"></label>
+                        <select class="kt-select w-100 js-example-basic-single" asp-for="Idanalyseparent" asp-items="@ViewBag.Idanalyseparent">
+                        </select>
+                        <span asp-validation-for="Idanalyseparent" class="text-red-500"></span>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Aliascodeautomate">
+                        </label>
+                        <input class="kt-input" asp-for="Aliascodeautomate" placeholder="" type="text">
+                        <span asp-validation-for="Aliascodeautomate" class="text-red-500"></span>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Description">
+                        </label>
+                        <textarea class="kt-input summernote" asp-for="Description" placeholder=""></textarea>
+                        <span asp-validation-for="Description" class="text-red-500"></span>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Prix">
+                        </label>
+                        <input class="kt-input" asp-for="Prix" placeholder="" type="number">
+                        <span asp-validation-for="Prix" class="text-red-500"></span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-5">
+                        <div class="flex flex-col gap-3">
+                            <label class="kt-form-label text-mono" asp-for="Codeunite"></label>
+                            <select class="kt-select w-100 js-example-basic-single" asp-for="Codeunite" asp-items="@ViewBag.Codeunite">
+                            </select>
+                            <span asp-validation-for="Codeunite" class="text-red-500"></span>
+                        </div>
+                        <div class="flex flex-col gap-3">
+                            <label class="kt-form-label text-mono" asp-for="Codeunitesi"></label>
+                            <select class="kt-select w-100 js-example-basic-single" asp-for="Codeunitesi" asp-items="@ViewBag.Codeunitesi">
+                            </select>
+                            <span asp-validation-for="Codeunitesi" class="text-red-500"></span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Facteurconversionsi">
+                        </label>
+                        <input class="kt-input" asp-for="Facteurconversionsi" placeholder="" type="text">
+                        <span asp-validation-for="Facteurconversionsi" class="text-red-500"></span>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Ordreaffichage">
+                        </label>
+                        <input class="kt-input" asp-for="Ordreaffichage" placeholder="" type="number">
+                        <span asp-validation-for="Ordreaffichage" class="text-red-500"></span>
+                    </div>
+                    <label class="kt-checkbox-group kt-form-label text-mono">
+                        <input class="kt-checkbox kt-checkbox-sm" asp-for="Isactive" type="checkbox">
+                        <span class="kt-checkbox-label">
+                            @Html.DisplayNameFor(model => model.Isactive)
+                        </span>
+                    </label>
+                </div>
+                <div class="flex flex-col gap-5">
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Indicederev">
+                        </label>
+                        <input class="kt-input" asp-for="Indicederev" placeholder="" type="text">
+                        <span asp-validation-for="Indicederev" class="text-red-500"></span>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Codification">
+                        </label>
+                        <input class="kt-input" asp-for="Codification" placeholder="" type="text">
+                        <span asp-validation-for="Codification" class="text-red-500"></span>
+                    </div>
+                    <label class="kt-checkbox-group kt-form-label text-mono">
+                        <input class="kt-checkbox kt-checkbox-sm" asp-for="Avecautomate" type="checkbox">
+                        <span class="kt-checkbox-label">
+                            @Html.DisplayNameFor(model => model.Avecautomate)
+                        </span>
+                    </label>
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Idautomate"></label>
+                        <select class="kt-select w-100 js-example-basic-single" asp-for="Idautomate" asp-items="@ViewBag.Idautomate">
+                        </select>
+                        <span asp-validation-for="Idautomate" class="text-red-500"></span>
+                    </div>
+                    <label class="kt-checkbox-group kt-form-label text-mono">
+                        <input class="kt-checkbox kt-checkbox-sm" asp-for="Affichermachineresultat" type="checkbox">
+                        <span class="kt-checkbox-label">
+                            @Html.DisplayNameFor(model => model.Affichermachineresultat)
+                        </span>
+                    </label>
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Formuleautomate">
+                        </label>
+                        <input class="kt-input" asp-for="Formuleautomate" placeholder="" type="text">
+                        <span asp-validation-for="Formuleautomate" class="text-red-500"></span>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Decimalresultatstandard">
+                        </label>
+                        <input class="kt-input" asp-for="Decimalresultatstandard" placeholder="" type="number">
+                        <span asp-validation-for="Decimalresultatstandard" class="text-red-500"></span>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Decimalresultatsi">
+                        </label>
+                        <input class="kt-input" asp-for="Decimalresultatsi" placeholder="" type="number">
+                        <span asp-validation-for="Decimalresultatsi" class="text-red-500"></span>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="IdsMethode"></label>
+                        <select class="kt-select w-100 js-example-basic-multiple" asp-for="IdsMethode" asp-items="@ViewBag.IdsMethode" multiple="multiple">
+                        </select>
+                        <span asp-validation-for="IdsMethode" class="text-red-500"></span>
+                    </div>
+                    <label class="kt-checkbox-group kt-form-label text-mono">
+                        <input class="kt-checkbox kt-checkbox-sm" asp-for="Affichermethodresultat" type="checkbox">
+                        <span class="kt-checkbox-label">
+                            @Html.DisplayNameFor(model => model.Affichermethodresultat)
+                        </span>
+                    </label>
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Commentaire">
+                        </label>
+                        <textarea class="kt-input summernote" asp-for="Commentaire" placeholder=""></textarea>
+                        <span asp-validation-for="Commentaire" class="text-red-500"></span>
+                    </div>
+                    <label class="kt-checkbox-group kt-form-label text-mono">
+                        <input class="kt-checkbox kt-checkbox-sm" asp-for="Accredite" type="checkbox">
+                        <span class="kt-checkbox-label">
+                            @Html.DisplayNameFor(model => model.Accredite)
+                        </span>
+                    </label>
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Idnatureechantillon"></label>
+                        <select class="kt-select w-100 js-example-basic-single" asp-for="Idnatureechantillon" asp-items="@ViewBag.Idnatureechantillon">
+                        </select>
+                        <span asp-validation-for="Idnatureechantillon" class="text-red-500"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Onglet Paramètres -->
+        <div id="content-parametres" class="tab-content hidden">
+            <div class="mb-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold">Paramètres de l'analyse</h3>
+                    <div class="flex gap-3">
+                        <button type="button" id="addParametre" class="kt-btn kt-btn-primary">+</button>
+                        <button type="button" id="removeParametre" class="kt-btn kt-btn-secondary kt-btn-outline" style="background-color: #dc3545; color: white;">-</button>
+                    </div>
+                </div>
+                <div class="kt-scrollable-x-auto">
+                    <table class="kt-table table-auto kt-table-border min-w-full" id="parametresTable">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 75px !important; width: 15% !important;"><span class="kt-table-col-label font-bold">Nom</span></th>
+                                <th style="min-width: 50px !important; width: 10% !important;"><span class="kt-table-col-label font-bold">Code</span></th>
+                                <th style="min-width: 25px !important; width: 5% !important;"><span class="kt-table-col-label font-bold">Masquer</span></th>
+                                <th style="min-width: 75px !important; width: 15% !important;"><span class="kt-table-col-label font-bold"></span></th>
+                                <th style="min-width: 75px !important; width: 15% !important;"><span class="kt-table-col-label font-bold">Résultat Standard</span></th>
+                                <th style="min-width: 75px !important; width: 15% !important;"><span class="kt-table-col-label font-bold">Résultat SI</span></th>
+                                <th style="min-width: 75px !important; width: 15% !important;"><span class="kt-table-col-label font-bold">Facteur Conversion</span></th>
+                                <th style="min-width: 50px !important; width: 10% !important;"><span class="kt-table-col-label font-bold">Ordre</span></th>
+                            </tr>
+                        </thead>
+                        <tbody id="parametresTableBody">
+                            @if (Model.Parametres != null && Model.Parametres.Any())
+                            {
+                                for (int i = 0; i < Model.Parametres.Count; i++)
+                                {
+                                    <tr>
+                                        <input type="hidden" asp-for="Parametres[@i].Parametreid" />
+                                        <input type="hidden" asp-for="Parametres[@i].Idanalyse" />
+                                        <td>
+                                            <textarea class="kt-input w-100" asp-for="Parametres[@i].Nom" placeholder="" style="height: 6em; line-height: 1.5em;"></textarea>
+                                        </td>
+                                        <td>
+                                            <input type="text" asp-for="Parametres[@i].Code" class="kt-input w-100" />
+                                        </td>
+                                        <td class="text-center">
+                                            <input class="kt-checkbox kt-checkbox-sm" asp-for="Parametres[@i].Masquer" type="checkbox">
+                                            @* <input type="checkbox" asp-for="Parametres[@i].Masquer" class="form-check-input" /> *@
+                                        </td>
+                                        <td>
+                                            <div class="flex flex-col gap-3">
+                                                <div class="flex flex-col gap-3">
+                                                    <label class="kt-form-label text-mono" for="Parametres[@i].Builder.Type">Type</label>
+                                                    <select id="selectType_@i" asp-for="Parametres[@i].Builder.Type" class="kt-select w-100 js-example-basic-single" asp-items="@ViewBag.TypeParametres">
+                                                    </select>
+                                                </div>
+                                                <div id="divValeur_@i" class="flex flex-col gap-3" style="display: none;">
+                                                    <label class="kt-form-label text-mono" for="Parametres[@i].Builder.Valeur">Valeur</label>
+                                                    <textarea class="kt-input w-100" asp-for="Parametres[@i].Builder.Valeur" placeholder="" style="height: 6em; line-height: 1.5em;"></textarea>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="flex flex-col gap-3">
+                                                <input asp-for="Parametres[@i].ResultatStandard" class="kt-input w-100" />
+                                                <select asp-for="Parametres[@i].UniteStandard" class="kt-select w-100 js-example-basic-single" asp-items="@ViewBag.Codeunite">
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="flex flex-col gap-3">
+                                                <input asp-for="Parametres[@i].ResultatSI" class="kt-input w-100" />
+                                                <select asp-for="Parametres[@i].UniteSI" class="kt-select w-100 js-example-basic-single" asp-items="@ViewBag.Codeunitesi">
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input asp-for="Parametres[@i].FacteurConversion" class="kt-input w-100" />
+                                        </td>
+                                        <td>
+                                            <input type="number" asp-for="Parametres[@i].OrdreAffichage" class="kt-input w-100" />
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Onglet Valeurs de référence -->
+        <div id="content-references" class="tab-content hidden">
+            <div class="mb-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold">Valeurs de référence</h3>
+                    <div class="flex gap-3">
+                        <button type="button" id="addReference" class="kt-btn kt-btn-primary">+</button>
+                        <button type="button" id="removeReference" class="kt-btn kt-btn-secondary kt-btn-outline" style="background-color: #dc3545; color: white;">-</button>
+                    </div>
+                </div>
+                <div class="kt-scrollable-x-auto">
+                    <table class="kt-table table-auto kt-table-border min-w-full" id="referencesTable">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 50px !important; width: 10% !important;"><span class="kt-table-col-label font-bold">Sexe</span></th>
+                                <th style="min-width: 75px !important; width: 15% !important;"><span class="kt-table-col-label font-bold">Âge min</span></th>
+                                <th style="min-width: 75px !important; width: 15% !important;"><span class="kt-table-col-label font-bold">Âge max</span></th>
+                                <th style="min-width: 100px !important; width: 20% !important;"><span class="kt-table-col-label font-bold">Titre</span></th>
+                                <th style="min-width: 100px !important; width: 20% !important;"><span class="kt-table-col-label font-bold">Standard</span></th>
+                                <th style="min-width: 100px !important; width: 20% !important;"><span class="kt-table-col-label font-bold">SI</span></th>
+                            </tr>
+                        </thead>
+                        <tbody id="referencesTableBody">
+                            @if (Model.ValeursReference != null && Model.ValeursReference.Any())
+                            {
+                                for (int i = 0; i < Model.ValeursReference.Count; i++)
+                                {
+                                    <tr>
+                                        <input type="hidden" asp-for="ValeursReference[@i].Valeurreferenceid" />
+                                        <input type="hidden" asp-for="ValeursReference[@i].Idanalyse" />
+                                        <td>
+                                            <div class="flex flex-col gap-3">
+                                                <select class="kt-select w-100 js-example-basic-single"
+                                                        asp-for="ValeursReference[@i].Sexeautorisecode"
+                                                        asp-items="@ViewBag.Sexeautorisecode">
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="flex flex-col gap-3">
+                                                <input class="kt-input" type="number"
+                                                       asp-for="ValeursReference[@i].Agedebut" />
+                                                <select class="kt-select w-100 js-example-basic-single"
+                                                        asp-for="ValeursReference[@i].Codeunitagedebut"
+                                                        asp-items="@ViewBag.Codeunite">
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="flex flex-col gap-3">
+                                                <input class="kt-input" type="number"
+                                                       asp-for="ValeursReference[@i].Agefin" />
+                                                <select class="kt-select w-100 js-example-basic-single"
+                                                        asp-for="ValeursReference[@i].Codeunitagefin"
+                                                        asp-items="@ViewBag.Codeunite">
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="flex flex-col gap-3">
+                                                <input class="kt-input" type="text"
+                                                       asp-for="ValeursReference[@i].Titre" />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="flex flex-col gap-3">
+                                                <div class="grid grid-cols-2 gap-5" style="row-gap:1rem;">
+                                                    <input class="kt-input" type="number" step="any"
+                                                           asp-for="ValeursReference[@i].Referencefromvalue" />
+                                                    <input class="kt-input" type="number" step="any"
+                                                           asp-for="ValeursReference[@i].Referencetovalue" />
+                                                </div>
+                                                <select class="kt-select w-100 js-example-basic-single"
+                                                        asp-for="ValeursReference[@i].Codeunitreference"
+                                                        asp-items="@ViewBag.Codeunite">
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="flex flex-col gap-3">
+                                                <div class="grid grid-cols-2 gap-5" style="row-gap:1rem;">
+                                                    <input class="kt-input" type="number" step="any"
+                                                           asp-for="ValeursReference[@i].Referencefromvaluesi" />
+                                                    <input class="kt-input" type="number" step="any"
+                                                           asp-for="ValeursReference[@i].Referencetovaluesi" />
+                                                </div>
+                                                <select class="kt-select w-100 js-example-basic-single"
+                                                        asp-for="ValeursReference[@i].Codeunitreferencesi"
+                                                        asp-items="@ViewBag.Codeunitesi">
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Onglet Tarif assurance -->
+        <div id="content-tarifs" class="tab-content hidden">
+            <div class="mb-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold">Tarifs assurance</h3>
+                </div>
+                <div class="kt-scrollable-x-auto">
+                    <table class="kt-table table-auto kt-table-border min-w-full" id="tarifsTable">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 250px !important; width: 50% !important;"><span class="kt-table-col-label font-bold">Assurance</span></th>
+                                <th style="min-width: 250px !important; width: 50% !important;"><span class="kt-table-col-label font-bold">Prix</span></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tarifsTableBody">
+                            @if (Model.TarifsAssurance != null && Model.TarifsAssurance.Any())
+                            {
+                                var count = Model.TarifsAssurance.Count;
+                                for (int i = 0; i < count; i++)
+                                {
+                                    <tr>
+                                        <input type="hidden" asp-for="TarifsAssurance[@i].Tarifanalyseassuranceid" />
+                                        <input type="hidden" asp-for="TarifsAssurance[@i].Idanalyse" />
+                                        <input type="hidden" asp-for="TarifsAssurance[@i].Codeassurance" />
+                                        <input type="hidden" asp-for="TarifsAssurance[@i].Nom" />
+                                        <td>
+                                            <span class="assurance-name">@Model.TarifsAssurance[i].Nom</span>
+                                        </td>
+                                        <td>
+                                            <input asp-for="TarifsAssurance[@i].Prix" class="kt-input w-100" type="number" />
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bouton d'enregistrement (commun à tous les onglets) -->
+        <div class="mt-6">
+            <div class="inline-flex justify-start grow gap-3">
+                <button type="submit" class="kt-btn kt-btn-primary">
+                    <span class="material-symbols-outlined">
+                        save
+                    </span> Modifier
+                </button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        // Load page variables
+        try {
+            const typeParametresOptions = @Html.Raw(Json.Serialize(ViewBag.TypeParametres));
+        } catch (e) {
+            var typeParametresOptions = [];
+        }
+        
+        try {
+            const sexeOptions = @Html.Raw(Json.Serialize(ViewBag.Sexeautorisecode));
+        } catch (e) {
+            var sexeOptions = [];
+        }
+        
+        try {
+            const codeUniteOptions = @Html.Raw(Json.Serialize(ViewBag.Codeunite));
+        } catch (e) {
+            var codeUniteOptions = [];
+        }
+        
+        try {
+            const codeUniteSiOptions = @Html.Raw(Json.Serialize(ViewBag.Codeunitesi));
+        } catch (e) {
+            var codeUniteSiOptions = [];
+        }
+        
+        try {
+            const currentAnalyseId = '@Model.Idanalyse';
+        } catch (e) {
+            var currentAnalyseId = '';
+        }
+    </script>
+
+    @* ---------------------------------- script pour parametre --------------------------------- *@
+
+    <script>
+        $(function() {
+
+            let parametreIndex = 0;
+
+            function generateSelectOptions(options) {
+                let html = '';
+                for (let i = 0; i < options.length; i++) {
+                    html += `<option value="${options[i].value}">${options[i].text}</option>`;
+                }
+                return html;
+            }
+
+            function reindexRowsParametre() {
+                $('#parametresTableBody tr').each(function (rowIndex, row) {
+                    $(row).find('input, select, textarea, label, div').each(function () {
+                        const $el = $(this);
+
+                        $.each(['name', 'id', 'for'], function (_, attr) {
+                            const val = $el.attr(attr);
+                            if (val && val.includes('Parametres[')) {
+                                const newVal = val.replace(/Parametres\[\d+\]/g, `Parametres[${rowIndex}]`);
+                                $el.attr(attr, newVal);
+                            }
+                        });
+
+                        // Ajuster l'id spécifique pour divValeur_#
+                        if ($el.attr('id') && $el.attr('id').startsWith('divValeur_')) {
+                            $el.attr('id', `divValeur_${rowIndex}`);
+                        }
+                        if ($el.attr('id') && $el.attr('id').startsWith('selectType_')) {
+                            $el.attr('id', `selectType_${rowIndex}`);
+                        }
+                    });
+                });
+
+                parametreIndex = $('#parametresTableBody tr').length;
+            }
+
+            function createParametreRow(index) {
+                return `
+                <tr>
+                    <input type="hidden" name="Parametres[${index}].Parametreid" />
+                    <td>
+                        <textarea class="kt-input w-100" name="Parametres[${index}].Nom" id="Parametres[${index}].Nom" placeholder="" style="height: 6em; line-height: 1.5em;"></textarea>
+                    </td>
+                    <td>
+                        <input name="Parametres[${index}].Code" id="Parametres[${index}].Code" class="kt-input w-100" />
+                    </td>
+                    <td class="text-center">
+                        <input type="checkbox" name="Parametres[${index}].Masquer" id="Parametres[${index}].Masquer" class="form-check-input" />
+                    </td>
+                    <td>
+                        <div class="flex flex-col gap-3">
+                            <div class="flex flex-col gap-3">
+                                <label class="kt-form-label text-mono" for="Parametres[${index}].Builder.Type">Type</label>
+                                <select id="selectType_${index}" name="Parametres[${index}].Builder.Type" class="kt-select w-100 js-example-basic-single">
+                                    ${generateSelectOptions(typeParametresOptions)}
+                                </select>
+                            </div>
+                            <div id="divValeur_${index}" class="flex flex-col gap-3" style="display: none;">
+                                <label class="kt-form-label text-mono" for="Parametres[${index}].Builder.Valeur">Valeur</label>
+                                <textarea class="kt-input w-100" name="Parametres[${index}].Builder.Valeur" id="Parametres[${index}].Builder.Valeur" placeholder="" style="height: 6em; line-height: 1.5em;"></textarea>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="flex flex-col gap-3">
+                            <input name="Parametres[${index}].ResultatStandard" id="Parametres[${index}].ResultatStandard" class="kt-input w-100" />
+                            <select name="Parametres[${index}].UniteStandard" id="Parametres[${index}].UniteStandard" class="kt-select w-100 js-example-basic-single">
+                                ${generateSelectOptions(codeUniteOptions)}
+                            </select>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="flex flex-col gap-3">
+                            <input name="Parametres[${index}].ResultatSI" id="Parametres[${index}].ResultatSI" class="kt-input w-100" />
+                            <select name="Parametres[${index}].UniteSI" id="Parametres[${index}].UniteSI" class="kt-select w-100 js-example-basic-single">
+                                ${generateSelectOptions(codeUniteSiOptions)}
+                            </select>
+                        </div>
+                    </td>
+                    <td>
+                        <input name="Parametres[${index}].FacteurConversion" id="Parametres[${index}].FacteurConversion" class="kt-input w-100" />
+                    </td>
+                    <td>
+                        <input type="number" name="Parametres[${index}].OrdreAffichage" id="Parametres[${index}].OrdreAffichage" class="kt-input w-100" />
+                    </td>
+                </tr>`;
+            }
+
+            // Add button
+            $('#addParametre').on('click', function () {
+                const newRow = createParametreRow(parametreIndex);
+                $('#parametresTableBody').append(newRow);
+
+                $('.js-example-basic-single').select2();
+
+                reindexRowsParametre();
+                handlerZoneBuilder();
+            });
+
+            // Remove button
+            $('#removeParametre').on('click', function () {
+                const $rows = $('#parametresTableBody tr');
+                if ($rows.length === 0) return;
+
+                $rows.last().remove();
+                reindexRowsParametre();
+                handlerZoneBuilder();
+            });
+
+            handlerZoneBuilder();
+
+            function handlerZoneBuilder() {
+                const parametreCount = $('#parametresTableBody tr').length;
+
+                for (let i = 0; i < parametreCount; i++) {
+
+                    console.log(i);
+
+                    $(`#selectType_${i}`).on('change', function() {
+
+                        var type = $(`#selectType_${i}`).val();
+
+                        console.log(type);
+                        console.log(i);
+
+                        if (type === 'Texte') {
+
+                            hideDivValeur(i);
+                        } else if (type === 'Liste') {
+
+                            showDivValeur(i);
+                        } else if (type === 'Formule') {
+
+                            showDivValeur(i);
+                        }
+                    })
+                    .trigger('change');
+                }
+            }
+
+            function showDivValeur(i) {
+                $(`#divValeur_${i}`).show();
+            }
+
+            function hideDivValeur(i) {
+                $(`#divValeur_${i}`).hide();
+            }
+
+        })
+    </script>
+
+    @* ----------------------------- script pour valeur reference ------------------------------- *@
+
+    <script>
+        $(function () {
+
+            // Initialize referenceIndex based on existing rows
+            let referenceIndex = $('#referencesTableBody tr').length;
+            
+            // Sanitize existing rows on page load - remove single quotes from unit codes
+            $('#referencesTableBody select').each(function() {
+                const $select = $(this);
+                const name = $select.attr('name');
+                const value = $select.val();
+                
+                // Check if this is a unit code field and has a single quote
+                if (name && (name.includes('Codeunitagedebut') || name.includes('Codeunitagefin') || 
+                            name.includes('Codeunitreference') || name.includes('Codeunitreferencesi')) && 
+                    value && value.includes("'")) {
+                    
+                    const cleanedValue = value.replace(/'/g, '');
+                    $select.val(cleanedValue);
+                }
+                
+                // Ensure Select2 is properly initialized
+                if (!$(this).hasClass('select2-hidden-accessible')) {
+                    $(this).select2({
+                        width: '100%'
+                    });
+                }
+            });
+
+            
+            // COMPREHENSIVE FORM CLEANING FUNCTION (Global scope for reuse)
+            window.performComprehensiveFormCleaning = function() {
+                let totalCleanedFields = 0;
+                
+                try {
+                    // 1. Clean all select fields (remove problematic characters)
+                    $('#analyseForm select').each(function() {
+                        const $select = $(this);
+                        const name = $select.attr('name');
+                        let value = $select.val();
+                        
+                        if (value && typeof value === 'string') {
+                            let cleanedValue = value;
+                            let wasChanged = false;
+                            
+                            // Remove single quotes
+                            if (cleanedValue.includes("'")) {
+                                cleanedValue = cleanedValue.replace(/'/g, '');
+                                wasChanged = true;
+                            }
+                            
+                            // Remove double quotes
+                            if (cleanedValue.includes('"')) {
+                                cleanedValue = cleanedValue.replace(/"/g, '');
+                                wasChanged = true;
+                            }
+                            
+                            // Remove other problematic characters
+                            const problematicChars = /[\\<>&;]/g;
+                            if (problematicChars.test(cleanedValue)) {
+                                cleanedValue = cleanedValue.replace(problematicChars, '');
+                                wasChanged = true;
+                            }
+                            
+                            // Trim whitespace
+                            cleanedValue = cleanedValue.trim();
+                            
+                            if (wasChanged) {
+                                $select.val(cleanedValue);
+                                totalCleanedFields++;
+                            }
+                        }
+                    });
+                    
+                    // 2. Clean all input fields
+                    $('#analyseForm input[type="text"], #analyseForm textarea').each(function() {
+                        const $input = $(this);
+                        const name = $input.attr('name');
+                        let value = $input.val();
+                        
+                        if (value && typeof value === 'string') {
+                            let cleanedValue = value;
+                            let wasChanged = false;
+                            
+                            // For text fields, be more conservative - only remove really problematic chars
+                            const reallyProblematicChars = /[\\<>&]/g;
+                            if (reallyProblematicChars.test(cleanedValue)) {
+                                cleanedValue = cleanedValue.replace(reallyProblematicChars, '');
+                                wasChanged = true;
+                            }
+                            
+                            if (wasChanged) {
+                                $input.val(cleanedValue);
+                                totalCleanedFields++;
+                            }
+                        }
+                    });
+                    
+                    // 3. CRITICAL FIX: Ensure ALL required ValeursReference fields exist
+                    $('#referencesTableBody tr').each(function(index) {
+                        const $row = $(this);
+                        
+                        // Fix missing Idanalyse
+                        let $idanalyseField = $row.find(`input[name="ValeursReference[${index}].Idanalyse"]`);
+                        if ($idanalyseField.length === 0) {
+                            // Create the missing Idanalyse field
+                            const hiddenIdanalyse = $('<input type="hidden">');
+                            hiddenIdanalyse.attr('name', `ValeursReference[${index}].Idanalyse`);
+                            hiddenIdanalyse.val(currentAnalyseId);
+                            $row.prepend(hiddenIdanalyse);
+                            totalCleanedFields++;
+                        } else if (!$idanalyseField.val()) {
+                            $idanalyseField.val(currentAnalyseId);
+                            totalCleanedFields++;
+                        }
+                        
+                        // CRITICAL: Fix missing Codeunitagedebut fields
+                        let $codeunitagedebutField = $row.find(`select[name="ValeursReference[${index}].Codeunitagedebut"]`);
+                        if ($codeunitagedebutField.length === 0) {
+                            // Try to find the age debut input and add the select after it
+                            const $agedebutInput = $row.find(`input[name="ValeursReference[${index}].Agedebut"]`);
+                            if ($agedebutInput.length > 0) {
+                                const $selectContainer = $agedebutInput.closest('div');
+                                if ($selectContainer.length > 0) {
+                                    // Create the missing select element
+                                    const $newSelect = $('<select>');
+                                    $newSelect.addClass('kt-select w-100 js-example-basic-single');
+                                    $newSelect.attr('name', `ValeursReference[${index}].Codeunitagedebut`);
+                                    $newSelect.attr('id', `ValeursReference[${index}].Codeunitagedebut`);
+                                    
+                                    // Add default options
+                                    if (typeof codeUniteOptions !== 'undefined' && codeUniteOptions.length > 0) {
+                                        codeUniteOptions.forEach(function(option) {
+                                            const $option = $('<option>');
+                                            let cleanValue = (option.value || '').replace(/'/g, '').trim();
+                                            $option.val(cleanValue);
+                                            $option.text(option.text || cleanValue);
+                                            $newSelect.append($option);
+                                        });
+                                    }
+                                    
+                                    $selectContainer.append($newSelect);
+                                    
+                                    // Initialize Select2 on the new field
+                                    $newSelect.select2({ width: '100%' });
+                                    
+                                    totalCleanedFields++;
+                                }
+                            }
+                        }
+                        
+                        // CRITICAL: Fix missing Codeunitagefin fields
+                        let $codeunitagefinField = $row.find(`select[name="ValeursReference[${index}].Codeunitagefin"]`);
+                        if ($codeunitagefinField.length === 0) {
+                            // Try to find the age fin input and add the select after it
+                            const $agefinInput = $row.find(`input[name="ValeursReference[${index}].Agefin"]`);
+                            if ($agefinInput.length > 0) {
+                                const $selectContainer = $agefinInput.closest('div');
+                                if ($selectContainer.length > 0) {
+                                    // Create the missing select element
+                                    const $newSelect = $('<select>');
+                                    $newSelect.addClass('kt-select w-100 js-example-basic-single');
+                                    $newSelect.attr('name', `ValeursReference[${index}].Codeunitagefin`);
+                                    $newSelect.attr('id', `ValeursReference[${index}].Codeunitagefin`);
+                                    
+                                    // Add default options
+                                    if (typeof codeUniteOptions !== 'undefined' && codeUniteOptions.length > 0) {
+                                        codeUniteOptions.forEach(function(option) {
+                                            const $option = $('<option>');
+                                            let cleanValue = (option.value || '').replace(/'/g, '').trim();
+                                            $option.val(cleanValue);
+                                            $option.text(option.text || cleanValue);
+                                            $newSelect.append($option);
+                                        });
+                                    }
+                                    
+                                    $selectContainer.append($newSelect);
+                                    
+                                    // Initialize Select2 on the new field
+                                    $newSelect.select2({ width: '100%' });
+                                    
+                                    totalCleanedFields++;
+                                }
+                            }
+                        }
+                    });
+                    
+                    // 4. Fix any malformed field names
+                    let malformedFieldsFound = false;
+                    $('#referencesTableBody input, #referencesTableBody select').each(function() {
+                        const $element = $(this);
+                        const name = $element.attr('name');
+                        
+                        if (name && name.includes('ValeursReference[') && !name.match(/ValeursReference\[\d+\]\./)) {
+                            malformedFieldsFound = true;
+                        }
+                    });
+                    
+                    if (malformedFieldsFound) {
+                        reindexRowsValeurReference();
+                        totalCleanedFields++;
+                    }
+                    
+                    // 5. Final validation check
+                    const serializedData = $('#analyseForm').serialize();
+                    let hasSerializationIssues = false;
+                    let detectedIssues = [];
+                    
+                    // Check for empty indexes in serialized data
+                    if (serializedData.includes('ValeursReference%5B%5D') || serializedData.includes('ValeursReference[]')) {
+                        detectedIssues.push('Empty ValeursReference indexes found');
+                        hasSerializationIssues = true;
+                    }
+                    
+                    // CRITICAL: Check for missing required unit code fields AND fix null values
+                    const rowCount = $('#referencesTableBody tr').length;
+                    for (let i = 0; i < rowCount; i++) {
+                        // Check actual field values first and fix null values
+                        const $codeunitagedebutSelect = $(`select[name="ValeursReference[${i}].Codeunitagedebut"]`);
+                        const $codeunitagefinSelect = $(`select[name="ValeursReference[${i}].Codeunitagefin"]`);
+                        
+                        // Fix null or empty Codeunitagedebut values
+                        if ($codeunitagedebutSelect.length > 0) {
+                            const currentDebutValue = $codeunitagedebutSelect.val();
+                            if (!currentDebutValue || currentDebutValue === '' || currentDebutValue === 'null' || currentDebutValue === null) {
+                                // Try to set a valid default value
+                                const firstValidOption = $codeunitagedebutSelect.find('option').filter(function() {
+                                    const val = $(this).val();
+                                    return val && val !== '' && val !== 'null' && val !== null;
+                                }).first();
+                                
+                                if (firstValidOption.length > 0) {
+                                    const newValue = firstValidOption.val();
+                                    $codeunitagedebutSelect.val(newValue);
+                                    $codeunitagedebutSelect.trigger('change');
+                                    totalCleanedFields++;
+                                } else {
+                                    detectedIssues.push(`Missing Codeunitagedebut for ValeursReference[${i}]`);
+                                    hasSerializationIssues = true;
+                                }
+                            }
+                        } else {
+                            detectedIssues.push(`Missing Codeunitagedebut for ValeursReference[${i}]`);
+                            hasSerializationIssues = true;
+                        }
+                        
+                        // Fix null or empty Codeunitagefin values
+                        if ($codeunitagefinSelect.length > 0) {
+                            const currentFinValue = $codeunitagefinSelect.val();
+                            if (!currentFinValue || currentFinValue === '' || currentFinValue === 'null' || currentFinValue === null) {
+                                // Try to set a valid default value
+                                const firstValidOption = $codeunitagefinSelect.find('option').filter(function() {
+                                    const val = $(this).val();
+                                    return val && val !== '' && val !== 'null' && val !== null;
+                                }).first();
+                                
+                                if (firstValidOption.length > 0) {
+                                    const newValue = firstValidOption.val();
+                                    $codeunitagefinSelect.val(newValue);
+                                    $codeunitagefinSelect.trigger('change');
+                                    totalCleanedFields++;
+                                } else {
+                                    detectedIssues.push(`Missing Codeunitagefin for ValeursReference[${i}]`);
+                                    hasSerializationIssues = true;
+                                }
+                            }
+                        } else {
+                            detectedIssues.push(`Missing Codeunitagefin for ValeursReference[${i}]`);
+                            hasSerializationIssues = true;
+                        }
+                    }
+                    
+                    // Check for malformed field patterns
+                    const problematicPatterns = [
+                        { pattern: /ValeursReference%5B%5D/g, name: 'Empty indexes (ValeursReference[])' },
+                        { pattern: /%27/g, name: 'Single quotes encoded' },
+                        { pattern: /%22/g, name: 'Double quotes encoded' },
+                        { pattern: /%3C/g, name: 'Less-than symbols encoded' },
+                        { pattern: /%3E/g, name: 'Greater-than symbols encoded' }
+                    ];
+                    
+                    problematicPatterns.forEach((item, index) => {
+                        if (item.pattern.test(serializedData)) {
+                            detectedIssues.push(item.name);
+                            hasSerializationIssues = true;
+                        }
+                    });
+                    
+                if (hasSerializationIssues) {
+                        const detailedError = `Serialization validation failed. Issues found: ${JSON.stringify(detectedIssues)}`;
+                        return { success: false, totalCleaned: totalCleanedFields, error: detailedError };
+                    }
+                    
+                    return { success: true, totalCleaned: totalCleanedFields };
+                    
+                } catch (error) {
+                    return { success: false, totalCleaned: totalCleanedFields, error: error.message };
+                }
+            };
+
+            // REDESIGNED: Create safe select options function that handles problematic values
+            function createSafeSelectOptions(options, targetSelectElement) {
+                try {
+                    // Validate inputs
+                    if (!Array.isArray(options)) {
+                        options = []; // Fallback to empty array
+                    }
+                    
+                    if (!targetSelectElement || !targetSelectElement.tagName || targetSelectElement.tagName.toLowerCase() !== 'select') {
+                        return;
+                    }
+                    
+                    // Clear existing options
+                    targetSelectElement.innerHTML = '';
+                    
+                    // Always add a default empty option first
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = '---';
+                    targetSelectElement.appendChild(defaultOption);
+                    
+                    // Add provided options
+                    for (let i = 0; i < options.length; i++) {
+                        try {
+                            const optionData = options[i];
+                            if (!optionData || (typeof optionData !== 'object' && typeof optionData !== 'string')) {
+                                continue;
+                            }
+                            
+                            const option = document.createElement('option');
+                            
+                            // Handle both object format {value: 'x', text: 'y'} and string format
+                            let rawValue, displayText;
+                            if (typeof optionData === 'string') {
+                                rawValue = optionData;
+                                displayText = optionData;
+                            } else {
+                                rawValue = optionData.value || optionData.Value || '';
+                                displayText = optionData.text || optionData.Text || rawValue;
+                            }
+                            
+                            // Sanitize the value to remove single quotes and other problematic characters
+                            let cleanValue = String(rawValue);
+                            if (cleanValue) {
+                                cleanValue = cleanValue.replace(/'/g, ''); // Remove single quotes
+                                cleanValue = cleanValue.replace(/"/g, ''); // Remove double quotes
+                                cleanValue = cleanValue.replace(/[\\<>&;]/g, ''); // Remove other problematic chars
+                                cleanValue = cleanValue.trim(); // Remove extra whitespace
+                            }
+                            
+                            // Sanitize display text as well (but less aggressively)
+                            let cleanText = String(displayText);
+                            if (cleanText) {
+                                cleanText = cleanText.trim();
+                            }
+                            
+                            option.value = cleanValue;
+                            option.textContent = cleanText || cleanValue;
+                            targetSelectElement.appendChild(option);
+                            
+                        } catch (optionError) {
+                            // Skip problematic options silently
+                        }
+                    }
+                    
+                } catch (error) {
+                    // Fallback: create at least an empty option
+                    try {
+                        targetSelectElement.innerHTML = '<option value="">---</option>';
+                    } catch (fallbackError) {
+                        // Ignore fallback errors
+                    }
+                }
+            }
+
+            // Create new ValeursReference row using DOM manipulation
+            function createValeurReferenceRow(i) {
+                // Validate input parameter
+                if (typeof i !== 'number' || i < 0) {
+                    throw new Error(`Invalid index parameter: ${i}. Must be a non-negative number.`);
+                }
+                
+                // Validate required global variables
+                const requiredVars = {
+                    'currentAnalyseId': currentAnalyseId,
+                    'sexeOptions': sexeOptions,
+                    'codeUniteOptions': codeUniteOptions,
+                    'codeUniteSiOptions': codeUniteSiOptions
+                };
+                
+                for (const [varName, varValue] of Object.entries(requiredVars)) {
+                    if (typeof varValue === 'undefined') {
+                        throw new Error(`Required variable ${varName} is undefined`);
+                    }
+                    if (varName.includes('Options') && !Array.isArray(varValue)) {
+                        throw new Error(`Required variable ${varName} is not an array: ${typeof varValue}`);
+                    }
+                }
+                
+                // Create the table row element
+                const row = document.createElement('tr');
+                
+                // Create hidden fields
+                const hiddenId = document.createElement('input');
+                hiddenId.type = 'hidden';
+                hiddenId.name = `ValeursReference[${i}].Valeurreferenceid`;
+                hiddenId.value = '';
+                row.appendChild(hiddenId);
+                
+                const hiddenAnalyseId = document.createElement('input');
+                hiddenAnalyseId.type = 'hidden';
+                hiddenAnalyseId.name = `ValeursReference[${i}].Idanalyse`;
+                hiddenAnalyseId.value = currentAnalyseId; // Use JavaScript variable instead of Razor syntax
+                row.appendChild(hiddenAnalyseId);
+                
+                // Create Sexe column
+                const sexeCell = document.createElement('td');
+                const sexeDiv = document.createElement('div');
+                sexeDiv.className = 'flex flex-col gap-3';
+                const sexeSelect = document.createElement('select');
+                sexeSelect.className = 'kt-select w-100 js-example-basic-single';
+                sexeSelect.name = `ValeursReference[${i}].Sexeautorisecode`;
+                sexeSelect.id = `ValeursReference[${i}].Sexeautorisecode`;
+                createSafeSelectOptions(sexeOptions, sexeSelect);
+                sexeDiv.appendChild(sexeSelect);
+                sexeCell.appendChild(sexeDiv);
+                row.appendChild(sexeCell);
+                
+                // Create Âge min column
+                const ageMinCell = document.createElement('td');
+                const ageMinDiv = document.createElement('div');
+                ageMinDiv.className = 'flex flex-col gap-3';
+                
+                const ageMinInput = document.createElement('input');
+                ageMinInput.className = 'kt-input';
+                ageMinInput.type = 'number';
+                ageMinInput.name = `ValeursReference[${i}].Agedebut`;
+                ageMinInput.id = `ValeursReference[${i}].Agedebut`;
+                ageMinDiv.appendChild(ageMinInput);
+                
+                const ageMinUnitSelect = document.createElement('select');
+                ageMinUnitSelect.className = 'kt-select w-100 js-example-basic-single';
+                ageMinUnitSelect.name = `ValeursReference[${i}].Codeunitagedebut`;
+                ageMinUnitSelect.id = `ValeursReference[${i}].Codeunitagedebut`;
+                createSafeSelectOptions(codeUniteOptions, ageMinUnitSelect);
+                ageMinDiv.appendChild(ageMinUnitSelect);
+                
+                ageMinCell.appendChild(ageMinDiv);
+                row.appendChild(ageMinCell);
+                
+                // Create Âge max column
+                const ageMaxCell = document.createElement('td');
+                const ageMaxDiv = document.createElement('div');
+                ageMaxDiv.className = 'flex flex-col gap-3';
+                
+                const ageMaxInput = document.createElement('input');
+                ageMaxInput.className = 'kt-input';
+                ageMaxInput.type = 'number';
+                ageMaxInput.name = `ValeursReference[${i}].Agefin`;
+                ageMaxInput.id = `ValeursReference[${i}].Agefin`;
+                ageMaxDiv.appendChild(ageMaxInput);
+                
+                const ageMaxUnitSelect = document.createElement('select');
+                ageMaxUnitSelect.className = 'kt-select w-100 js-example-basic-single';
+                ageMaxUnitSelect.name = `ValeursReference[${i}].Codeunitagefin`;
+                ageMaxUnitSelect.id = `ValeursReference[${i}].Codeunitagefin`;
+                createSafeSelectOptions(codeUniteOptions, ageMaxUnitSelect);
+                ageMaxDiv.appendChild(ageMaxUnitSelect);
+                
+                ageMaxCell.appendChild(ageMaxDiv);
+                row.appendChild(ageMaxCell);
+                
+                // Create Titre column
+                const titreCell = document.createElement('td');
+                const titreDiv = document.createElement('div');
+                titreDiv.className = 'flex flex-col gap-3';
+                const titreInput = document.createElement('input');
+                titreInput.className = 'kt-input';
+                titreInput.type = 'text';
+                titreInput.name = `ValeursReference[${i}].Titre`;
+                titreInput.id = `ValeursReference[${i}].Titre`;
+                titreDiv.appendChild(titreInput);
+                titreCell.appendChild(titreDiv);
+                row.appendChild(titreCell);
+                
+                // Create Standard column
+                const standardCell = document.createElement('td');
+                const standardDiv = document.createElement('div');
+                standardDiv.className = 'flex flex-col gap-3';
+                
+                const standardGridDiv = document.createElement('div');
+                standardGridDiv.className = 'grid grid-cols-2 gap-5';
+                standardGridDiv.style.rowGap = '1rem';
+                
+                const fromValueInput = document.createElement('input');
+                fromValueInput.className = 'kt-input';
+                fromValueInput.type = 'number';
+                fromValueInput.step = 'any';
+                fromValueInput.name = `ValeursReference[${i}].Referencefromvalue`;
+                fromValueInput.id = `ValeursReference[${i}].Referencefromvalue`;
+                standardGridDiv.appendChild(fromValueInput);
+                
+                const toValueInput = document.createElement('input');
+                toValueInput.className = 'kt-input';
+                toValueInput.type = 'number';
+                toValueInput.step = 'any';
+                toValueInput.name = `ValeursReference[${i}].Referencetovalue`;
+                toValueInput.id = `ValeursReference[${i}].Referencetovalue`;
+                standardGridDiv.appendChild(toValueInput);
+                
+                standardDiv.appendChild(standardGridDiv);
+                
+                const standardUnitSelect = document.createElement('select');
+                standardUnitSelect.className = 'kt-select w-100 js-example-basic-single';
+                standardUnitSelect.name = `ValeursReference[${i}].Codeunitreference`;
+                standardUnitSelect.id = `ValeursReference[${i}].Codeunitreference`;
+                createSafeSelectOptions(codeUniteOptions, standardUnitSelect);
+                standardDiv.appendChild(standardUnitSelect);
+                
+                standardCell.appendChild(standardDiv);
+                row.appendChild(standardCell);
+                
+                // Create SI column
+                const siCell = document.createElement('td');
+                const siDiv = document.createElement('div');
+                siDiv.className = 'flex flex-col gap-3';
+                
+                const siGridDiv = document.createElement('div');
+                siGridDiv.className = 'grid grid-cols-2 gap-5';
+                siGridDiv.style.rowGap = '1rem';
+                
+                const siFromValueInput = document.createElement('input');
+                siFromValueInput.className = 'kt-input';
+                siFromValueInput.type = 'number';
+                siFromValueInput.step = 'any';
+                siFromValueInput.name = `ValeursReference[${i}].Referencefromvaluesi`;
+                siFromValueInput.id = `ValeursReference[${i}].Referencefromvaluesi`;
+                siGridDiv.appendChild(siFromValueInput);
+                
+                const siToValueInput = document.createElement('input');
+                siToValueInput.className = 'kt-input';
+                siToValueInput.type = 'number';
+                siToValueInput.step = 'any';
+                siToValueInput.name = `ValeursReference[${i}].Referencetovaluesi`;
+                siToValueInput.id = `ValeursReference[${i}].Referencetovaluesi`;
+                siGridDiv.appendChild(siToValueInput);
+                
+                siDiv.appendChild(siGridDiv);
+                
+                const siUnitSelect = document.createElement('select');
+                siUnitSelect.className = 'kt-select w-100 js-example-basic-single';
+                siUnitSelect.name = `ValeursReference[${i}].Codeunitreferencesi`;
+                siUnitSelect.id = `ValeursReference[${i}].Codeunitreferencesi`;
+                createSafeSelectOptions(codeUniteSiOptions, siUnitSelect);
+                siDiv.appendChild(siUnitSelect);
+                
+                siCell.appendChild(siDiv);
+                row.appendChild(siCell);
+                
+                // COMPREHENSIVE VALIDATION: Verify the row was created correctly
+                console.log(`[DEBUG] Validating created ValeursReference row ${i}...`);
+                
+                const expectedElements = [
+                    { type: 'input', name: `ValeursReference[${i}].Valeurreferenceid`, elementType: 'hidden' },
+                    { type: 'input', name: `ValeursReference[${i}].Idanalyse`, elementType: 'hidden' },
+                    { type: 'select', name: `ValeursReference[${i}].Sexeautorisecode` },
+                    { type: 'input', name: `ValeursReference[${i}].Agedebut`, elementType: 'number' },
+                    { type: 'select', name: `ValeursReference[${i}].Codeunitagedebut` },
+                    { type: 'input', name: `ValeursReference[${i}].Agefin`, elementType: 'number' },
+                    { type: 'select', name: `ValeursReference[${i}].Codeunitagefin` },
+                    { type: 'input', name: `ValeursReference[${i}].Titre`, elementType: 'text' },
+                    { type: 'input', name: `ValeursReference[${i}].Referencefromvalue`, elementType: 'number' },
+                    { type: 'input', name: `ValeursReference[${i}].Referencetovalue`, elementType: 'number' },
+                    { type: 'select', name: `ValeursReference[${i}].Codeunitreference` },
+                    { type: 'input', name: `ValeursReference[${i}].Referencefromvaluesi`, elementType: 'number' },
+                    { type: 'input', name: `ValeursReference[${i}].Referencetovaluesi`, elementType: 'number' },
+                    { type: 'select', name: `ValeursReference[${i}].Codeunitreferencesi` }
+                ];
+                
+                let validationErrors = [];
+                let foundElements = 0;
+                
+                for (const expected of expectedElements) {
+                    const element = row.querySelector(`${expected.type}[name="${expected.name}"]`);
+                    if (!element) {
+                        validationErrors.push(`Missing ${expected.type} element: ${expected.name}`);
+                    } else {
+                        foundElements++;
+                        
+                        // Additional type validation for inputs
+                        if (expected.elementType && element.type !== expected.elementType) {
+                            validationErrors.push(`Wrong type for ${expected.name}: expected ${expected.elementType}, got ${element.type}`);
+                        }
+                        
+                        // Validate select elements have options
+                        if (expected.type === 'select' && element.options.length === 0) {
+                            validationErrors.push(`Select element ${expected.name} has no options`);
+                        }
+                        
+                        // Validate Idanalyse has correct value
+                        if (expected.name.includes('Idanalyse') && element.value !== currentAnalyseId) {
+                            validationErrors.push(`Idanalyse field has wrong value: expected ${currentAnalyseId}, got ${element.value}`);
+                        }
+                    }
+                }
+                
+                console.log(`[DEBUG] Row validation: Found ${foundElements}/${expectedElements.length} expected elements`);
+                
+                if (validationErrors.length > 0) {
+                    console.error(`[DEBUG] Row validation FAILED for index ${i}:`);
+                    validationErrors.forEach(error => console.error(`[DEBUG]   - ${error}`));
+                    throw new Error(`Row validation failed: ${validationErrors.length} errors found. First error: ${validationErrors[0]}`);
+                }
+                
+                // Final DOM structure validation
+                const totalInputs = row.querySelectorAll('input').length;
+                const totalSelects = row.querySelectorAll('select').length;
+                const totalCells = row.querySelectorAll('td').length;
+                
+                console.log(`[DEBUG] Row ${i} structure: ${totalCells} cells, ${totalInputs} inputs, ${totalSelects} selects`);
+                
+                if (totalCells !== 6) {
+                    throw new Error(`Wrong number of table cells: expected 6, got ${totalCells}`);
+                }
+                
+                if (totalInputs !== 8) { // 2 hidden + 6 visible inputs
+                    console.warn(`[DEBUG] Unexpected number of inputs: expected 8, got ${totalInputs}`);
+                }
+                
+                if (totalSelects !== 6) {
+                    console.warn(`[DEBUG] Unexpected number of selects: expected 6, got ${totalSelects}`);
+                }
+                
+                console.log(`[DEBUG] ===== Successfully created and validated ValeursReference row with index: ${i} =====`);
+                return row;
+            }
+
+            function reindexRowsValeurReference() {
+                console.log('[DEBUG] Reindexing ValeursReference rows');
+                let hasChanges = false;
+                
+                $('#referencesTableBody tr').each(function (rowIndex, row) {
+                    $(row).find('input, select').each(function () {
+                        const $element = $(this);
+                        const name = $element.attr('name');
+                        const id = $element.attr('id');
+                        
+                        if (name && name.includes('ValeursReference[')) {
+                            // Only reindex if the current index doesn't match the row index
+                            const currentIndex = name.match(/ValeursReference\[(\d+)\]/);
+                            if (currentIndex && parseInt(currentIndex[1]) !== rowIndex) {
+                                const newName = name.replace(/ValeursReference\[\d+\]/, `ValeursReference[${rowIndex}]`);
+                                $element.attr('name', newName);
+                                console.log('[DEBUG] Updated name from', name, 'to', newName);
+                                hasChanges = true;
+                                
+                                // Verify the new name is valid
+                                if (!newName.match(/ValeursReference\[\d+\]\./)) {
+                                    console.error('[DEBUG] WARNING: Generated invalid field name:', newName);
+                                }
+                            }
+                        }
+                        
+                        if (id && id.includes('ValeursReference[')) {
+                            const currentIndex = id.match(/ValeursReference\[(\d+)\]/);
+                            if (currentIndex && parseInt(currentIndex[1]) !== rowIndex) {
+                                const newId = id.replace(/ValeursReference\[\d+\]/, `ValeursReference[${rowIndex}]`);
+                                $element.attr('id', newId);
+                                console.log('[DEBUG] Updated id from', id, 'to', newId);
+                                hasChanges = true;
+                            }
+                        }
+                    });
+                });
+
+                if (!hasChanges) {
+                    console.log('[DEBUG] No reindexing needed - all fields already properly indexed');
+                }
+
+                referenceIndex = $('#referencesTableBody tr').length;
+                console.log('[DEBUG] Reference index set to:', referenceIndex);
+            }
+
+            $('#removeReference').on('click', function () {
+                const $rows = $('#referencesTableBody tr');
+                if ($rows.length === 0) return;
+
+                // Supprime la dernière ligne
+                $rows.last().remove();
+
+                // Réindexe tous les champs
+                reindexRowsValeurReference();
+            });
+
+            document.getElementById('addReference').addEventListener('click', function () {
+                console.log(`[DEBUG] Adding new reference row with current referenceIndex: ${referenceIndex}`);
+                
+                // Validate required variables are available
+                if (typeof sexeOptions === 'undefined' || !Array.isArray(sexeOptions)) {
+                    console.error('[DEBUG] sexeOptions is not defined or not an array');
+                    alert('ERREUR: Options de sexe non disponibles. Veuillez rafraîchir la page.');
+                    return;
+                }
+                
+                if (typeof codeUniteOptions === 'undefined' || !Array.isArray(codeUniteOptions)) {
+                    console.error('[DEBUG] codeUniteOptions is not defined or not an array');
+                    alert('ERREUR: Options d\'unités non disponibles. Veuillez rafraîchir la page.');
+                    return;
+                }
+                
+                if (typeof codeUniteSiOptions === 'undefined' || !Array.isArray(codeUniteSiOptions)) {
+                    console.error('[DEBUG] codeUniteSiOptions is not defined or not an array');
+                    alert('ERREUR: Options d\'unités SI non disponibles. Veuillez rafraîchir la page.');
+                    return;
+                }
+                
+                if (typeof currentAnalyseId === 'undefined' || !currentAnalyseId) {
+                    console.error('[DEBUG] currentAnalyseId is not defined');
+                    alert('ERREUR: ID d\'analyse manquant. Veuillez rafraîchir la page.');
+                    return;
+                }
+                
+                console.log(`[DEBUG] All required variables validated successfully`);
+                
+                try {
+                    // Use current referenceIndex for new row
+                    const i = referenceIndex;
+                    const rowElement = createValeurReferenceRow(i);
+                    
+                    // Validate the row was created successfully
+                    if (!rowElement || rowElement.tagName !== 'TR') {
+                        throw new Error('Failed to create table row element');
+                    }
+                    
+                    // Count expected fields in the new row
+                    const expectedFields = [
+                        'Valeurreferenceid', 'Idanalyse', 'Sexeautorisecode',
+                        'Agedebut', 'Codeunitagedebut', 'Agefin', 'Codeunitagefin',
+                        'Titre', 'Referencefromvalue', 'Referencetovalue', 'Codeunitreference',
+                        'Referencefromvaluesi', 'Referencetovaluesi', 'Codeunitreferencesi'
+                    ];
+                    
+                    let actualFieldsCount = 0;
+                    $(rowElement).find('input, select').each(function() {
+                        const name = $(this).attr('name');
+                        if (name && name.includes(`ValeursReference[${i}]`)) {
+                            actualFieldsCount++;
+                        }
+                    });
+                    
+                    console.log(`[DEBUG] New row created with ${actualFieldsCount} fields (expected: ${expectedFields.length})`);
+                    
+                    // Append the DOM element directly
+                    document.getElementById('referencesTableBody').appendChild(rowElement);
+                    console.log(`[DEBUG] Row appended to table body`);
+                    
+                    // Update referenceIndex BEFORE reindexing to avoid conflicts
+                    referenceIndex++;
+                    console.log(`[DEBUG] Updated referenceIndex to: ${referenceIndex}`);
+                    
+                    // Reindex all rows to ensure proper sequential indexing
+                    console.log(`[DEBUG] Starting reindexing process...`);
+                    reindexRowsValeurReference();
+                    
+                    // Initialize Select2 on the new selects AFTER reindexing
+                    console.log(`[DEBUG] Initializing Select2 on new elements...`);
+                    $('#referencesTableBody tr:last-child select').each(function() {
+                        const $select = $(this);
+                        const name = $select.attr('name');
+                        
+                        try {
+                            // Only initialize if not already initialized
+                            if (!$select.hasClass('select2-hidden-accessible')) {
+                                $select.select2({
+                                    width: '100%',
+                                    placeholder: '---'
+                                });
+                                console.log(`[DEBUG] Select2 initialized for: ${name}`);
+                            } else {
+                                console.log(`[DEBUG] Select2 already initialized for: ${name}`);
+                            }
+                        } catch (ex) {
+                            console.error(`[DEBUG] Failed to initialize Select2 for ${name}:`, ex.message);
+                        }
+                    });
+                    
+                    console.log(`[DEBUG] Successfully added new reference row with final index: ${referenceIndex - 1}`);
+                    
+                } catch (error) {
+                    console.error('[DEBUG] Error adding new reference row:', error.message);
+                    alert('ERREUR lors de l\'ajout de la nouvelle ligne: ' + error.message);
+                    
+                    // Rollback referenceIndex if it was incremented
+                    if (referenceIndex > $('#referencesTableBody tr').length) {
+                        referenceIndex = $('#referencesTableBody tr').length;
+                        console.log(`[DEBUG] Rolled back referenceIndex to: ${referenceIndex}`);
+                    }
+                }
+            });
+
+        });
+
+    </script>
+
+    @* ------------------------------------- autre scripts -------------------------------------- *@
+
+    <script>
+        $(document).ready(function() {
+            
+            // Form submission handler
+            $('#analyseForm').on('submit', function(e) {
+                // Sync Summernote content
+                $('.summernote').each(function() {
+                    try {
+                        $(this).summernote('code', $(this).summernote('code'));
+                    } catch (ex) {
+                        // Ignore summernote sync errors
+                    }
+                });
+                
+                // Clean form data before submission
+                const cleaningResult = performComprehensiveFormCleaning();
+                if (!cleaningResult.success) {
+                    alert('Erreur lors du nettoyage des données du formulaire.');
+                    e.preventDefault();
+                    return false;
+                }
+                
+                return true;
+            });
+
+            // Initialize Select2 dropdowns
+            $('.js-example-basic-single').select2({
+                width: '100%'
+            });
+
+            $('.js-example-basic-multiple').select2({
+                width: '100%'
+            });
+
+            // Initialize Summernote rich text editor
+            $('.summernote').summernote({
+                placeholder: '',
+                tabsize: 2,
+                height: 120,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
+                ]
+            });
+
+            // Initialize tab functionality
+            initializeTabs();
+        });
+    </script>
+
+    @* Tab initialization script - Simple and Clean *@
+    <script>
+        function initializeTabs() {
+            console.log('=== Initializing Tab System ===');
+            
+            // Clear any existing handlers to avoid conflicts
+            $('.tab-button').off('click');
+            
+            // Setup fresh click handlers
+            $('.tab-button').on('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                var clickedTabId = $(this).attr('id');
+                console.log('Tab clicked:', clickedTabId);
+                
+                // Calculate target content ID
+                var targetContentId = clickedTabId.replace('tab-', 'content-');
+                console.log('Target content:', targetContentId);
+                
+                // Update all tab buttons to inactive state
+                $('.tab-button').removeClass('active border-primary text-primary');
+                $('.tab-button').addClass('border-transparent text-gray-500');
+                
+                // Set clicked tab to active state
+                $(this).removeClass('border-transparent text-gray-500');
+                $(this).addClass('active border-primary text-primary');
+                
+                // Hide all tab content
+                $('.tab-content').addClass('hidden');
+                
+                // Show target content
+                $('#' + targetContentId).removeClass('hidden');
+                
+                console.log('Tab switch completed:', targetContentId);
+            });
+            
+            // Set initial state - first tab active
+            $('#tab-general').removeClass('border-transparent text-gray-500');
+            $('#tab-general').addClass('active border-primary text-primary');
+            $('#content-general').removeClass('hidden');
+            
+            // Verify setup
+            var tabButtons = $('.tab-button').length;
+            var tabContents = $('.tab-content').length;
+            console.log('Setup complete:', tabButtons, 'buttons,', tabContents, 'content areas');
+        }
+        
+        // Place this code in a separate document ready block
+        $(document).ready(function() {
+            // MINIMAL SUBMIT - Submit form with minimal processing
+            $('#minimalSubmit').on('click', function() {
+                console.log('[DEBUG] ===== MINIMAL SUBMIT STARTED =====');
+                
+                const form = $('#analyseForm')[0];
+                
+                // Only do absolutely minimal checks
+                if (!form) {
+                    console.error('[DEBUG] Form not found!');
+                    alert('Form not found!');
+                    return;
+                }
+                
+                // Check if we have at least the required Idanalyse
+                const idanalyseInput = form.querySelector('input[name="Idanalyse"]');
+                if (!idanalyseInput || !idanalyseInput.value) {
+                    console.error('[DEBUG] Missing main Idanalyse field!');
+                    alert('Missing Idanalyse field!');
+                    return;
+                }
+                
+                console.log('[DEBUG] Main Idanalyse:', idanalyseInput.value);
+                
+                // Quick check of ValeursReference structure without modification
+                const vrefElements = form.querySelectorAll('input[name*="ValeursReference"], select[name*="ValeursReference"]');
+                console.log('[DEBUG] Found ValeursReference elements:', vrefElements.length);
+                
+                let hasEmptyIndexes = false;
+                vrefElements.forEach((el, idx) => {
+                    if (el.name.includes('ValeursReference[]')) {
+                        console.error('[DEBUG] Found empty index in:', el.name);
+                        hasEmptyIndexes = true;
+                    }
+                });
+                
+                if (hasEmptyIndexes) {
+                    console.error('[DEBUG] CRITICAL: Found empty indexes - cannot submit');
+                    alert('Found empty indexes in form fields - form cannot be submitted safely.');
+                    return;
+                }
+                
+                // Get the serialized data WITHOUT any cleaning
+                const rawFormData = $(form).serialize();
+                console.log('[DEBUG] Raw form data length:', rawFormData.length);
+                console.log('[DEBUG] Raw form data preview:', rawFormData.substring(0, 200) + '...');
+                
+                // Try to submit using AJAX to see the actual server response
+                console.log('[DEBUG] Attempting AJAX submission...');
+                
+                $.ajax({
+                    url: form.action || window.location.pathname,
+                    method: 'POST',
+                    data: rawFormData,
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    beforeSend: function(xhr, settings) {
+                        console.log('[DEBUG] AJAX request started');
+                        console.log('[DEBUG] URL:', settings.url);
+                        console.log('[DEBUG] Method:', settings.type);
+                        console.log('[DEBUG] Data length:', settings.data.length);
+                    },
+                    success: function(data, textStatus, xhr) {
+                        console.log('[DEBUG] AJAX SUCCESS!');
+                        console.log('[DEBUG] Status:', textStatus);
+                        console.log('[DEBUG] Response type:', typeof data);
+                        console.log('[DEBUG] Response preview:', typeof data === 'string' ? data.substring(0, 200) : data);
+                        alert('SUCCESS! Form submitted successfully. Check console for details.');
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        console.error('[DEBUG] AJAX ERROR!');
+                        console.error('[DEBUG] Status:', xhr.status);
+                        console.error('[DEBUG] Status Text:', xhr.statusText);
+                        console.error('[DEBUG] Response Text:', xhr.responseText);
+                        console.error('[DEBUG] Text Status:', textStatus);
+                        console.error('[DEBUG] Error Thrown:', errorThrown);
+                        
+                        // Try to parse response as JSON for model state errors
+                        try {
+                            const responseJson = JSON.parse(xhr.responseText);
+                            console.error('[DEBUG] Parsed response JSON:', responseJson);
+                        } catch (jsonError) {
+                            console.error('[DEBUG] Response is not JSON:', xhr.responseText);
+                        }
+                        
+                        alert(`ERROR ${xhr.status}: ${xhr.statusText}\n\nCheck console for detailed error information.`);
+                    },
+                    complete: function(xhr, textStatus) {
+                        console.log('[DEBUG] AJAX request completed with status:', textStatus);
+                    }
+                });
+            });
+            
+            // Add click debugging for submit buttons
+            $('button[type="submit"]').on('click', function(e) {
+                console.log('[DEBUG] Submit button clicked:', $(this).text().trim());
+            });
+            
+            // Add form submission debugging
+            $('#analyseForm').on('submit', function(e) {
+                console.log('[DEBUG] ====== FORM SUBMISSION STARTED ======');
+                console.log('[DEBUG] Form action:', $(this).attr('action'));
+                console.log('[DEBUG] Form method:', $(this).attr('method'));
+                console.log('[DEBUG] Current URL:', window.location.href);
+                
+                // PRE-SUBMISSION VALIDATION: Check form structure before cleaning
+                console.log('[DEBUG] Pre-submission form structure validation...');
+                
+                let structureValid = true;
+                let totalElements = 0;
+                let valeursReferenceElements = 0;
+                
+                $('#analyseForm input, #analyseForm select, #analyseForm textarea').each(function() {
+                    totalElements++;
+                    const name = $(this).attr('name');
+                    const value = $(this).val();
+                    
+                    if (name && name.includes('ValeursReference[')) {
+                        valeursReferenceElements++;
+                        
+                        // Log the element for debugging
+                        console.log(`[DEBUG] ValeursReference element: name="${name}", value="${value}", type="${$(this).prop('tagName').toLowerCase()}"`);
+                        
+                        // Check for malformed names
+                        if (!name.match(/ValeursReference\[\d+\]\./)) {
+                            console.error(`[DEBUG] MALFORMED FIELD NAME: ${name}`);
+                            structureValid = false;
+                        }
+                        
+                        // Check for problematic values
+                        if (typeof value === 'string' && value.includes("'")) {
+                            console.warn(`[DEBUG] Field contains single quote: ${name} = "${value}"`);
+                        }
+                    }
+                });
+                
+                console.log(`[DEBUG] Total form elements: ${totalElements}`);
+                console.log(`[DEBUG] ValeursReference elements: ${valeursReferenceElements}`);
+                console.log(`[DEBUG] Form structure valid: ${structureValid}`);
+                
+                if (!structureValid) {
+                    console.error('[DEBUG] Form structure validation FAILED - submission aborted');
+                    alert('ERREUR: Structure de formulaire invalide détectée. Veuillez rafraîchir la page.');
+                    e.preventDefault();
+                    return false;
+                }
+                
+                // COMPREHENSIVE SERIALIZATION FIX: Clean all form data for safe submission
+                console.log('[DEBUG] Regular Submit: Comprehensive form data cleaning...');
+                
+                // Call the comprehensive cleaning function
+                const cleaningResult = performComprehensiveFormCleaning();
+                
+                if (!cleaningResult.success) {
+                    console.error('[DEBUG] Form submission aborted due to serialization issues:', cleaningResult.error);
+                    alert('ERREUR: Problèmes de sérialisation détectés. Impossible de soumettre le formulaire.\n\nErreur: ' + (cleaningResult.error || 'Inconnue'));
+                    e.preventDefault();
+                    return false;
+                }
+                
+                console.log(`[DEBUG] Regular Submit: Successfully cleaned ${cleaningResult.totalCleaned} fields`);
+                
+                // POST-CLEANING VALIDATION: Re-check field names after cleaning
+                let hasInvalidFields = false;
+                $('#referencesTableBody input, #referencesTableBody select').each(function() {
+                    const name = $(this).attr('name');
+                    if (name && name.includes('ValeursReference[') && !name.match(/ValeursReference\[\d+\]\./)) {
+                        console.error('[DEBUG] Invalid field name detected after cleaning:', name);
+                        hasInvalidFields = true;
+                    }
+                });
+                
+                if (hasInvalidFields) {
+                    console.error('[DEBUG] Form submission prevented due to invalid field names after cleaning');
+                    alert('Erreur: Noms de champs invalides détectés après nettoyage. Veuillez rafraîchir la page.');
+                    e.preventDefault();
+                    return false;
+                }
+                
+                // Check if Summernote is causing issues
+                $('.summernote').each(function() {
+                    try {
+                        $(this).summernote('code', $(this).summernote('code'));
+                        console.log('[DEBUG] Summernote synchronized successfully');
+                    } catch (ex) {
+                        console.error('[DEBUG] Summernote synchronization failed:', ex.message);
+                    }
+                });
+                
+                // Ensure Select2 values are properly synced before submission
+                let select2SyncCount = 0;
+                $('#referencesTableBody select.select2-hidden-accessible').each(function() {
+                    try {
+                        const $select = $(this);
+                        const value = $select.select2('val');
+                        if (value !== null && value !== undefined) {
+                            $select.val(value).trigger('change.select2');
+                            select2SyncCount++;
+                        }
+                    } catch (ex) {
+                        console.error('[DEBUG] Select2 sync failed for element:', ex.message);
+                    }
+                });
+                
+                console.log(`[DEBUG] Select2 fields synchronized: ${select2SyncCount}`);
+                
+                // FINAL CHECK: Serialize and validate the final form data
+                const finalFormData = $(this).serialize();
+                console.log(`[DEBUG] Final serialized form data length: ${finalFormData.length}`);
+                
+                // Check for critical issues in serialized data
+                const criticalIssues = [];
+                if (finalFormData.includes('ValeursReference%5B%5D')) {
+                    criticalIssues.push('Empty ValeursReference indexes found');
+                }
+                if (finalFormData.includes('%27')) {
+                    criticalIssues.push('Single quotes still present in data');
+                }
+                
+                if (criticalIssues.length > 0) {
+                    console.error('[DEBUG] CRITICAL ISSUES in final form data:', criticalIssues);
+                    alert('ERREUR CRITIQUE: Problèmes détectés dans les données finales:\n' + criticalIssues.join('\n'));
+                    e.preventDefault();
+                    return false;
+                }
+                
+                console.log('[DEBUG] All pre-submission checks passed - submitting form');
+                console.log('[DEBUG] Form data preview:', finalFormData.length > 500 ? finalFormData.substring(0, 500) + '...' : finalFormData);
+                
+                // Don't prevent the default submission, just log it
+                return true;
+            });
+
+            $('.js-example-basic-single').select2({
+                // theme: "classic",
+                width: '100%'
+            });
+
+            $('.js-example-basic-multiple').select2({
+                // theme: "classic",
+                width: '100%'
+            });
+
+            $('.summernote').summernote({
+                placeholder: '',
+                tabsize: 2,
+                height: 120,
+                toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+                ],
+                callbacks: {
+                    onChange: function(contents, $editable) {
+                        console.log('[DEBUG] Summernote content changed:', contents.length + ' characters');
+                    },
+                    onInit: function() {
+                        console.log('[DEBUG] Summernote initialized');
+                    }
+                }
+            });
+
+            // Gestion des onglets
+            initializeTabs();
+            
+            // Debug submit button
+            $('#debugSubmit').on('click', function() {
+                console.log('[DEBUG] Debug submit clicked');
+                console.log('[DEBUG] Form element:', $('#analyseForm')[0]);
+                console.log('[DEBUG] Form action:', $('#analyseForm').attr('action'));
+                console.log('[DEBUG] Form method:', $('#analyseForm').attr('method'));
+                console.log('[DEBUG] Form valid:', $('#analyseForm')[0].checkValidity());
+                
+                // Run feature validation
+                const featuresValid = window.validateExistingFeatures();
+                if (!featuresValid) {
+                    alert('WARNING: Some features failed validation. Check console for details.');
+                    return;
+                }
+                
+                // Check all ValeursReference fields
+                let fieldCount = 0;
+                let invalidFields = [];
+                $('#referencesTableBody input, #referencesTableBody select').each(function() {
+                    fieldCount++;
+                    const name = $(this).attr('name');
+                    const value = $(this).val();
+                    console.log(`[DEBUG] Field ${fieldCount}: name="${name}" value="${value}"`);
+                    
+                    if (name && name.includes('ValeursReference[') && !name.match(/ValeursReference\[\d+\]/)) {
+                        invalidFields.push(name);
+                    }
+                });
+                
+                console.log(`[DEBUG] Total ValeursReference fields: ${fieldCount}`);
+                console.log(`[DEBUG] Invalid fields: ${invalidFields.length}`);
+                
+                if (invalidFields.length > 0) {
+                    console.error('[DEBUG] Invalid field names:', invalidFields);
+                    alert(`ERREUR: ${invalidFields.length} champs invalides détectés:\n${invalidFields.join('\n')}`);
+                } else {
+                    // Additional validation: check for required Idanalyse fields
+                    let missingIdanalyse = [];
+                    $('#referencesTableBody input[name*=".Idanalyse"]').each(function() {
+                        if (!$(this).val()) {
+                            missingIdanalyse.push($(this).attr('name'));
+                        }
+                    });
+                    
+                    if (missingIdanalyse.length > 0) {
+                        console.error('[DEBUG] Missing Idanalyse values:', missingIdanalyse);
+                        alert(`ERREUR: ${missingIdanalyse.length} champs Idanalyse manquants`);
+                    } else {
+                        console.log('[DEBUG] All fields appear valid, submitting form...');
+                        $('#analyseForm').off('submit').submit();
+                    }
+                }
+            });
+            
+            // Force submit button - bypasses all validation
+            $('#forceSubmit').on('click', function() {
+                console.log('[DEBUG] Force submit clicked - bypassing all validation');
+                
+                // COMPREHENSIVE SERIALIZATION FIX: Clean all form data for safe submission
+                console.log('[DEBUG] Force Submit: Comprehensive form data cleaning...');
+                
+                const cleaningResult = window.performComprehensiveFormCleaning();
+                
+                if (!cleaningResult.success) {
+                    console.error('[DEBUG] Force submit aborted due to serialization issues:', cleaningResult.error);
+                    alert('ERREUR CRITIQUE: Problèmes de sérialisation détectés. Impossible de soumettre le formulaire en toute sécurité.\n\nErreur: ' + cleaningResult.error);
+                    return;
+                }
+                
+                console.log(`[DEBUG] Force Submit: Successfully cleaned ${cleaningResult.totalCleaned} fields`);
+                console.log('[DEBUG] Form data is now safe for submission.');
+                
+                const form = $('#analyseForm')[0];
+                console.log('[DEBUG] Form element:', form);
+                console.log('[DEBUG] Form action attribute:', form.getAttribute('action'));
+                console.log('[DEBUG] Form action property:', form.action);
+                console.log('[DEBUG] Form method:', form.method);
+                console.log('[DEBUG] Current page URL:', window.location.href);
+                console.log('[DEBUG] Base URL:', window.location.origin);
+                
+                // Disable HTML5 validation temporarily
+                form.setAttribute('novalidate', 'novalidate');
+                
+                // Log form data before submission
+                const formData = new FormData(form);
+                console.log('[DEBUG] Form data entries:');
+                for (let [key, value] of formData.entries()) {
+                    if (key.includes('ValeursReference')) {
+                        console.log(`[DEBUG] ${key} = ${value}`);
+                    }
+                }
+                
+                console.log('[DEBUG] Serialized form data:', $(form).serialize());
+                
+                // Check for problematic field patterns
+                let hasEmptyIndexes = false;
+                let hasMissingIdanalyse = false;
+                
+                for (let [key, value] of formData.entries()) {
+                    if (key.includes('ValeursReference')) {
+                        // Check for empty indexes like ValeursReference[].Property
+                        if (key.match(/ValeursReference\[\]\./)) {
+                            hasEmptyIndexes = true;
+                            console.warn('[DEBUG] PROBLEM: Empty index found:', key);
+                        }
+                        
+                        // Check for missing Idanalyse values
+                        if (key.includes('.Idanalyse') && (!value || value === '')) {
+                            hasMissingIdanalyse = true;
+                            console.warn('[DEBUG] PROBLEM: Missing Idanalyse value for:', key);
+                        }
+                    }
+                }
+                
+                if (hasEmptyIndexes) {
+                    console.error('[DEBUG] CRITICAL: Found empty indexes in ValeursReference fields');
+                }
+                if (hasMissingIdanalyse) {
+                    console.error('[DEBUG] CRITICAL: Found missing Idanalyse values');
+                }
+                
+                // Remove any jQuery validation
+                $('#analyseForm').off('submit');
+                
+                // Submit directly
+                form.submit();
+            });
+        });
+
+
+    </script>
+
+}

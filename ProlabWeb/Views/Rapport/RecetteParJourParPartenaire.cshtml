@@ -1,0 +1,46 @@
+@model ProlabWeb.ViewModels.RecetteParJourVM
+@{
+    ViewData["Title"] = "Recettes journalières par partenaire";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="grid grid-cols-2 gap-5">
+    <div>
+        <h1 class="font-bold">Recettes journalières par partenaire</h1>
+    </div>
+</div>
+<div class="flex items-center gap-2 mb-5">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success">@ViewBag.Message</div>
+}
+
+<div class="min-w-full mb-5">
+    <form asp-action="RecetteParJourParPartenaire" method="post" class="flex flex-col gap-5">
+        <div class="flex flex-col gap-3 mt-5">
+            <label class="kt-form-label text-mono" asp-for="Date"></label>
+            <input class="kt-input" asp-for="Date" type="date" placeholder="jj/mm/aaaa" />
+            <span asp-validation-for="Date" class="text-red-500"></span>
+        </div>
+        <div class="flex gap-5 mt-5">
+            <button type="button" id="btnRecherche" class="kt-btn kt-btn-primary">
+                <span class="material-symbols-outlined">search</span> Rechercher
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- Loader Spinner -->
+<div id="loader-spinner" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9999;">
+    <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Chargement...</span>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/app/rapport/recetteparjourparpartenaire.js"></script>
+} 

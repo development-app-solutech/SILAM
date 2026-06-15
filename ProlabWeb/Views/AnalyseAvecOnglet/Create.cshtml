@@ -1,0 +1,807 @@
+@model ProlabWeb.ViewModels.AnalyseAvecOngletCreateVM
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="grid grid-cols-2 gap-5">
+    <div>
+        <h1 class="font-bold">Création Analyse</h1>
+    </div>
+    <div class="text-end">
+        <a asp-action="Index" class="text-primary">Retour à liste</a>
+    </div>
+</div>
+<div class="flex items-center gap-2">
+    <span class="border-t border-border border-primary w-full">
+    </span>
+</div>
+
+<div class="min-w-full mb-5">
+    <!-- Navigation des onglets -->
+    <div class="mb-6">
+        <nav class="flex space-x-8" aria-label="Tabs">
+            <button type="button" id="tab-general" class="tab-button active whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm border-primary text-primary" aria-current="page">
+                Informations générales
+            </button>
+            <button type="button" id="tab-parametres" class="tab-button whitespace-nowrap py-2 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium text-sm">
+                Paramètres
+            </button>
+            <button type="button" id="tab-references" class="tab-button whitespace-nowrap py-2 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium text-sm">
+                Valeurs de référence
+            </button>
+            <button type="button" id="tab-tarifs" class="tab-button whitespace-nowrap py-2 px-1 border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 font-medium text-sm">
+                Tarif assurance
+            </button>
+        </nav>
+    </div>
+
+    <form asp-action="Create" class="flex flex-col gap-5" id="analyseForm" method="post">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-red-500"></div>
+        
+        <!-- Onglet Informations générales -->
+        <div id="content-general" class="tab-content">
+            <div class="grid grid-cols-2 gap-10">
+            <div class="flex flex-col gap-5">
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Idlaboratoire"></label>
+                    <select class="kt-select w-100 js-example-basic-single" asp-for="Idlaboratoire" asp-items="@ViewBag.Idlaboratoire">
+                    </select>
+                    <span asp-validation-for="Idlaboratoire" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Nom">
+                    </label>
+                    <input class="kt-input" asp-for="Nom" placeholder="" type="text">
+                    <span asp-validation-for="Nom" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Codeparametre">
+                    </label>
+                    <input class="kt-input" asp-for="Codeparametre" placeholder="" type="text">
+                    <span asp-validation-for="Codeparametre" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Idanalyseparent"></label>
+                    <select class="kt-select w-100 js-example-basic-single" asp-for="Idanalyseparent" asp-items="@ViewBag.Idanalyseparent">
+                    </select>
+                    <span asp-validation-for="Idanalyseparent" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Aliascodeautomate">
+                    </label>
+                    <input class="kt-input" asp-for="Aliascodeautomate" placeholder="" type="text">
+                    <span asp-validation-for="Aliascodeautomate" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Description">
+                    </label>
+                    <textarea class="kt-input summernote" asp-for="Description" placeholder=""></textarea>
+                    <span asp-validation-for="Description" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Prix">
+                    </label>
+                    <input class="kt-input" asp-for="Prix" placeholder="" type="number">
+                    <span asp-validation-for="Prix" class="text-red-500"></span>
+                </div>
+                <div class="grid grid-cols-2 gap-5">
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Codeunite"></label>
+                        <select class="kt-select w-100 js-example-basic-single" asp-for="Codeunite" asp-items="@ViewBag.Codeunite">
+                        </select>
+                        <span asp-validation-for="Codeunite" class="text-red-500"></span>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Codeunitesi"></label>
+                        <select class="kt-select w-100 js-example-basic-single" asp-for="Codeunitesi" asp-items="@ViewBag.Codeunitesi">
+                        </select>
+                        <span asp-validation-for="Codeunitesi" class="text-red-500"></span>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Facteurconversionsi">
+                    </label>
+                    <input class="kt-input" asp-for="Facteurconversionsi" placeholder="" type="text">
+                    <span asp-validation-for="Facteurconversionsi" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Ordreaffichage">
+                    </label>
+                    <input class="kt-input" asp-for="Ordreaffichage" placeholder="" type="number">
+                    <span asp-validation-for="Ordreaffichage" class="text-red-500"></span>
+                </div>
+                <label class="kt-checkbox-group kt-form-label text-mono">
+                    <input class="kt-checkbox kt-checkbox-sm" asp-for="Isactive" type="checkbox">
+                    <span class="kt-checkbox-label">
+                        @Html.DisplayNameFor(model => model.Isactive)
+                    </span>
+                </label>
+            </div>
+            <div class="flex flex-col gap-5">
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Indicederev">
+                    </label>
+                    <input class="kt-input" asp-for="Indicederev" placeholder="" type="text">
+                    <span asp-validation-for="Indicederev" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Codification">
+                    </label>
+                    <input class="kt-input" asp-for="Codification" placeholder="" type="text">
+                    <span asp-validation-for="Codification" class="text-red-500"></span>
+                </div>
+                <label class="kt-checkbox-group kt-form-label text-mono">
+                    <input class="kt-checkbox kt-checkbox-sm" asp-for="Avecautomate" type="checkbox">
+                    <span class="kt-checkbox-label">
+                        @Html.DisplayNameFor(model => model.Avecautomate)
+                    </span>
+                </label>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Idautomate"></label>
+                    <select class="kt-select w-100 js-example-basic-single" asp-for="Idautomate" asp-items="@ViewBag.Idautomate">
+                    </select>
+                    <span asp-validation-for="Idautomate" class="text-red-500"></span>
+                </div>
+                <label class="kt-checkbox-group kt-form-label text-mono">
+                    <input class="kt-checkbox kt-checkbox-sm" asp-for="Affichermachineresultat" type="checkbox">
+                    <span class="kt-checkbox-label">
+                        @Html.DisplayNameFor(model => model.Affichermachineresultat)
+                    </span>
+                </label>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Formuleautomate">
+                    </label>
+                    <input class="kt-input" asp-for="Formuleautomate" placeholder="" type="text">
+                    <span asp-validation-for="Formuleautomate" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Decimalresultatstandard">
+                    </label>
+                    <input class="kt-input" asp-for="Decimalresultatstandard" placeholder="" type="number">
+                    <span asp-validation-for="Decimalresultatstandard" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Decimalresultatsi">
+                    </label>
+                    <input class="kt-input" asp-for="Decimalresultatsi" placeholder="" type="number">
+                    <span asp-validation-for="Decimalresultatsi" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="IdsMethode"></label>
+                    <select class="kt-select w-100 js-example-basic-multiple" asp-for="IdsMethode" asp-items="@ViewBag.IdsMethode" multiple="multiple">
+                    </select>
+                    <span asp-validation-for="IdsMethode" class="text-red-500"></span>
+                </div>
+                <label class="kt-checkbox-group kt-form-label text-mono">
+                    <input class="kt-checkbox kt-checkbox-sm" asp-for="Affichermethodresultat" type="checkbox">
+                    <span class="kt-checkbox-label">
+                        @Html.DisplayNameFor(model => model.Affichermethodresultat)
+                    </span>
+                </label>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Commentaire">
+                    </label>
+                    <textarea class="kt-input summernote" asp-for="Commentaire" placeholder=""></textarea>
+                    <span asp-validation-for="Commentaire" class="text-red-500"></span>
+                </div>
+                <label class="kt-checkbox-group kt-form-label text-mono">
+                    <input class="kt-checkbox kt-checkbox-sm" asp-for="Accredite" type="checkbox">
+                    <span class="kt-checkbox-label">
+                        @Html.DisplayNameFor(model => model.Accredite)
+                    </span>
+                </label>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Idnatureechantillon"></label>
+                    <select class="kt-select w-100 js-example-basic-single" asp-for="Idnatureechantillon" asp-items="@ViewBag.Idnatureechantillon">
+                    </select>
+                    <span asp-validation-for="Idnatureechantillon" class="text-red-500"></span>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Onglet Paramètres -->
+        <div id="content-parametres" class="tab-content hidden">
+            <div class="mb-4">
+                <div class="flex justify-between items-center mb-4">    
+                    <h3 class="text-lg font-semibold">Paramètres de l'analyse</h3>
+                    <div class="flex gap-3">
+                        <button type="button" id="addParametre" class="kt-btn kt-btn-primary">+</button>
+                        <button type="button" id="removeParametre" class="kt-btn kt-btn-secondary kt-btn-outline" style="background-color: #dc3545; color: white;">-</button>
+                    </div>
+                </div>
+                <div class="kt-scrollable-x-auto">
+                    <table class="kt-table table-auto kt-table-border min-w-full" id="parametresTable">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 75px !important; width: 15% !important;"><span class="kt-table-col-label font-bold">Nom</span></th>
+                                <th style="min-width: 50px !important; width: 10% !important;"><span class="kt-table-col-label font-bold">Code</span></th>
+                                <th style="min-width: 25px !important; width: 5% !important;"><span class="kt-table-col-label font-bold">Masquer</span></th>
+                                <th style="min-width: 75px !important; width: 15% !important;"><span class="kt-table-col-label font-bold"></span></th>
+                                <th style="min-width: 75px !important; width: 15% !important;"><span class="kt-table-col-label font-bold">Résultat Standard</span></th>
+                                <th style="min-width: 75px !important; width: 15% !important;"><span class="kt-table-col-label font-bold">Résultat SI</span></th>
+                                <th style="min-width: 75px !important; width: 15% !important;"><span class="kt-table-col-label font-bold">Facteur Conversion</span></th>
+                                <th style="min-width: 50px !important; width: 10% !important;"><span class="kt-table-col-label font-bold">Ordre</span></th>
+                            </tr>
+                        </thead>
+                        <tbody id="parametresTableBody">
+                            @if (Model.Parametres != null && Model.Parametres.Any())
+                            {
+                                for (int i = 0; i < Model.Parametres.Count; i++)
+                                {
+                                    <tr>
+                                        <td>
+                                            <textarea class="kt-input w-100" name="Parametres[@i].Nom" id="Parametres[@i].Nom" placeholder="" style="height: 6em; line-height: 1.5em;"></textarea>
+                                        </td>
+                                        <td>
+                                            <input type="text" name="Parametres[@i].Code" id="Parametres[@i].Code" class="kt-input w-100" />
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" name="Parametres[@i].Masquer" id="Parametres[@i].Masquer" class="form-check-input" />
+                                        </td>
+                                        <td>
+                                            <div class="flex flex-col gap-3">
+                                                <div class="flex flex-col gap-3">
+                                                    <label class="kt-form-label text-mono" for="Parametres[@i].Builder.Type">Type</label>
+                                                    <select id="selectType_@i" name="Parametres[@i].Builder.Type" class="kt-select w-100 js-example-basic-single" asp-items="@ViewBag.TypeParametres">
+                                                    </select>
+                                                </div>
+                                                <div id="divValeur_@i" class="flex flex-col gap-3" style="display: none;">
+                                                    <label class="kt-form-label text-mono" for="Parametres[@i].Builder.Valeur">Valeur</label>
+                                                    <textarea class="kt-input w-100" name="Parametres[@i].Builder.Valeur" id="Parametres[@i].Builder.Valeur" placeholder="" style="height: 6em; line-height: 1.5em;"></textarea>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="flex flex-col gap-3">
+                                                <input name="Parametres[@i].ResultatStandard" id="Parametres[@i].ResultatStandard" class="kt-input w-100" />
+                                                <select name="Parametres[@i].UniteStandard" id="Parametres[@i].UniteStandard" class="kt-select w-100 js-example-basic-single" asp-items="@ViewBag.Codeunite">
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="flex flex-col gap-3">
+                                                <input name="Parametres[@i].ResultatSI" id="Parametres[@i].ResultatSI" class="kt-input w-100" />
+                                                <select name="Parametres[@i].UniteSI" id="Parametres[@i].UniteSI" class="kt-select w-100 js-example-basic-single" asp-items="@ViewBag.Codeunitesi">
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input name="Parametres[@i].FacteurConversion" id="Parametres[@i].FacteurConversion" class="kt-input w-100" />
+                                        </td>
+                                        <td>
+                                            <input type="number" name="Parametres[@i].OrdreAffichage" id="Parametres[@i].OrdreAffichage" class="kt-input w-100" />
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Onglet Valeurs de référence -->
+        <div id="content-references" class="tab-content hidden">
+            <div class="mb-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold">Valeurs de référence</h3>
+                    <div class="flex gap-3">
+                        <button type="button" id="addReference" class="kt-btn kt-btn-primary">+</button>
+                        <button type="button" id="removeReference" class="kt-btn kt-btn-secondary kt-btn-outline" style="background-color: #dc3545; color: white;">-</button>
+                    </div>
+                </div>
+                <div class="kt-scrollable-x-auto">
+                    <table class="kt-table table-auto kt-table-border min-w-full" id="referencesTable">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 50px !important; width: 10% !important;"><span class="kt-table-col-label font-bold">Sexe</span></th>
+                                <th style="min-width: 75px !important; width: 15% !important;"><span class="kt-table-col-label font-bold">Âge min</span></th>
+                                <th style="min-width: 75px !important; width: 15% !important;"><span class="kt-table-col-label font-bold">Âge max</span></th>
+                                <th style="min-width: 100px !important; width: 20% !important;"><span class="kt-table-col-label font-bold">Titre</span></th>
+                                <th style="min-width: 100px !important; width: 20% !important;"><span class="kt-table-col-label font-bold">Standard</span></th>
+                                <th style="min-width: 100px !important; width: 20% !important;"><span class="kt-table-col-label font-bold">SI</span></th>
+                            </tr>
+                        </thead>
+                        <tbody id="referencesTableBody">
+                            @if (Model.ValeursReference != null && Model.ValeursReference.Any())
+                            {
+                                for (int i = 0; i < Model.ValeursReference.Count; i++)
+                                {
+                                    <tr>
+                                        <td>
+                                            <div class="flex flex-col gap-3">
+                                                <select class="kt-select w-100 js-example-basic-single"
+                                                        name="ValeursReference[@i].Sexeautorisecode"
+                                                        id="ValeursReference[@i].Sexeautorisecode"
+                                                        asp-items="@ViewBag.Sexeautorisecode">
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="flex flex-col gap-3">
+                                                <input class="kt-input" type="number"
+                                                       name="ValeursReference[@i].Agedebut"
+                                                       id="ValeursReference[@i].Agedebut" />
+                                                <select class="kt-select w-100 js-example-basic-single"
+                                                        name="ValeursReference[@i].Codeunitagedebut"
+                                                        id="ValeursReference[@i].Codeunitagedebut"
+                                                        asp-items="@ViewBag.Codeunite">
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="flex flex-col gap-3">
+                                                <input class="kt-input" type="number"
+                                                       name="ValeursReference[@i].Agefin"
+                                                       id="ValeursReference[@i].Agefin" />
+                                                <select class="kt-select w-100 js-example-basic-single"
+                                                        name="ValeursReference[@i].Codeunitagefin"
+                                                        id="ValeursReference[@i].Codeunitagefin"
+                                                        asp-items="@ViewBag.Codeunite">
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="flex flex-col gap-3">
+                                                <input class="kt-input" type="text"
+                                                       name="ValeursReference[@i].Titre"
+                                                       id="ValeursReference[@i].Titre" />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="flex flex-col gap-3">
+                                                <div class="grid grid-cols-2 gap-5" style="row-gap:1rem;">
+                                                    <input class="kt-input" type="number"
+                                                           name="ValeursReference[@i].Referencefromvalue"
+                                                           id="ValeursReference[@i].Referencefromvalue" />
+                                                    <input class="kt-input" type="number"
+                                                           name="ValeursReference[@i].Referencetovalue"
+                                                           id="ValeursReference[@i].Referencetovalue" />
+                                                </div>
+                                                <select class="kt-select w-100 js-example-basic-single"
+                                                        name="ValeursReference[@i].Codeunitreference"
+                                                        id="ValeursReference[@i].Codeunitreference"
+                                                        asp-items="@ViewBag.Codeunite">
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="flex flex-col gap-3">
+                                                <div class="grid grid-cols-2 gap-5" style="row-gap:1rem;">
+                                                    <input class="kt-input" type="number"
+                                                           name="ValeursReference[@i].Referencefromvaluesi"
+                                                           id="ValeursReference[@i].Referencefromvaluesi" />
+                                                    <input class="kt-input" type="number"
+                                                           name="ValeursReference[@i].Referencetovaluesi"
+                                                           id="ValeursReference[@i].Referencetovaluesi" />
+                                                </div>
+                                                <select class="kt-select w-100 js-example-basic-single"
+                                                        name="ValeursReference[@i].Codeunitreferencesi"
+                                                        id="ValeursReference[@i].Codeunitreferencesi"
+                                                        asp-items="@ViewBag.Codeunitesi">
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Onglet Tarif assurance -->
+        <div id="content-tarifs" class="tab-content hidden">
+            <div class="mb-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold">Tarifs assurance</h3>
+                </div>
+                <div class="kt-scrollable-x-auto">
+                    <table class="kt-table table-auto kt-table-border min-w-full" id="tarifsTable">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 250px !important; width: 50% !important;"><span class="kt-table-col-label font-bold">Assurance</span></th>
+                                <th style="min-width: 250px !important; width: 50% !important;"><span class="kt-table-col-label font-bold">Prix</span></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tarifsTableBody">
+                            @if (Model.TarifsAssurance != null && Model.TarifsAssurance.Any())
+                            {
+                                var count = Model.TarifsAssurance.Count;
+                                for (int i = 0; i < count; i++)
+                                {
+                                    <tr>
+                                        <input type="hidden" asp-for="TarifsAssurance[@i].Codeassurance" />
+                                        <input type="hidden" asp-for="TarifsAssurance[@i].Nom" />
+                                        <td>
+                                            <span class="assurance-name">@Model.TarifsAssurance[i].Nom</span>
+                                        </td>
+                                        <td>
+                                            <input asp-for="TarifsAssurance[@i].Prix" class="kt-input w-100" type="number" />
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bouton d'enregistrement (commun à tous les onglets) -->
+        <div class="mt-6">
+            <div class="inline-flex justify-start grow">
+                <button type="submit" class="kt-btn kt-btn-primary">
+                    <span class="material-symbols-outlined">
+                        save
+                    </span> Enregistrer
+                </button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        const typeParametresOptions = @Html.Raw(Json.Serialize(ViewBag.TypeParametres));
+        const sexeOptions = @Html.Raw(Json.Serialize(ViewBag.Sexeautorisecode));
+        const codeUniteOptions = @Html.Raw(Json.Serialize(ViewBag.Codeunite));
+        const codeUniteSiOptions = @Html.Raw(Json.Serialize(ViewBag.Codeunitesi));
+    </script>
+
+    @* -------------------------- script pour parametre ------------------------------- *@
+
+    <script>
+        $(function() {
+
+            let parametreIndex = 0;
+
+            function generateSelectOptions(options) {
+                let html = '';
+                for (let i = 0; i < options.length; i++) {
+                    html += `<option value="${options[i].value}">${options[i].text}</option>`;
+                }
+                return html;
+            }
+
+            function reindexRowsParametre() {
+                $('#parametresTableBody tr').each(function (rowIndex, row) {
+                    $(row).find('input, select, textarea, label, div').each(function () {
+                        const $el = $(this);
+
+                        $.each(['name', 'id', 'for'], function (_, attr) {
+                            const val = $el.attr(attr);
+                            if (val && val.includes('Parametres[')) {
+                                const newVal = val.replace(/Parametres\[\d+\]/g, `Parametres[${rowIndex}]`);
+                                $el.attr(attr, newVal);
+                            }
+                        });
+
+                        // Ajuster l'id spécifique pour divValeur_#
+                        if ($el.attr('id') && $el.attr('id').startsWith('divValeur_')) {
+                            $el.attr('id', `divValeur_${rowIndex}`);
+                        }
+                        if ($el.attr('id') && $el.attr('id').startsWith('selectType_')) {
+                            $el.attr('id', `selectType_${rowIndex}`);
+                        }
+                    });
+                });
+
+                parametreIndex = $('#parametresTableBody tr').length;
+            }
+
+            function createParametreRow(index) {
+                return `
+                <tr>
+                    <td>
+                        <textarea class="kt-input w-100" name="Parametres[${index}].Nom" id="Parametres[${index}].Nom" placeholder="" style="height: 6em; line-height: 1.5em;"></textarea>
+                    </td>
+                    <td>
+                        <input name="Parametres[${index}].Code" id="Parametres[${index}].Code" class="kt-input w-100" />
+                    </td>
+                    <td class="text-center">
+                        <input type="checkbox" name="Parametres[${index}].Masquer" id="Parametres[${index}].Masquer" class="form-check-input" />
+                    </td>
+                    <td>
+                        <div class="flex flex-col gap-3">
+                            <div class="flex flex-col gap-3">
+                                <label class="kt-form-label text-mono" for="Parametres[${index}].Builder.Type">Type</label>
+                                <select id="selectType_${index}" name="Parametres[${index}].Builder.Type" class="kt-select w-100 js-example-basic-single">
+                                    ${generateSelectOptions(typeParametresOptions)}
+                                </select>
+                            </div>
+                            <div id="divValeur_${index}" class="flex flex-col gap-3" style="display: none;">
+                                <label class="kt-form-label text-mono" for="Parametres[${index}].Builder.Valeur">Valeur</label>
+                                <textarea class="kt-input w-100" name="Parametres[${index}].Builder.Valeur" id="Parametres[${index}].Builder.Valeur" placeholder="" style="height: 6em; line-height: 1.5em;"></textarea>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="flex flex-col gap-3">
+                            <input name="Parametres[${index}].ResultatStandard" id="Parametres[${index}].ResultatStandard" class="kt-input w-100" />
+                            <select name="Parametres[${index}].UniteStandard" id="Parametres[${index}].UniteStandard" class="kt-select w-100 js-example-basic-single">
+                                ${generateSelectOptions(codeUniteOptions)}
+                            </select>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="flex flex-col gap-3">
+                            <input name="Parametres[${index}].ResultatSI" id="Parametres[${index}].ResultatSI" class="kt-input w-100" />
+                            <select name="Parametres[${index}].UniteSI" id="Parametres[${index}].UniteSI" class="kt-select w-100 js-example-basic-single">
+                                ${generateSelectOptions(codeUniteSiOptions)}
+                            </select>
+                        </div>
+                    </td>
+                    <td>
+                        <input name="Parametres[${index}].FacteurConversion" id="Parametres[${index}].FacteurConversion" class="kt-input w-100" />
+                    </td>
+                    <td>
+                        <input type="number" name="Parametres[${index}].OrdreAffichage" id="Parametres[${index}].OrdreAffichage" class="kt-input w-100" />
+                    </td>
+                </tr>`;
+            }
+
+            // Add button
+            $('#addParametre').on('click', function () {
+                const newRow = createParametreRow(parametreIndex);
+                $('#parametresTableBody').append(newRow);
+
+                $('.js-example-basic-single').select2();
+
+                reindexRowsParametre();
+                handlerZoneBuilder();
+            });
+
+            // Remove button
+            $('#removeParametre').on('click', function () {
+                const $rows = $('#parametresTableBody tr');
+                if ($rows.length === 0) return;
+
+                $rows.last().remove();
+                reindexRowsParametre();
+                handlerZoneBuilder();
+            });
+
+            handlerZoneBuilder();
+
+            function handlerZoneBuilder() {
+                const parametreCount = $('#parametresTableBody tr').length;
+
+                for (let i = 0; i < parametreCount; i++) {
+
+                    console.log(i);
+
+                    $(`#selectType_${i}`).on('change', function() {
+
+                        var type = $(`#selectType_${i}`).val();
+
+                        console.log(type);
+                        console.log(i);
+
+                        if (type === 'Texte') {
+
+                            hideDivValeur(i);
+                        } else if (type === 'Liste') {
+
+                            showDivValeur(i);
+                        } else if (type === 'Formule') {
+
+                            showDivValeur(i);
+                        }
+                    })
+                    .trigger('change');
+                }
+            }
+
+            function showDivValeur(i) {
+                $(`#divValeur_${i}`).show();
+            }
+
+            function hideDivValeur(i) {
+                $(`#divValeur_${i}`).hide();
+            }
+
+        })
+    </script>
+
+    @* ----------------------------- script pour valeur reference ------------------------------- *@
+
+    <script>
+        $(function () {
+
+            let referenceIndex = 0;
+
+            function generateSelectOptions(options) {
+                let html = '';
+                for (let i = 0; i < options.length; i++) {
+                    html += `<option value="${options[i].value}">${options[i].text}</option>`;
+                }
+                return html;
+            }
+
+            function createValeurReferenceRow(i) {
+                const rowHtml = `
+                    <tr>
+                        <td>
+                            <div class="flex flex-col gap-3">
+                                <select class="kt-select w-100 js-example-basic-single"
+                                        name="ValeursReference[${i}].Sexeautorisecode"
+                                        id="ValeursReference[${i}].Sexeautorisecode">
+                                    ${generateSelectOptions(sexeOptions)}
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="flex flex-col gap-3">
+                                <input class="kt-input" type="number"
+                                       name="ValeursReference[${i}].Agedebut"
+                                       id="ValeursReference[${i}].Agedebut" />
+                                <select class="kt-select w-100 js-example-basic-single"
+                                        name="ValeursReference[${i}].Codeunitagedebut"
+                                        id="ValeursReference[${i}].Codeunitagedebut">
+                                    ${generateSelectOptions(codeUniteOptions)}
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="flex flex-col gap-3">
+                                <input class="kt-input" type="number"
+                                       name="ValeursReference[${i}].Agefin"
+                                       id="ValeursReference[${i}].Agefin" />
+                                <select class="kt-select w-100 js-example-basic-single"
+                                        name="ValeursReference[${i}].Codeunitagefin"
+                                        id="ValeursReference[${i}].Codeunitagefin">
+                                    ${generateSelectOptions(codeUniteOptions)}
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="flex flex-col gap-3">
+                                <input class="kt-input" type="text"
+                                       name="ValeursReference[${i}].Titre"
+                                       id="ValeursReference[${i}].Titre" />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="flex flex-col gap-3">
+                                <div class="grid grid-cols-2 gap-5" style="row-gap:1rem;">
+                                    <input class="kt-input" type="number"
+                                           name="ValeursReference[${i}].Referencefromvalue"
+                                           id="ValeursReference[${i}].Referencefromvalue" />
+                                    <input class="kt-input" type="number"
+                                           name="ValeursReference[${i}].Referencetovalue"
+                                           id="ValeursReference[${i}].Referencetovalue" />
+                                </div>
+                                <select class="kt-select w-100 js-example-basic-single"
+                                        name="ValeursReference[${i}].Codeunitreference"
+                                        id="ValeursReference[${i}].Codeunitreference">
+                                    ${generateSelectOptions(codeUniteOptions)}
+                                </select>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="flex flex-col gap-3">
+                                <div class="grid grid-cols-2 gap-5" style="row-gap:1rem;">
+                                    <input class="kt-input" type="number"
+                                           name="ValeursReference[${i}].Referencefromvaluesi"
+                                           id="ValeursReference[${i}].Referencefromvaluesi" />
+                                    <input class="kt-input" type="number"
+                                           name="ValeursReference[${i}].Referencetovaluesi"
+                                           id="ValeursReference[${i}].Referencetovaluesi" />
+                                </div>
+                                <select class="kt-select w-100 js-example-basic-single"
+                                        name="ValeursReference[${i}].Codeunitreferencesi"
+                                        id="ValeursReference[${i}].Codeunitreferencesi">
+                                    ${generateSelectOptions(codeUniteSiOptions)}
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+
+                return rowHtml;
+            }
+
+            function reindexRowsValeurReference() {
+                $('#referencesTableBody tr').each(function (rowIndex, row) {
+                    $(row).find('input, select').each(function () {
+                        const name = $(this).attr('name');
+                        if (!name) return;
+
+                        const newName = name.replace(/ValeursReference\[\d+\]/, `ValeursReference[${rowIndex}]`);
+                        $(this).attr('name', newName);
+                        $(this).attr('id', newName);
+                    });
+                });
+
+                referenceIndex = $('#referencesTableBody tr').length;
+            }
+
+            $('#removeReference').on('click', function () {
+                const $rows = $('#referencesTableBody tr');
+                if ($rows.length === 0) return;
+
+                // Supprime la dernière ligne
+                $rows.last().remove();
+
+                // Réindexe tous les champs
+                reindexRowsValeurReference();
+            });
+
+            document.getElementById('addReference').addEventListener('click', function () {
+                const i = referenceIndex;
+                const rowHtml = createValeurReferenceRow(i);
+
+                document.getElementById('referencesTableBody').insertAdjacentHTML('beforeend', rowHtml);
+
+                // Initialisation Select2 sur les nouveaux <select>
+                $('.js-example-basic-single').select2();
+
+                reindexRowsValeurReference();
+            });
+
+        });
+
+    </script>
+
+    <script>
+        $(document).ready(function() {
+
+            $('.js-example-basic-single').select2({
+                // theme: "classic",
+                width: '100%'
+            });
+
+            $('.js-example-basic-multiple').select2({
+                // theme: "classic",
+                width: '100%'
+            });
+
+            $('.summernote').summernote({
+                placeholder: '',
+                tabsize: 2,
+                height: 120,
+                toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+                ]
+            });
+
+            // Gestion des onglets
+            initializeTabs();
+            
+        });
+
+        // Fonction pour initialiser la navigation des onglets
+        function initializeTabs() {
+            $('.tab-button').click(function() {
+                const targetTab = $(this).attr('id').replace('tab-', 'content-');
+                
+                // Mettre à jour l'apparence des boutons d'onglets
+                $('.tab-button').removeClass('active border-primary text-primary')
+                    .addClass('border-transparent text-gray-500');
+                $(this).removeClass('border-transparent text-gray-500')
+                    .addClass('active border-primary text-primary');
+                
+                // Afficher/masquer le contenu des onglets
+                $('.tab-content').addClass('hidden');
+                $('#' + targetTab).removeClass('hidden');
+            });
+        }
+
+    </script>
+}

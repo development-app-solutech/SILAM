@@ -1,0 +1,49 @@
+@model ProlabWeb.Db.Country
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Country</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Countryisocode2" />
+            <div class="form-group">
+                <label asp-for="Countryisocode3" class="control-label"></label>
+                <input asp-for="Countryisocode3" class="form-control" />
+                <span asp-validation-for="Countryisocode3" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Currencycode" class="control-label"></label>
+                <input asp-for="Currencycode" class="form-control" />
+                <span asp-validation-for="Currencycode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Internetdomain" class="control-label"></label>
+                <input asp-for="Internetdomain" class="form-control" />
+                <span asp-validation-for="Internetdomain" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

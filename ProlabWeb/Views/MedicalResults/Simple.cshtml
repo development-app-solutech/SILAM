@@ -1,0 +1,72 @@
+@model ProlabWeb.Models.MedicalResultsViewModel
+
+@{
+    ViewData["Title"] = "Responsive Medical Results";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/css/responsive-datatable-simple.css" rel="stylesheet" />
+
+<div class="medical-results-dashboard">
+    
+    <!-- Statistics Cards -->
+    <div class="stats-grid">
+        <div class="stat-card yellow">
+            <h3>En Attente</h3>
+            <div class="stat-number">5</div>
+            <button class="stat-button">Plus d'infos</button>
+        </div>
+        <div class="stat-card green">
+            <h3>Résultats</h3>
+            <div class="stat-number">3</div>
+            <button class="stat-button">Plus d'infos</button>
+        </div>
+        <div class="stat-card purple">
+            <h3>Validations</h3>
+            <div class="stat-number">2</div>
+            <button class="stat-button">Plus d'infos</button>
+        </div>
+    </div>
+
+    <!-- Results Table -->
+    <div class="table-container">
+        <div class="table-header">
+            <h2 class="table-title">@Model.Title</h2>
+        </div>
+        
+        <table class="responsive-table">
+            <thead>
+                <tr>
+                    <th>Numéro demande</th>
+                    <th>Date</th>
+                    <th>Patient</th>
+                    <th>Prescripteur</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var result in Model.Results)
+                {
+                    <tr>
+                        <td>@result.NumeroCommande</td>
+                        <td>@result.Date</td>
+                        <td>
+                            <span class="patient-name">@result.Patient</span>
+                            @if (!string.IsNullOrEmpty(result.PatientId))
+                            {
+                                <span class="patient-id">@result.PatientId</span>
+                            }
+                        </td>
+                        <td>@result.Prescripteur</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Company Info -->
+    <div class="company-info">
+        @Model.CompanyInfo
+    </div>
+</div>
+
+<script src="~/js/simple-responsive-table.js"></script>

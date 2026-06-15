@@ -1,0 +1,66 @@
+@model ProlabWeb.Db.Methode
+
+@{
+    ViewData["Title"] = "Modifier une méthode";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="grid grid-cols-2 gap-5 mb-2">
+    <div>
+        <h1 class="font-bold">Modifier une méthode</h1>
+    </div>
+    <div class="text-end">
+        <a asp-action="Index" class="text-primary">Retour à la liste</a>
+    </div>
+</div>
+<div class="flex items-center gap-2 mb-4">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+<div class="min-w-full mb-5">
+    <form asp-action="Edit" method="post" class="flex flex-col gap-5">
+        @Html.AntiForgeryToken()
+        @if (!ViewData.ModelState.IsValid && ViewData.ModelState.Values.SelectMany(v => v.Errors).Any())
+        {
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <li>@error.ErrorMessage</li>
+                    }
+                </ul>
+            </div>
+        }
+        <div asp-validation-summary="ModelOnly" class="text-red-500"></div>
+
+        <!-- Champ Idmethode masqué - ne doit pas être modifié -->
+        <input type="hidden" asp-for="Idmethode" />
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div class="flex flex-col gap-5">
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Nom"></label>
+                    <input class="kt-input" asp-for="Nom" placeholder="Nom de la méthode" type="text">
+                    <span asp-validation-for="Nom" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Isactive"></label>
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" asp-for="Isactive" class="form-check-input" />
+                        <span class="text-sm text-gray-600">Méthode active</span>
+                    </div>
+                    <span asp-validation-for="Isactive" class="text-red-500"></span>
+                </div>
+            </div>
+            <div class="flex flex-col gap-5">
+                <!-- Colonne vide pour maintenir la cohérence du layout -->
+            </div>
+        </div>
+        <div class="inline-flex justify-start grow">
+            <button type="submit" class="kt-btn kt-btn-primary">
+                <span class="material-symbols-outlined">
+                    save
+                </span> Enregistrer
+            </button>
+        </div>
+    </form>
+</div>

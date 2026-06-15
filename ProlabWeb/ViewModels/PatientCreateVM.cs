@@ -1,0 +1,63 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ProlabWeb.ViewModels
+{
+    public class PatientCreateVM
+    {
+        [Required(ErrorMessage = "Le code patient est obligatoire.")]
+        [StringLength(50, ErrorMessage = "Le code patient ne peut pas dépasser 50 caractères.")]
+        [Display(Name = "Code patient")]
+        public string Code { get; set; } = null!;
+
+        [Display(Name = "Site")]
+        public string Codesite { get; set; } = null!;
+
+        public string Nom { get; set; } = null!;
+
+        [Display(Name = "Prénom")]
+        public string Prenom { get; set; } = null!;
+
+        [Display(Name = "Nom d'usage")]
+        public string? Nomusage { get; set; }
+
+        [Display(Name = "Sexe")]
+        public string Codesexe { get; set; } = null!;
+
+        [Display(Name = "Date de naissance")]
+        public DateTime? Datenaissance { get; set; }
+
+        [Range(0, 130, ErrorMessage = "L'âge doit être compris entre 0 et 130.")]
+        [Display(Name = "Âge")]
+        public int Age { get; set; }
+
+        [Display(Name = "Type de peau")]
+        public string? Codetypepeau { get; set; }
+
+        [Display(Name = "Type de document")]
+        public string Codetypedocumentidentite { get; set; } = null!;
+
+        [Display(Name = "Numéro de document")]
+        public string? Numerodocumentidentite { get; set; }
+
+        public string? Ville { get; set; }
+
+        public string? Quartier { get; set; }
+
+        [Display(Name = "Renseignements cliniques")]
+        public string? Renseignementclinique { get; set; }
+
+        [Display(Name = "Lieu de naissance")]
+        public string Lieunaissance { get; set; } = null!;
+
+        [Display(Name = "Téléphone")]
+        public string? Tel { get; set; }
+
+        public string? Adresse { get; set; }
+
+        public string? Email { get; set; }
+
+        public IFormFile? File { get; set; }
+
+        public string? Filename { get; set; }
+    }
+}

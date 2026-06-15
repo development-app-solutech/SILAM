@@ -1,0 +1,125 @@
+@using ProlabWeb.Helpers
+@model IEnumerable<ProlabWeb.ViewModels.PatientItem>
+
+@{
+    ViewData["Title"] = "Liste des patients";
+}
+
+<div class="grid grid-cols-2 gap-5">
+    <div><h1 class="font-bold">@ViewData["Title"]</h1></div>
+</div>
+<div class="flex items-center gap-2">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+
+<div class="min-w-full">
+    <div class="grid gap-5" data-kt-datatable="true" data-kt-datatable-page-size="10">
+        <div class="grid grid-cols-3 gap-5">
+            <div>
+                <label class="kt-input border-t border-primary">
+                    <span class="material-symbols-outlined">search</span>
+                    <input class="kt-input" placeholder="Recherche" type="text" data-kt-patient-table-filter="search">
+                </label>
+            </div>
+            <div></div>
+            <div class="inline-flex justify-end grow gap-5">
+                <a asp-action="Create" class="kt-btn kt-btn-primary">
+                    <span class="material-symbols-outlined">add</span> Nouvelle patient
+                </a>
+            </div>
+        </div>
+        <div class="kt-scrollable-x-auto">
+            <table id="kt_table_patient_index" class="kt-table table-auto kt-table-border">
+                <thead>
+                    <tr>
+                        <th class="w-[60px]"><input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-check="true" type="checkbox"></th>
+                        <th>Photo</th>
+                        <th>@Html.DisplayNameFor(m => m.First().Patient.Nom)</th>
+                        <th>@Html.DisplayNameFor(m => m.First().Patient.Prenom)</th>
+                        <th>@Html.DisplayNameFor(m => m.First().Patient.Code)</th>
+                        <th>Genre</th>
+                        <th>@Html.DisplayNameFor(m => m.First().Patient.Datenaissance)</th>
+                        <th>Âge</th>
+                        <th>Date de création</th>  <!-- Nouvelle colonne -->
+                        <th>Contact</th>
+                        <th>Résidence</th>
+                        <th class="w-[60px]"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-start"><input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true" type="checkbox" value="@item.Patient.Patientid"></td>
+                            <td>
+                                @{
+                                    var imgSrc = item.Photopatient != null
+                                    ? Utilities.ConvertByteArrayToBase64(item.Photopatient.Photo, item.Photopatient.Extension)
+                                    : "";
+                                }
+                            <img alt="" class="rounded-full size-9 shrink-0" src="@(!string.IsNullOrWhiteSpace(imgSrc) ? imgSrc : "/img/photo_patient_default.png")">
+                        </td>
+                        <td class="font-normal text-foreground">@item.Patient.Nom</td>
+                        <td class="font-normal text-foreground">@item.Patient.Prenom</td>
+                        <td class="font-normal text-foreground">@item.Patient.Code</td>
+                        <td class="font-normal text-foreground">@item.Patient.CodesexeNavigation.Value</td>
+                        <td class="font-normal text-foreground">
+                            @(item.Patient.Datenaissance != DateTime.MinValue ? item.Patient.Datenaissance.ToString("dd/MM/yyyy") : "N/A")
+                        </td>
+                        <td class="font-normal text-foreground">
+                            @(
+                                item.Patient.Age.ToString()
+                                ?? (item.Patient.Datenaissance != DateTime.MinValue
+                                    ? Utilities.CalculerAgeEnAnnee(item.Patient.Datenaissance).ToString()
+                                    : "N/A")
+                              )
+                        </td>
+                        <td class="font-normal text-foreground">
+                            @(
+                                                        item.Patient.Creationdate?.ToString("dd/MM/yyyy")
+                                                        ?? "N/A"
+                                                        )
+                        </td> 
+                        <td class="font-normal text-foreground">
+                            @string.Join(", ", new[] { item.Patient.Adresse, item.Patient.Tel, item.Patient.Email }.Where(s => !string.IsNullOrEmpty(s)))
+                        </td>
+                        <td class="font-normal text-foreground">
+                            @string.Join(", ", new[] { item.Patient.Ville, item.Patient.Quartier }.Where(s => !string.IsNullOrEmpty(s)))
+                        </td>
+                        <td class="text-center">
+                            <div class="kt-menu flex-inline" data-kt-menu="true">
+                                <div class="kt-menu-item kt-menu-item-dropdown" data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click">
+                                    <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
+                                        <i class="ki-filled ki-dots-vertical text-lg"></i>
+                                    </button>
+                                    <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]" data-kt-menu-dismiss="true">
+                                        <div class="kt-menu-item">
+                                            <a class="kt-menu-link" asp-action="Edit" asp-route-id="@item.Patient.Patientid">
+                                                <span class="kt-menu-icon"><i class="ki-filled ki-pencil"></i></span>
+                                                <span class="kt-menu-title">Modifier</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                                        }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function() {
+
+            KTPatientList.init();
+        });
+    </script>
+}

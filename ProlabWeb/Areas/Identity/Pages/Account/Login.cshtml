@@ -1,0 +1,89 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Connexion";
+    Layout = null;
+}
+
+<!--
+Product: Metronic is a toolkit of UI components built with Tailwind CSS for developing scalable web applications quickly and efficiently
+Version: v9.2.0
+Author: Keenthemes
+Contact: support@keenthemes.com
+Website: https://www.keenthemes.com
+Support: https://devs.keenthemes.com
+Follow: https://www.twitter.com/keenthemes
+License: https://keenthemes.com/metronic/tailwind/docs/getting-started/license
+-->
+<!DOCTYPE html>
+<html class="h-full" data-kt-theme="true" data-kt-theme-mode="light" dir="ltr" lang="fr">
+<head>
+    <title>@ViewData["Title"]</title>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="~/metronic/dist/assets/vendors/apexcharts/apexcharts.css" rel="stylesheet" />
+    <link href="~/metronic/dist/assets/vendors/keenicons/styles.bundle.css" rel="stylesheet" />
+    <link href="~/metronic/dist/assets/css/styles.css" rel="stylesheet" />
+    <link href="~/css/login-modern.css" rel="stylesheet" />
+</head>
+<body class="login-modern-bg">
+    <div class="login-container">
+        <div class="login-card">
+            <!-- Logo Section -->
+            <div class="login-logo">
+                <div class="logo-container">
+                    <img src="~/img/logo_solutech.jpg" alt="Solutech Logo" class="logo-image">
+                    <h1 class="app-title">SILAM</h1>
+                </div>
+                <div class="app-subtitle">Système de Gestion de Laboratoire</div>
+                <div class="access-notice">Accès réservé au Personnel</div>
+            </div>
+            
+            <!-- Login Form -->
+            <form method="post" class="login-form">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                
+                <div class="form-group">
+                    <input asp-for="Input.Email" 
+                           class="form-input" 
+                           placeholder="Nom d'utilisateur / Email" 
+                           autocomplete="username" 
+                           required />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group">
+                    <input asp-for="Input.Password" 
+                           type="password" 
+                           class="form-input" 
+                           placeholder="Mot de passe" 
+                           autocomplete="current-password" 
+                           required />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                
+                
+                <button type="submit" class="login-button" id="loginBtn">
+                    Connexion
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="login-footer">
+        <div>2025 © <a href="#">Solutech Informatique et Services</a></div>
+    </div>
+    
+    <!-- Loading Script -->
+    <script>
+        document.getElementById('loginBtn').addEventListener('click', function() {
+            this.classList.add('loading');
+            this.textContent = '';
+        });
+    </script>
+    <partial name="_ValidationScriptsPartial" />
+</body>
+</html>

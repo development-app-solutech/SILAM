@@ -1,0 +1,34 @@
+﻿@model ProlabWeb.Db.Categoriemateriel
+
+@{
+    ViewData["Title"] = "Détails de la catégorie de matériel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="grid grid-cols-2 gap-5 mb-2">
+    <div>
+        <h1 class="font-bold">Détails de la catégorie de matériel</h1>
+    </div>
+    <div class="text-end">
+        <a asp-action="Index" class="text-primary">Retour à la liste</a>
+    </div>
+</div>
+<div class="flex items-center gap-2 mb-4">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+<div class="min-w-full mb-5">
+    <dl class="row">
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Categoriematerielid)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Categoriematerielid)</dd>
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Nom)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Nom)</dd>
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Description)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Description)</dd>
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Isactive)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Isactive)</dd>
+    </dl>
+    <div class="flex justify-end mt-6 space-x-3">
+        <a asp-action="Edit" asp-route-id="@Model?.Categoriematerielid" class="kt-btn kt-btn-primary">Modifier</a>
+        <a asp-action="Index" class="kt-btn kt-btn-outline">Retour à la liste</a>
+    </div>
+</div>

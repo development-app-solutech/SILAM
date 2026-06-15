@@ -1,0 +1,84 @@
+@model IEnumerable<ProlabWeb.ViewModels.UtilisateurAvecLaboratoiresVM>
+
+@{
+    ViewData["Title"] = "Liste des utilisateurs laboratoire";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="grid grid-cols-2 gap-5">
+    <div>
+        <h1 class="font-bold">Liste des utilisateurs laboratoire</h1>
+    </div>
+</div>
+<div class="flex items-center gap-2">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+
+<div class="min-w-full">
+    <div class="grid gap-5" data-kt-datatable="true" data-kt-datatable-page-size="10">
+        <div class="grid grid-cols-3 gap-5">
+            <div>
+                <label class="kt-input border-t border-primary">
+                    <span class="material-symbols-outlined">search</span>
+                    <input class="kt-input" placeholder="Recherche" type="text" data-kt-utilisateurmanylaboratoire-table-filter="search">
+                </label>
+            </div>
+            <div></div>
+            <div class="inline-flex justify-end grow gap-5">
+                <a asp-action="Create" class="kt-btn kt-btn-primary">
+                    <span class="material-symbols-outlined">add</span> Nouvel utilisateur labo
+                </a>
+
+            </div>
+        </div>
+        <div class="overflow-x-auto">
+            <table id="kt_table_utilisateurmanylaboratoire_index" class="kt-table min-w-full">
+                <thead>
+                    <tr>
+                        <th><span class="kt-table-col-label">Utilisateur</span></th>
+                        <th class="border-l-2 border-primary"><span class="kt-table-col-label">Laboratoire</span></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model) {
+                    <tr>
+                        <td>@item.Utilisateur?.Nom</td>
+                        <td class="border-l-2 border-primary">@(string.Join(", ", item.Laboratoires.Select(x => x.Nom).ToList()))</td>
+                        <td>
+                            <div class="kt-menu flex-inline" data-kt-menu="true">
+                                <div class="kt-menu-item kt-menu-item-dropdown" data-kt-menu-item-offset="0, 10px" data-kt-menu-item-placement="bottom-end" data-kt-menu-item-placement-rtl="bottom-start" data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click">
+                                    <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
+                                        <i class="ki-filled ki-dots-vertical text-lg"></i>
+                                    </button>
+                                    <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]" data-kt-menu-dismiss="true">
+                                        <div class="kt-menu-item">
+                                            <a class="kt-menu-link" asp-action="Edit" asp-route-id="@item.Utilisateur.Utilisateurid">
+                                                <span class="kt-menu-icon">
+                                                    <i class="ki-filled ki-pencil"></i>
+                                                </span>
+                                                <span class="kt-menu-title">Modifier</span>
+                                            </a>
+                                        </div>
+                                        <div class="kt-menu-item">
+                                            <a class="kt-menu-link" asp-action="Details" asp-route-id="@item.Utilisateur.Utilisateurid">
+                                                <span class="kt-menu-icon">
+                                                    <i class="ki-filled ki-search-list"></i>
+                                                </span>
+                                                <span class="kt-menu-title">Détail</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/app/utilisateurmanylaboratoire/index.js"></script>
+}

@@ -1,0 +1,305 @@
+/* Dashboard Styles - Mobile First Responsive Design */
+
+/* Dashboard Container */
+.dashboard-container {
+    padding: 15px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+/* Title */
+.main-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.main-title h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+
+/* Cards Grid - Mobile First */
+.main-card {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin: 20px 0;
+    width: 100%;
+}
+
+/* Individual Card Styling */
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    border-radius: 12px;
+    gap: 15px;
+    color: white;
+    min-height: 140px;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+
+/* Card Background Colors */
+.card:nth-child(1) {
+    background: linear-gradient(135deg, #03A9F4, #0288D1);
+}
+
+.card:nth-child(2) {
+    background: linear-gradient(135deg, #FFEB3B, #FFC107);
+    color: #333 !important;
+}
+
+.card:nth-child(3) {
+    background: linear-gradient(135deg, #4CAF50, #388E3C);
+}
+
+.card:nth-child(4) {
+    background: linear-gradient(135deg, #9C27B0, #7B1FA2);
+}
+
+/* Card Header */
+.card-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-inner .card-label {
+    font-size: 16px;
+    font-weight: bold;
+    color: inherit;
+}
+
+.card:nth-child(2) .card-inner .card-label {
+    color: #333;
+}
+
+.card-inner .material-icons-outlined {
+    font-size: 40px;
+    color: inherit;
+    opacity: 0.8;
+}
+
+.card:nth-child(2) .card-inner .material-icons-outlined {
+    color: #333;
+}
+
+/* Card Number/Total */
+.card-total {
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+    color: inherit;
+    margin: 10px 0;
+}
+
+.card:nth-child(2) .card-total {
+    color: #333;
+}
+
+/* Card Info/Link */
+.card-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding-top: 10px;
+}
+
+.card-info a {
+    text-decoration: none;
+    font-size: 12px;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    transition: background 0.2s ease;
+}
+
+.card:nth-child(2) .card-info a {
+    color: #333;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.card-info a:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.card:nth-child(2) .card-info a:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.card-info .material-symbols-outlined {
+    font-size: 16px;
+    color: inherit;
+}
+
+/* Table Styling */
+.table-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 30px 0 20px 0;
+    color: #333;
+}
+
+.table-container {
+    overflow-x: auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+.results-table th,
+.results-table td {
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    text-align: left;
+    font-size: 14px;
+}
+
+.results-table th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+    color: #333;
+}
+
+.results-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    color: white;
+    font-weight: bold;
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.status-success {
+    background-color: #4CAF50;
+}
+
+.status-warning {
+    background-color: #FF9800;
+}
+
+.status-secondary {
+    background-color: #9E9E9E;
+}
+
+/* No Results */
+.no-results {
+    text-align: center;
+    padding: 40px 20px;
+    color: #888;
+    font-style: italic;
+}
+
+/* Responsive Breakpoints */
+
+/* Very Small Screens (up to 480px) */
+@media (max-width: 480px) {
+    .dashboard-container {
+        padding: 10px;
+    }
+    
+    .main-card {
+        gap: 12px;
+    }
+    
+    .card {
+        padding: 15px;
+        min-height: 120px;
+    }
+    
+    .card-inner .card-label {
+        font-size: 14px;
+    }
+    
+    .card-inner .material-icons-outlined {
+        font-size: 30px;
+    }
+    
+    .card-total {
+        font-size: 24px;
+    }
+    
+    .card-info a {
+        font-size: 11px;
+        padding: 4px 8px;
+    }
+}
+
+/* Small Screens (640px and up) */
+@media (min-width: 640px) {
+    .main-card {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .dashboard-container {
+        padding: 20px;
+    }
+}
+
+/* Medium Screens (768px and up) */
+@media (min-width: 768px) {
+    .card {
+        min-height: 160px;
+    }
+    
+    .card-total {
+        font-size: 40px;
+    }
+}
+
+/* Large Screens (1024px and up) */
+@media (min-width: 1024px) {
+    .main-card {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 25px;
+    }
+    
+    .dashboard-container {
+        padding: 25px;
+        max-width: calc(100vw - 300px);
+    }
+    
+    .card {
+        min-height: 180px;
+    }
+}
+
+/* Override any conflicting styles from other frameworks */
+.main-card.main-card.main-card {
+    display: grid !important;
+}
+
+.card.card.card {
+    display: flex !important;
+    flex-direction: column !important;
+}

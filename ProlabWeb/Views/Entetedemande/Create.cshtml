@@ -1,0 +1,748 @@
+@model ProlabWeb.ViewModels.EntetedemandeCreateVM
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+@section Styles {
+    <link href="~/css/form-modern.css" rel="stylesheet" />
+}
+
+<div class="page-header">
+    <h1 class="page-title">Création de demande d'analyse</h1>
+    <div>
+        <a asp-action="Index" class="back-link">Retour à la liste</a>
+    </div>
+</div>
+
+<div class="modern-form-container">
+    <form asp-action="Create" id="entetedemandeCreateForm" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-red-500"></div>
+        <input type="hidden" asp-for="Codesite" />
+        <input type="hidden" asp-for="Utilisateurid" />
+        
+        <!-- General Information Section -->
+        <div class="section-card">
+            <h3 class="section-title">Informations Générales</h3>
+            <div class="form-grid form-grid-3">
+                <div class="form-group">
+                    <label class="form-label" asp-for="Codesite">Site</label>
+                    <select class="form-select js-example-basic-single" asp-for="Codesite" asp-items="@ViewBag.Codesite" disabled>
+                    </select>
+                    <span asp-validation-for="Codesite" class="text-red-500"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" asp-for="Utilisateurid">Utilisateur</label>
+                    <select class="form-select js-example-basic-single" asp-for="Utilisateurid" asp-items="@ViewBag.Utilisateurid" disabled>
+                    </select>
+                    <span asp-validation-for="Utilisateurid" class="text-red-500"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" asp-for="Partenaireid">Partenaire</label>
+                    <select class="form-select js-example-basic-single" asp-for="Partenaireid" asp-items="@ViewBag.Partenaireid">
+                    </select>
+                    <span asp-validation-for="Partenaireid" class="text-red-500"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Patient Information Section -->
+        <div class="section-card" id="fieldsetPatient">
+            <h3 class="section-title patient">Informations Patient</h3>
+            <div id="divPatient">
+                <!-- Patient Selection -->
+                <div class="form-group">
+                    <label class="form-label" asp-for="Patientid">Patient</label>
+                    <select class="form-select js-example-basic-single" asp-for="Patientid" asp-items="@ViewBag.Patientid">
+                    </select>
+                    <span asp-validation-for="Patientid" class="text-red-500"></span>
+                </div>
+                
+                <!-- Patient Photo -->
+                <div class="photo-upload-section">
+                    <img class="photo-preview" src="~/img/photo_patient_default.png" id="imgImage" alt="Photo du patient" />
+                    <input type="file" asp-for="Patient.File" accept="image/*" style="display: none;" />
+                    <input type="text" asp-for="Patient.Filename" style="display: none;" />
+                    <div class="photo-buttons">
+                        <button type="button" class="btn-photo btn-photo-select" id="btnSelectImage">
+                            📷 Choisir une photo
+                        </button>
+                        <button type="button" class="btn-photo btn-photo-cancel" id="btnCancelImage">
+                            ❌ Annuler
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Patient Details -->
+                <div class="form-grid form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label" asp-for="Patient.Nom">Nom</label>
+                        <input class="form-input" asp-for="Patient.Nom" type="text">
+                        <span asp-validation-for="Patient.Nom" class="text-red-500"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" asp-for="Patient.Prenom">Prénom</label>
+                        <input class="form-input" asp-for="Patient.Prenom" type="text">
+                        <span asp-validation-for="Patient.Prenom" class="text-red-500"></span>
+                    </div>
+                </div>
+
+                <div class="form-grid form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label" asp-for="Patient.Code">Code Patient</label>
+                        <input class="form-input" asp-for="Patient.Code" type="text" readonly>
+                        <span asp-validation-for="Patient.Code" class="text-red-500"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" asp-for="Patient.Nomusage">Nom d'usage</label>
+                        <input class="form-input" asp-for="Patient.Nomusage" type="text">
+                        <span asp-validation-for="Patient.Nomusage" class="text-red-500"></span>
+                    </div>
+                </div>
+
+                <div class="form-grid form-grid-4">
+                    <div class="form-group">
+                        <label class="form-label" asp-for="Patient.Codesexe">Sexe</label>
+                        <select class="form-select js-example-basic-single" asp-for="Patient.Codesexe" asp-items="@ViewBag.Codesexe">
+                        </select>
+                        <span asp-validation-for="Patient.Codesexe" class="text-red-500"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" asp-for="Patient.Datenaissance">Date de naissance</label>
+                        <input class="form-input" asp-for="Patient.Datenaissance" type="date">
+                        <span asp-validation-for="Patient.Datenaissance" class="text-red-500"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" asp-for="Patient.Age">Âge</label>
+                        <input class="form-input" asp-for="Patient.Age" type="number" min="0" max="130">
+                        <span asp-validation-for="Patient.Age" class="text-red-500"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" asp-for="Patient.Codetypepeau">Type de peau</label>
+                        <select class="form-select js-example-basic-single" asp-for="Patient.Codetypepeau" asp-items="@ViewBag.Codetypepeau">
+                        </select>
+                        <span asp-validation-for="Patient.Codetypepeau" class="text-red-500"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" asp-for="Patient.Lieunaissance">Lieu de naissance</label>
+                    <input class="form-input" asp-for="Patient.Lieunaissance" type="text">
+                    <span asp-validation-for="Patient.Lieunaissance" class="text-red-500"></span>
+                </div>
+
+                <div class="form-grid form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label" asp-for="Patient.Codetypedocumentidentite">Type de document</label>
+                        <select class="form-select js-example-basic-single" asp-for="Patient.Codetypedocumentidentite" asp-items="@ViewBag.Codetypedocumentidentite">
+                        </select>
+                        <span asp-validation-for="Patient.Codetypedocumentidentite" class="text-red-500"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" asp-for="Patient.Numerodocumentidentite">N° de document</label>
+                        <input class="form-input" asp-for="Patient.Numerodocumentidentite" type="text">
+                        <span asp-validation-for="Patient.Numerodocumentidentite" class="text-red-500"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" asp-for="Patient.Adresse">Adresse</label>
+                    <input class="form-input" asp-for="Patient.Adresse" type="text">
+                    <span asp-validation-for="Patient.Adresse" class="text-red-500"></span>
+                </div>
+
+                <div class="form-grid form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label" asp-for="Patient.Tel">Téléphone</label>
+                        <input class="form-input" asp-for="Patient.Tel" type="tel">
+                        <span asp-validation-for="Patient.Tel" class="text-red-500"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" asp-for="Patient.Email">Email</label>
+                        <input class="form-input" asp-for="Patient.Email" type="email">
+                        <span asp-validation-for="Patient.Email" class="text-red-500"></span>
+                    </div>
+                </div>
+
+                <div class="form-grid form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label" asp-for="Patient.Ville">Ville</label>
+                        <input class="form-input" asp-for="Patient.Ville" type="text">
+                        <span asp-validation-for="Patient.Ville" class="text-red-500"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" asp-for="Patient.Quartier">Quartier</label>
+                        <input class="form-input" asp-for="Patient.Quartier" type="text">
+                        <span asp-validation-for="Patient.Quartier" class="text-red-500"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" asp-for="Patient.Renseignementclinique">Renseignements cliniques</label>
+                    <textarea class="form-textarea summernote" asp-for="Patient.Renseignementclinique"></textarea>
+                    <span asp-validation-for="Patient.Renseignementclinique" class="text-red-500"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analysis Section -->
+        <div class="section-card" id="fieldsetAnalyse">
+            <h3 class="section-title analyses">Analyses</h3>
+            <div class="form-group">
+                <label class="form-label" asp-for="IdsCategorie">Catégories d'analyses</label>
+                <select class="form-select js-example-basic-multiple" asp-for="IdsCategorie" asp-items="@ViewBag.IdsCategorie" multiple="multiple">
+                </select>
+                <span asp-validation-for="IdsCategorie" class="text-red-500"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label" asp-for="IdsAnalyse">Analyses</label>
+                <select class="form-select js-example-basic-multiple" asp-for="IdsAnalyse" asp-items="@ViewBag.IdsAnalyse" multiple="multiple">
+                </select>
+                <span asp-validation-for="IdsAnalyse" class="text-red-500"></span>
+            </div>
+            <div class="form-group text-end mb-0">
+                <strong id="analyseTotalDisplay">Net à payer: 0 FCFA</strong>
+            </div>
+        </div>
+
+        <!-- Insurance Section -->
+        <div class="section-card" id="fieldsetAssurance">
+            <h3 class="section-title insurance">Assurance</h3>
+            <div class="checkbox-group">
+                <input class="checkbox-input" asp-for="EstAssure" type="checkbox">
+                <label class="checkbox-label" asp-for="EstAssure">
+                    @Html.DisplayNameFor(model => model.EstAssure)
+                </label>
+            </div>
+            <div id="accordionAssurance" style="display: none;">
+                <div class="form-grid form-grid-2">
+                    <div class="form-group">
+                        <label class="form-label" asp-for="Codeassurance">Assurance</label>
+                        <select class="form-select js-example-basic-single" asp-for="Codeassurance" asp-items="@ViewBag.Codeassurance">
+                        </select>
+                        <span asp-validation-for="Codeassurance" class="text-red-500"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" asp-for="Policeassuranceid">Police d'assurance</label>
+                        <select class="form-select js-example-basic-single" asp-for="Policeassuranceid" asp-items="@ViewBag.Policeassuranceid">
+                        </select>
+                        <span asp-validation-for="Policeassuranceid" class="text-red-500"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prescriber Section -->
+        <div class="section-card" id="fieldsetPrescripteur">
+            <h3 class="section-title prescriber">Prescripteur</h3>
+            <div class="form-group">
+                <label class="form-label" asp-for="Prescripteurid">Prescripteur</label>
+                <select class="form-select js-example-basic-single" asp-for="Prescripteurid" asp-items="@ViewBag.Prescripteurid">
+                </select>
+                <span asp-validation-for="Prescripteurid" class="text-red-500"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label" asp-for="Prescripteur.Nom">Nom du prescripteur</label>
+                <input class="form-input" asp-for="Prescripteur.Nom" type="text">
+                <span asp-validation-for="Prescripteur.Nom" class="text-red-500"></span>
+            </div>
+            <div class="form-group">
+                <label class="form-label" asp-for="Prescripteur.Description">Description</label>
+                <textarea class="form-textarea summernote" asp-for="Prescripteur.Description"></textarea>
+                <span asp-validation-for="Prescripteur.Description" class="text-red-500"></span>
+            </div>
+            <div class="form-grid form-grid-2">
+                <div class="form-group">
+                    <label class="form-label" asp-for="Prescripteur.Adresse">Adresse</label>
+                    <input class="form-input" asp-for="Prescripteur.Adresse" type="text">
+                    <span asp-validation-for="Prescripteur.Adresse" class="text-red-500"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" asp-for="Prescripteur.Tel">Téléphone</label>
+                    <input class="form-input" asp-for="Prescripteur.Tel" type="tel">
+                    <span asp-validation-for="Prescripteur.Tel" class="text-red-500"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center">
+            <button id="boutonEnregistrer" type="submit" class="submit-button">
+                <span class="default-text">💾 Enregistrer la demande</span>
+                <span class="loading-text" style="display: none;">⏳ Enregistrement en cours...</span>
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function() {
+            var defaultImage = '/img/photo_patient_default.png';
+            var previewImage = document.querySelector('#imgImage');
+            var fileImage = document.querySelector('[name="Patient.File"]');
+            var filenameImage = document.querySelector('[name="Patient.Filename"]');
+            var choisirImage = document.querySelector('#btnSelectImage');
+            var annulerImage = document.querySelector('#btnCancelImage');
+
+            var patient = document.querySelector('[name="Patientid"]');
+            var estassure =  document.querySelector('[name="EstAssure"]');
+            var prescripteur = document.querySelector('[name="Prescripteurid"]');
+
+            var divPatient = document.querySelector('#divPatient');
+            var fieldsetAssurance = document.querySelector('#fieldsetAssurance');
+            var fieldsetPrescripteur = document.querySelector('#fieldsetPrescripteur');
+
+            var form = document.querySelector('#entetedemandeCreateForm');
+            var submitButton = document.querySelector('#boutonEnregistrer');
+
+            function setDefaultImage() {
+                $(previewImage).attr('src', defaultImage);
+                $(fileImage).val('');
+                $(filenameImage).val('');
+            }
+
+            function resetPatient() {
+                let selectionne = $(patient).val().trim() !== '';
+                setDefaultImage();
+                $(divPatient).find('input').val('');
+                $(divPatient).find('select').not('[name="Patientid"]').val(null).trigger('change');
+                $(divPatient).find('textarea[name="Patient.Renseignementclinique"]').summernote('code', '');
+            }
+            function togglePatient() {
+                let selectionne = $(patient).val().trim() !== '';
+                $(divPatient).find('input').prop('disabled', selectionne);
+                $(divPatient).find('button').prop('disabled', selectionne);
+                $(divPatient).find('select').not('[name="Patientid"]').prop('disabled', selectionne);
+                $(divPatient).find('textarea[name="Patient.Renseignementclinique"]').summernote(selectionne ? 'disable' : 'enable');
+            }
+
+            function resetAssurance() {
+                let coche = $(estassure).is(':checked');
+                $(fieldsetAssurance).find('select').val(null).trigger('change');
+            }
+            function toggleAssurance() {
+                let coche = $(estassure).is(':checked');
+                $(fieldsetAssurance).find('select').prop('disabled', !coche);
+                if (coche) {
+                    $('#accordionAssurance').slideDown();
+                } else {
+                    $('#accordionAssurance').slideUp();
+                }
+            }
+
+            function resetPrescripteur() {
+                let selectionne = $(prescripteur).val().trim() !== '';
+                $(fieldsetPrescripteur).find('input').val('');
+                $(fieldsetPrescripteur).find('textarea[name="Prescripteur.Description"]').summernote('code', '');
+            }
+            function togglePrescripteur() {
+                let selectionne = $(prescripteur).val().trim() !== '';
+                $(fieldsetPrescripteur).find('input').prop('disabled', selectionne);
+                $(fieldsetPrescripteur).find('textarea[name="Prescripteur.Description"]').summernote(selectionne ? 'disable' : 'enable');
+            }
+
+            togglePatient();
+            toggleAssurance();
+            togglePrescripteur();
+
+            // Initialize patient code on page load if creating a new patient
+            if (!$(patient).val() || $(patient).val().trim() === '') {
+                $('[name="Patient.Code"]').val(Date.now());
+            }
+
+            function clearValidationErrors() {
+                document.querySelectorAll('.validation-error').forEach(el => el.remove());
+            }
+
+            function showValidationError(input, message) {
+                const errorSpan = document.createElement('span');
+                errorSpan.className = 'validation-error';
+                errorSpan.style.color = 'red';
+                errorSpan.textContent = message;
+                input.insertAdjacentElement('afterend', errorSpan);
+            }
+
+            function normalizeDateForInput(dateValue) {
+                if (!dateValue) return '';
+
+                // Already in HTML date format (yyyy-MM-dd)
+                if (/^\d{4}-\d{2}-\d{2}$/.test(dateValue)) {
+                    return dateValue;
+                }
+
+                // ISO date-time or similar (yyyy-MM-ddTHH:mm:ss)
+                if (/^\d{4}-\d{2}-\d{2}T/.test(dateValue)) {
+                    return dateValue.substring(0, 10);
+                }
+
+                // Common French format (dd/MM/yyyy)
+                const frMatch = dateValue.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+                if (frMatch) {
+                    return `${frMatch[3]}-${frMatch[2]}-${frMatch[1]}`;
+                }
+
+                // Last fallback: native parser
+                const parsed = new Date(dateValue);
+                if (!isNaN(parsed.getTime())) {
+                    const year = parsed.getFullYear();
+                    const month = String(parsed.getMonth() + 1).padStart(2, '0');
+                    const day = String(parsed.getDate()).padStart(2, '0');
+                    return `${year}-${month}-${day}`;
+                }
+
+                return '';
+            }
+
+            function calculerAgeDepuisDate(dateStr) {
+                if (!dateStr) return '';
+
+                const birthDate = new Date(dateStr);
+                if (isNaN(birthDate.getTime())) return '';
+
+                const today = new Date();
+                let age = today.getFullYear() - birthDate.getFullYear();
+                const monthDiff = today.getMonth() - birthDate.getMonth();
+
+                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+
+                if (age < 0) return '';
+                return age;
+            }
+
+            function extractPriceFromOptionText(optionText) {
+                if (!optionText) return 0;
+
+                // Format attendu: "Nom (12 000)" ; on récupère la valeur entre parenthèses.
+                const match = optionText.match(/\(([^)]+)\)\s*$/);
+                if (!match) return 0;
+
+                const digitsOnly = match[1].replace(/[^\d]/g, '');
+                const parsed = parseInt(digitsOnly, 10);
+                return Number.isNaN(parsed) ? 0 : parsed;
+            }
+
+            function sumSelectedOptions(selectName) {
+                let total = 0;
+                $(`[name="${selectName}"] option:selected`).each(function () {
+                    const optionValue = $(this).val();
+                    if (!optionValue) return;
+                    total += extractPriceFromOptionText($(this).text());
+                });
+                return total;
+            }
+
+            function getSelectedGuids(selectName) {
+                return $(`[name="${selectName}"]`).val() || [];
+            }
+
+            function formatFcfa(value) {
+                const amount = Number(value) || 0;
+                return `${Math.round(amount).toLocaleString('fr-FR')} FCFA`;
+            }
+
+            function updateAnalyseTotalLocalFallback() {
+                const totalCategories = sumSelectedOptions('IdsCategorie');
+                const totalAnalyses = sumSelectedOptions('IdsAnalyse');
+                const net = totalCategories + totalAnalyses;
+                $('#analyseTotalDisplay').text(`Net à payer: ${formatFcfa(net)}`);
+            }
+
+            let totalPreviewRequestVersion = 0;
+
+            async function updateAnalyseTotal() {
+                const requestVersion = ++totalPreviewRequestVersion;
+                const antiForgeryToken = $('[name="__RequestVerificationToken"]').val();
+
+                const payload = {
+                    idsCategorie: getSelectedGuids('IdsCategorie'),
+                    idsAnalyse: getSelectedGuids('IdsAnalyse'),
+                    estAssure: $(estassure).is(':checked'),
+                    policeassuranceid: $('[name="Policeassuranceid"]').val() || null
+                };
+
+                if (payload.idsCategorie.length === 0 && payload.idsAnalyse.length === 0) {
+                    $('#analyseTotalDisplay').text('Net à payer: 0 FCFA');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/Entetedemande/CalculateNetPreview', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'RequestVerificationToken': antiForgeryToken
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (requestVersion !== totalPreviewRequestVersion) {
+                        return;
+                    }
+
+                    if (!response.ok) {
+                        updateAnalyseTotalLocalFallback();
+                        return;
+                    }
+
+                    const result = await response.json();
+                    if (!result || !result.success || !result.data) {
+                        updateAnalyseTotalLocalFallback();
+                        return;
+                    }
+
+                    const netAPayer = result.data.netAPayer ?? 0;
+                    $('#analyseTotalDisplay').text(`Net à payer: ${formatFcfa(netAPayer)}`);
+                } catch (error) {
+                    console.error('Erreur lors du calcul du net à payer:', error);
+                    if (requestVersion === totalPreviewRequestVersion) {
+                        updateAnalyseTotalLocalFallback();
+                    }
+                }
+            }
+
+            $(patient).on('change', function() {
+                let id = $(this).val();
+                if (!id || id.trim() === '') {
+                    resetPatient();
+                    let timestamp = Date.now();
+                    $('[name="Patient.Code"]').val(timestamp);
+                    togglePatient();
+                    return;
+                }
+                $.ajax({
+                    url: `/Patient/GetPatient?id=${id}`,
+                    type: 'GET',
+                    dataType: 'json',
+                    beforeSend: function() {
+                        resetPatient();
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            let data = JSON.parse(response.data);
+                            $('[name="Patient.Nom"]').val(data.Nom);
+                            $('[name="Patient.Prenom"]').val(data.Prenom);
+                            $('[name="Patient.Code"]').val(data.Code);
+                            $('[name="Patient.Nomusage"]').val(data.Nomusage);
+                            $('[name="Patient.Codesexe"]').val(data.Codesexe).trigger('change');
+                            $('[name="Patient.Codetypepeau"]').val(data.Codetypepeau).trigger('change');
+                            const normalizedDate = normalizeDateForInput(data.Datenaissance);
+                            $('[name="Patient.Datenaissance"]').val(normalizedDate);
+                            if (data.Age !== null && data.Age !== undefined && data.Age !== '') {
+                                $('[name="Patient.Age"]').val(data.Age);
+                            } else {
+                                const age = calculerAgeDepuisDate(normalizedDate);
+                                $('[name="Patient.Age"]').val(age);
+                            }
+                            $('[name="Patient.Lieunaissance"]').val(data.Lieunaissance);
+                            $('[name="Patient.Codetypedocumentidentite"]').val(data.Codetypedocumentidentite).trigger('change');
+                            $('[name="Patient.Numerodocumentidentite"]').val(data.Numerodocumentidentite);
+                            $('[name="Patient.Adresse"]').val(data.Adresse);
+                            $('[name="Patient.Tel"]').val(data.Tel);
+                            $('[name="Patient.Email"]').val(data.Email);
+                            $('[name="Patient.Ville"]').val(data.Ville);
+                            $('[name="Patient.Quartier"]').val(data.Quartier);
+                            $('[name="Patient.Renseignementclinique"]').summernote('code', data.Renseignementclinique);
+                            $(previewImage).attr('src', data.PhotoBase64);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Request failed:', status, error);
+                    },
+                    complete: function(xhr, status) {
+                        togglePatient();
+                    }
+                });
+            });
+
+            $(estassure).on('change', function() {
+                resetAssurance();
+                toggleAssurance();
+                updateAnalyseTotal();
+            });
+
+            $('[name="Codeassurance"]').on('change', function() {
+                let id = $(this).val();
+                $.ajax({
+                    url: `/Policeassurance/GetPoliceassuranceByAssurance?id=${id}`,
+                    type: 'GET',
+                    dataType: 'json',
+                    beforeSend: function() {
+                        $('[name="Policeassuranceid"]').empty();
+                        $('[name="Policeassuranceid"]').append('<option value="">---</option>');
+                        updateAnalyseTotal();
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            let parsedData = JSON.parse(response.data);
+                            let policies = parsedData.policies;
+                            
+                            // Populate police dropdown
+                            $.each(policies, function(index, value) {
+                                $('[name="Policeassuranceid"]').append(`<option value="${value.Value}">${value.Text}</option>`);
+                            });
+                            
+                            // If only one policy, auto-select it
+                            if (policies.length === 1) {
+                                $('[name="Policeassuranceid"]').val(policies[0].Value).trigger('change');
+                            } else {
+                                updateAnalyseTotal();
+                            }
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Request failed:', status, error);
+                        updateAnalyseTotal();
+                    }
+                });
+            });
+
+            $('[name="Policeassuranceid"]').on('change', updateAnalyseTotal);
+
+            $(prescripteur).on('change', function() {
+                let id = $(this).val();
+                $.ajax({
+                    url: `/Prescripteur/GetPrescripteur?id=${id}`,
+                    type: 'GET',
+                    dataType: 'json',
+                    beforeSend: function() {
+                        resetPrescripteur();
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            let data = JSON.parse(response.data);
+                            $('[name="Prescripteur.Nom"]').val(data.Nom);
+                            $('[name="Prescripteur.Description"]').summernote('code', data.Description);
+                            $('[name="Prescripteur.Adresse"]').val(data.Adresse);
+                            $('[name="Prescripteur.Tel"]').val(data.Tel);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Request failed:', status, error);
+                    },
+                    complete: function(xhr, status) {
+                        togglePrescripteur();
+                    }
+                });
+            });
+
+
+
+            $(choisirImage).on('click', function(e) {
+                e.preventDefault();
+                $(fileImage).click();
+            });
+
+            $(fileImage).on('change', function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        $(previewImage).attr('src', e.target.result);
+                        $(filenameImage).val(file.name);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            $(previewImage).on('error', function () {
+                setDefaultImage();
+            });
+
+            $(annulerImage).on('click', function (e) {
+                e.preventDefault();
+                setDefaultImage();
+            });
+
+            $('.js-example-basic-single').select2({
+                width: '100%'
+            });
+
+            $('.js-example-basic-multiple').select2({
+                width: '100%',
+                templateResult: function(data) {
+                    // Display with price in dropdown
+                    if (!data.id) return data.text; // For placeholder
+                    return data.text; // Already includes price from controller
+                },
+                templateSelection: function(data) {
+                    // Display with price in selected tag
+                    if (!data.id) return data.text; // For placeholder
+                    return data.text; // Already includes price from controller
+                }
+            });
+
+            $('[name="IdsCategorie"], [name="IdsAnalyse"]').on('change', updateAnalyseTotal);
+            updateAnalyseTotal();
+
+            $('[name="Patient.Datenaissance"]').on('change', function() {
+                const age = calculerAgeDepuisDate($(this).val());
+                if (age !== '') {
+                    $('[name="Patient.Age"]').val(age);
+                }
+            });
+
+            $('.summernote').summernote({
+                placeholder: '',
+                tabsize: 2,
+                height: 120,
+                toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+                ]
+            });
+
+            // Loader seulement si formulaire valide côté client
+            function resetSubmitButton() {
+                $(submitButton).prop('disabled', false);
+                $(submitButton).find('.default-text').show();
+                $(submitButton).find('.loading-text').hide();
+            }
+
+            $(form).on('submit', function(e) {
+                // Si jQuery Validate est chargé et que le form est invalide => pas de loader
+                if (typeof $(form).valid === 'function' && !$(form).valid()) {
+                    resetSubmitButton();
+                    return; // Laisser la validation afficher les erreurs, ne pas activer le loader
+                }
+                if ($(submitButton).prop('disabled')) {
+                    e.preventDefault();
+                    return false;
+                }
+                $(submitButton).prop('disabled', true);
+                $(submitButton).find('.default-text').hide();
+                $(submitButton).find('.loading-text').show();
+                setTimeout(function() {
+                    if ($(submitButton).prop('disabled')) {
+                        resetSubmitButton();
+                    }
+                }, 25000);
+            });
+
+            $(form).on('invalid-form.validate', function () {
+                resetSubmitButton();
+            });
+
+            if ($('.text-red-500').length > 0 || $('[asp-validation-summary]').find('ul').length > 0) {
+                resetSubmitButton();
+            }
+
+            $(submitButton).on('click', function(e) {
+                if ($(this).prop('disabled')) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        });
+    </script>
+}

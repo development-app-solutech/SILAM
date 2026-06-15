@@ -1,0 +1,89 @@
+@model ProlabWeb.ViewModels.PrelevementEditVM
+
+@{
+    ViewData["Title"] = "Modifier un prélèvement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="grid grid-cols-2 gap-5 mb-2">
+    <div>
+        <h1 class="font-bold">Modifier un prélèvement</h1>
+    </div>
+    <div class="text-end">
+        <a asp-action="Index" class="text-primary">Retour à la liste</a>
+    </div>
+</div>
+<div class="flex items-center gap-2 mb-4">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+<div class="min-w-full mb-5">
+    <form asp-action="Edit" method="post" class="flex flex-col gap-5">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Prelevementid" />
+        @if (!ViewData.ModelState.IsValid && ViewData.ModelState.Values.SelectMany(v => v.Errors).Any())
+        {
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <li>@error.ErrorMessage</li>
+                    }
+                </ul>
+            </div>
+        }
+        <div asp-validation-summary="ModelOnly" class="text-red-500"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div class="flex flex-col gap-5">
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Detaildemandeid"></label>
+                    <select class="kt-input" asp-for="Detaildemandeid" asp-items="@(ViewData["Detaildemandeid"] as IEnumerable<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>)">
+                        <option value="">-- Sélectionner le patient --</option>
+                    </select>
+                    <span asp-validation-for="Detaildemandeid" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Preleveurid"></label>
+                    <select class="kt-input" asp-for="Preleveurid" asp-items="@(ViewData["Preleveurid"] as IEnumerable<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>)">
+                        <option value="">-- Sélectionner le préleveur --</option>
+                    </select>
+                    <span asp-validation-for="Preleveurid" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Idnatureechantillon"></label>
+                    <select class="kt-input" asp-for="Idnatureechantillon" asp-items="@(ViewData["Idnatureechantillon"] as IEnumerable<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>)">
+                        <option value="">-- Sélectionner la nature d'échantillon --</option>
+                    </select>
+                    <span asp-validation-for="Idnatureechantillon" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Date"></label>
+                    <input class="kt-input" asp-for="Date" placeholder="Date de prélèvement" type="datetime-local">
+                    <span asp-validation-for="Date" class="text-red-500"></span>
+                </div>
+            </div>
+            <div class="flex flex-col gap-5">
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Statut"></label>
+                    <input class="kt-input" asp-for="Statut" placeholder="Statut" type="text">
+                    <span asp-validation-for="Statut" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Datereception"></label>
+                    <input class="kt-input" asp-for="Datereception" placeholder="Date de réception" type="datetime-local">
+                    <span asp-validation-for="Datereception" class="text-red-500"></span>
+                </div>
+            </div>
+        </div>
+        <div class="inline-flex justify-start grow">
+            <button type="submit" class="kt-btn kt-btn-primary">
+                <span class="material-symbols-outlined">
+                    save
+                </span> Enregistrer
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

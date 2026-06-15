@@ -1,0 +1,83 @@
+@model ProlabWeb.Db.Enteteresultat
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="grid grid-cols-2 gap-5">
+    <div>
+        <h1 class="font-bold">Supprimer l'entête de résultat</h1>
+    </div>
+</div>
+<div class="flex items-center gap-2">
+    <span class="border-t border-border border-primary w-full">
+    </span>
+</div>
+
+<div class="grid gap-5">
+    <div class="kt-card">
+        <div class="kt-card-body">
+            <div class="alert alert-warning">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-warning">
+                        warning
+                    </span>
+                    <span class="font-semibold">Êtes-vous sûr de vouloir supprimer cet entête de résultat ?</span>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
+                <div class="kt-form-group">
+                    <label class="kt-form-label font-semibold">@Html.DisplayNameFor(model => model.Enteteresultatid)</label>
+                    <div class="kt-form-control-static">@Html.DisplayFor(model => model.Enteteresultatid)</div>
+                </div>
+                
+                <div class="kt-form-group">
+                    <label class="kt-form-label font-semibold">@Html.DisplayNameFor(model => model.Entetedemande)</label>
+                    <div class="kt-form-control-static">@Html.DisplayFor(model => model.Entetedemande.Entetedemandeid)</div>
+                </div>
+                
+                <div class="kt-form-group">
+                    <label class="kt-form-label font-semibold">@Html.DisplayNameFor(model => model.IdanalyseNavigation)</label>
+                    <div class="kt-form-control-static">@Html.DisplayFor(model => model.IdanalyseNavigation.Nom)</div>
+                </div>
+                
+                <div class="kt-form-group">
+                    <label class="kt-form-label font-semibold">@Html.DisplayNameFor(model => model.Date)</label>
+                    <div class="kt-form-control-static">@Html.DisplayFor(model => model.Date)</div>
+                </div>
+                
+                <div class="kt-form-group">
+                    <label class="kt-form-label font-semibold">@Html.DisplayNameFor(model => model.CodesiteNavigation)</label>
+                    <div class="kt-form-control-static">@Html.DisplayFor(model => model.CodesiteNavigation.Name)</div>
+                </div>
+                
+                <div class="kt-form-group">
+                    <label class="kt-form-label font-semibold">@Html.DisplayNameFor(model => model.Technicien)</label>
+                    <div class="kt-form-control-static">@Html.DisplayFor(model => model.Technicien.Nom)</div>
+                </div>
+            </div>
+            
+            <div class="kt-form-group">
+                <label class="kt-form-label font-semibold">@Html.DisplayNameFor(model => model.Interpretation)</label>
+                <div class="kt-form-control-static">@Html.DisplayFor(model => model.Interpretation)</div>
+            </div>
+            
+            <form asp-action="Delete" class="mt-5">
+                <input type="hidden" asp-for="Enteteresultatid" />
+                <div class="flex gap-3">
+                    <button type="submit" class="kt-btn kt-btn-danger">
+                        <span class="material-symbols-outlined">
+                            delete
+                        </span> Supprimer
+                    </button>
+                    <a asp-action="Index" class="kt-btn kt-btn-secondary">
+                        <span class="material-symbols-outlined">
+                            arrow_back
+                        </span> Retour à la liste
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> 

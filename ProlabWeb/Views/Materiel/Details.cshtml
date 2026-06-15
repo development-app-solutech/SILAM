@@ -1,0 +1,32 @@
+﻿@model ProlabWeb.Db.Materiel
+
+@{
+    ViewData["Title"] = "Détail matériel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="grid grid-cols-2 gap-5 mb-5">
+    <div>
+        <h1 class="font-bold">Détail matériel</h1>
+    </div>
+    <div class="text-end">
+        <a asp-action="Index" class="text-primary">Retour à la liste</a>
+    </div>
+</div>
+<div class="flex items-center gap-2 mb-5">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+<div class="min-w-full mb-5">
+    <div class="kt-card p-5">
+        <dl class="grid grid-cols-2 gap-5">
+            <dt class="font-semibold">Nom</dt>
+            <dd>@Model.Nom</dd>
+            <dt class="font-semibold">Description</dt>
+            <dd>@Model.Description</dd>
+        </dl>
+        <div class="flex gap-3 mt-5">
+            <a asp-action="Edit" asp-route-id="@Model?.Materielid" class="kt-btn kt-btn-warning">Modifier</a>
+            <a asp-action="Index" class="kt-btn kt-btn-secondary">Retour à la liste</a>
+        </div>
+    </div>
+</div>

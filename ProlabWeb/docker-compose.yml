@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  prolabweb:
+    build: .
+    image: prolabweb:latest
+    container_name: prolabweb
+    ports:
+      - "8081:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
+    restart: unless-stopped

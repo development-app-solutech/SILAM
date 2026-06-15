@@ -1,0 +1,356 @@
+@using System.Globalization
+@model IEnumerable<ProlabWeb.Db.Analyse>
+
+@{
+    ViewData["Title"] = "Analyses";
+
+    var cultureFr = new CultureInfo("fr-FR");
+}
+
+@*<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Codeparametre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Aliascodeautomate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Avecautomate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Formuleautomate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Affichermachineresultat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Decimalresultatstandard)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Decimalresultatsi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Affichermethodresultat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Commentaire)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Accredite)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prix)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Isactive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Facteurconversionsi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ordreaffichage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Indicederev)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Codification)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodeuniteNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodeunitesiNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdanalyseparentNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdautomateNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdlaboratoireNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdnatureechantillonNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Codeparametre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aliascodeautomate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Avecautomate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Formuleautomate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Affichermachineresultat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Decimalresultatstandard)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Decimalresultatsi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Affichermethodresultat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Commentaire)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Accredite)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prix)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Isactive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Facteurconversionsi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ordreaffichage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Indicederev)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Codification)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodeuniteNavigation.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodeunitesiNavigation.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdanalyseparentNavigation.Idanalyse)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdautomateNavigation.Idautomate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdlaboratoireNavigation.Idlaboratoire)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdnatureechantillonNavigation.Idnatureechantillon)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Idanalyse">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Idanalyse">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Idanalyse">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+ *@
+
+<div class="grid grid-cols-2 gap-5">
+    <div>
+        <h1 class="font-bold">Liste des analyses</h1>
+    </div>
+</div>
+<div class="flex items-center gap-2">
+    <span class="border-t border-border border-primary w-full">
+    </span>
+</div>
+
+<div class="min-w-full">
+    <div class="grid gap-5" data-kt-datatable="true" data-kt-datatable-page-size="10">
+        <div class="grid grid-cols-3 gap-5">
+            <div>
+                <label class="kt-input border-t border-primary">
+                    <span class="material-symbols-outlined">
+                        search
+                    </span>
+                    <input class="kt-input" placeholder="Recherche" type="text" data-kt-analyse-table-filter="search">
+                </label>
+            </div>
+            <div></div>
+            <div class="inline-flex justify-end grow gap-5">
+                <a asp-action="Create" class="kt-btn kt-btn-primary">
+                    <span class="material-symbols-outlined">
+                        add
+                    </span> Nouvelle analyse
+                </a>
+
+            </div>
+        </div>
+        <div class="kt-scrollable-x-auto">
+            <table id="kt_table_analyse_index" class="kt-table table-auto kt-table-border">
+                <thead>
+                    <tr>
+                        <th class="w-[60px]">
+                            <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-check="true" type="checkbox">
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">
+                                    @Html.DisplayNameFor(model => model.Codeparametre)
+                                </span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">
+                                    @Html.DisplayNameFor(model => model.Nom)
+                                </span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">
+                                    @Html.DisplayNameFor(model => model.Aliascodeautomate)
+                                </span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">
+                                    @Html.DisplayNameFor(model => model.Prix)
+                                </span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">
+                                    @Html.DisplayNameFor(model => model.Isactive)
+                                </span>
+                            </span>
+                        </th>
+                        <th class="w-[60px]">
+                        </th>
+                    </tr>
+                </thead>
+
+                <div id="kt_spinner_analyse_index" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="display: none;">
+                    <div class="kt-datatable-loading">
+                        <svg class="animate-spin -ml-1 h-5 w-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Loading...
+                    </div>
+                </div>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-start">
+                                <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true" type="checkbox" value="1">
+                            </td>
+                            <td class="font-normal text-foreground">
+                                @Html.DisplayFor(modelItem => item.Codeparametre)
+                            </td>
+                            <td class="font-normal text-foreground">
+                                @Html.DisplayFor(modelItem => item.Nom)
+                            </td>
+                            <td class="font-normal text-foreground">
+                                @Html.DisplayFor(modelItem => item.Aliascodeautomate)
+                            </td>
+                            <td class="font-normal text-foreground">
+                                <p>@Math.Floor(item.Prix).ToString("N0", cultureFr)</p>
+                            </td>
+                            <td class="">
+                                @if (item.Isactive)
+                                {
+                                    <span class="kt-badge kt-badge-success kt-badge-outline rounded-[30px]">
+                                        <span class="kt-badge-dot size-1.5">
+                                        </span>
+                                        Active
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="kt-badge kt-badge-destructive kt-badge-outline rounded-[30px]">
+                                        <span class="kt-badge-dot size-1.5">
+                                        </span>
+                                        Inactive
+                                    </span>
+                                }
+                            </td>
+                            <td class="text-center">
+                                <div class="kt-menu flex-inline" data-kt-menu="true">
+                                    <div class="kt-menu-item kt-menu-item-dropdown" data-kt-menu-item-offset="0, 10px" data-kt-menu-item-placement="bottom-end" data-kt-menu-item-placement-rtl="bottom-start" data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click">
+                                        <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
+                                            <i class="ki-filled ki-dots-vertical text-lg">
+                                            </i>
+                                        </button>
+                                        <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]" data-kt-menu-dismiss="true">
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link" asp-action="Edit" asp-route-id="@item.Idanalyse">
+                                                    <span class="kt-menu-icon">
+                                                        <i class="ki-filled ki-pencil">
+                                                        </i>
+                                                    </span>
+                                                    <span class="kt-menu-title">
+                                                        Modifier
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            @* <div class="kt-menu-separator">
+                                                    </div> *@
+                                            @* <div class="kt-menu-item">
+                                                <a class="kt-menu-link" asp-action="Delete" asp-route-id="@item.Idanalyse" data-kt-analyses-table-filter="delete_row" data-id="@item.Idanalyse">
+                                                    <span class="kt-menu-icon">
+                                                        <i class="ki-filled ki-trash">
+                                                        </i>
+                                                    </span>
+                                                    <span class="kt-menu-title">
+                                                        Supprimer
+                                                    </span>
+                                                </a>
+                                            </div> *@
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function() {
+
+            KTAnalyseList.init();
+        });
+    </script>
+}

@@ -1,0 +1,51 @@
+﻿@model ProlabWeb.ViewModels.UtilisateurprofilCreateVM
+
+@{
+    ViewData["Title"] = "Créer un utilisateur/profil";
+}
+
+<div class="grid grid-cols-2 gap-5">
+    <div>
+        <h1 class="font-bold">Créer un utilisateur/profil</h1>
+    </div>
+</div>
+<div class="flex items-center gap-2">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+
+<div class="min-w-full">
+    <div class="grid gap-5">
+        <form asp-action="Create" class="flex flex-col gap-5" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-red-500"></div>
+            <div class="grid grid-cols-2 gap-10">
+                <div class="flex flex-col gap-5">
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Utilisateurid"></label>
+                        <select class="kt-select w-100 js-example-basic-single" asp-for="Utilisateurid" asp-items="ViewBag.Utilisateurid" required>
+                            <option value="">-- Sélectionner un utilisateur --</option>
+                        </select>
+                        <span asp-validation-for="Utilisateurid" class="text-red-500"></span>
+                    </div>
+                    <div class="flex flex-col gap-3">
+                        <label class="kt-form-label text-mono" asp-for="Profilid"></label>
+                        <select class="kt-select w-100 js-example-basic-single" asp-for="Profilid" asp-items="ViewBag.Profilid" required>
+                            <option value="">-- Sélectionner un profil --</option>
+                        </select>
+                        <span asp-validation-for="Profilid" class="text-red-500"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="inline-flex justify-start grow">
+                <button type="submit" class="kt-btn kt-btn-primary">
+                    <span class="material-symbols-outlined">
+                        save
+                    </span> Enregistrer
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,89 @@
+﻿@model ProlabWeb.ViewModels.MaterielCreateVM
+
+@{
+    ViewData["Title"] = "Créer un matériel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="grid grid-cols-2 gap-5">
+    <div>
+        <h1 class="font-bold">Création d'un matériel</h1>
+    </div>
+    <div class="text-end">
+        <a asp-action="Index" class="text-primary">Retour à la liste</a>
+    </div>
+</div>
+<div class="flex items-center gap-2">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+
+<div class="min-w-full mb-5">
+    <form asp-action="Create" class="flex flex-col gap-5" method="post">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-red-500"></div>
+        <div class="grid grid-cols-2 gap-10">
+            <div class="flex flex-col gap-5">
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Categoriematerielid"></label>
+                    <select class="kt-select w-100 js-example-basic-single" asp-for="Categoriematerielid" asp-items="ViewBag.Categoriematerielid"></select>
+                    <span asp-validation-for="Categoriematerielid" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Nom"></label>
+                    <input class="kt-input" asp-for="Nom" placeholder="" type="text">
+                    <span asp-validation-for="Nom" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Description"></label>
+                    <input class="kt-input" asp-for="Description" placeholder="" type="text">
+                    <span asp-validation-for="Description" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Idlaboratoire"></label>
+                    <select class="kt-select w-100 js-example-basic-single" asp-for="Idlaboratoire" asp-items="ViewBag.Idlaboratoire"></select>
+                    <span asp-validation-for="Idlaboratoire" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Prix"></label>
+                    <input class="kt-input" asp-for="Prix" placeholder="" type="number">
+                    <span asp-validation-for="Prix" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Quantitemin"></label>
+                    <input class="kt-input" asp-for="Quantitemin" placeholder="" type="number">
+                    <span asp-validation-for="Quantitemin" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Dateperemption"></label>
+                    <input class="kt-input" asp-for="Dateperemption" placeholder="" type="date">
+                    <span asp-validation-for="Dateperemption" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Zonestockage"></label>
+                    <input class="kt-input" asp-for="Zonestockage" placeholder="" type="text">
+                    <span asp-validation-for="Zonestockage" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Conditionstockage"></label>
+                    <input class="kt-input" asp-for="Conditionstockage" placeholder="" type="text">
+                    <span asp-validation-for="Conditionstockage" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Codebarre"></label>
+                    <input class="kt-input" asp-for="Codebarre" placeholder="" type="text">
+                    <span asp-validation-for="Codebarre" class="text-red-500"></span>
+                </div>
+            </div>
+        </div>
+        <div class="inline-flex justify-start grow">
+            <button type="submit" class="kt-btn kt-btn-primary">
+                <span class="material-symbols-outlined">
+                    save
+                </span> Enregistrer
+            </button>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,250 @@
+/* ==============================================
+   SILAM - Enhanced Sidebar Styling
+   Modern Medical Dashboard Design
+   ============================================== */
+
+/* Sidebar Container - New Blue-Gray Theme */
+#sidebar {
+    background: linear-gradient(180deg, #2C5F75 0%, #1E4059 100%) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Sidebar Header Styling */
+#sidebar_header {
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+/* Logo and Brand Area */
+#sidebar_header .flex.items-center {
+    padding: 1.5rem 1rem;
+    border-radius: 0 0 15px 15px;
+    margin-bottom: 0.5rem;
+}
+
+#sidebar_header img {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+#sidebar_header .text-xl {
+    color: #FFFFFF !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Menu Container */
+#sidebar_menu {
+    padding: 0 1rem;
+}
+
+/* Menu Items - Primary Level */
+.kt-menu-item > .kt-menu-link {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 12px !important;
+    margin-bottom: 0.5rem !important;
+    padding: 0.875rem 1rem !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    backdrop-filter: blur(5px);
+}
+
+.kt-menu-item > .kt-menu-link:hover {
+    background: rgba(103, 193, 245, 0.2) !important;
+    border-color: rgba(103, 193, 245, 0.4) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(103, 193, 245, 0.25);
+}
+
+/* Active Menu Item */
+.kt-menu-item-active > .kt-menu-link,
+.kt-menu-item-here > .kt-menu-link {
+    background: linear-gradient(135deg, #67C1F5 0%, #4FA8D8 100%) !important;
+    border-color: #67C1F5 !important;
+    box-shadow: 0 6px 20px rgba(103, 193, 245, 0.4);
+}
+
+/* Menu Icons */
+.kt-menu-icon i {
+    color: #B8D4E3 !important;
+    font-size: 1.25rem !important;
+    transition: all 0.3s ease;
+}
+
+.kt-menu-item:hover .kt-menu-icon i,
+.kt-menu-item-active .kt-menu-icon i,
+.kt-menu-item-here .kt-menu-icon i {
+    color: #FFFFFF !important;
+    transform: scale(1.1);
+}
+
+/* Menu Titles */
+.kt-menu-title {
+    color: #E8F4F8 !important;
+    font-weight: 500 !important;
+    font-size: 0.9rem !important;
+    transition: color 0.3s ease;
+}
+
+.kt-menu-item:hover .kt-menu-title,
+.kt-menu-item-active .kt-menu-title,
+.kt-menu-item-here .kt-menu-title {
+    color: #FFFFFF !important;
+    font-weight: 600 !important;
+}
+
+/* Submenu Items */
+.kt-menu-accordion {
+    background: rgba(0, 0, 0, 0.1) !important;
+    border-radius: 8px !important;
+    margin-top: 0.5rem !important;
+    padding: 0.5rem !important;
+}
+
+.kt-menu-accordion .kt-menu-item > .kt-menu-link {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 8px !important;
+    padding: 0.625rem 0.875rem !important;
+    margin-bottom: 0.25rem !important;
+}
+
+.kt-menu-accordion .kt-menu-item > .kt-menu-link:hover {
+    background: rgba(103, 193, 245, 0.15) !important;
+    border-color: rgba(103, 193, 245, 0.3) !important;
+}
+
+.kt-menu-accordion .kt-menu-item-active > .kt-menu-link {
+    background: linear-gradient(135deg, rgba(103, 193, 245, 0.3), rgba(79, 168, 216, 0.3)) !important;
+    border-color: rgba(103, 193, 245, 0.5) !important;
+}
+
+/* Menu Arrows */
+.kt-menu-arrow i {
+    color: #B8D4E3 !important;
+    transition: all 0.3s ease;
+}
+
+.kt-menu-item:hover .kt-menu-arrow i,
+.kt-menu-item-show .kt-menu-arrow i {
+    color: #FFFFFF !important;
+    transform: rotate(180deg);
+}
+
+/* Secondary Level Submenus */
+.kt-menu-accordion .kt-menu-accordion {
+    background: rgba(0, 0, 0, 0.15) !important;
+    margin-left: 0.5rem !important;
+}
+
+.kt-menu-accordion .kt-menu-accordion .kt-menu-title {
+    font-size: 0.825rem !important;
+    color: #D1E7ED !important;
+}
+
+/* Sidebar Footer */
+#sidebar_footer {
+    background: rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+/* Scrollbar Styling */
+#sidebar_menu .kt-scrollable-y-auto::-webkit-scrollbar {
+    width: 6px;
+}
+
+#sidebar_menu .kt-scrollable-y-auto::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+}
+
+#sidebar_menu .kt-scrollable-y-auto::-webkit-scrollbar-thumb {
+    background: rgba(103, 193, 245, 0.4);
+    border-radius: 3px;
+    transition: background 0.3s ease;
+}
+
+#sidebar_menu .kt-scrollable-y-auto::-webkit-scrollbar-thumb:hover {
+    background: rgba(103, 193, 245, 0.6);
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 1024px) {
+    #sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    #sidebar.show {
+        transform: translateX(0);
+    }
+}
+
+/* Dashboard Cards Color Coordination */
+.card:first-child {
+    background: linear-gradient(135deg, #67C1F5 0%, #4FA8D8 100%) !important;
+}
+
+.card:nth-child(2) {
+    background: linear-gradient(135deg, #FFD93D 0%, #FFB300 100%) !important;
+}
+
+.card:nth-child(3) {
+    background: linear-gradient(135deg, #6BCF7F 0%, #4CAF50 100%) !important;
+}
+
+.card:nth-child(4) {
+    background: linear-gradient(135deg, #B085F5 0%, #9C27B0 100%) !important;
+}
+
+/* Animation for Menu Items */
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.kt-menu-item {
+    animation: slideInFromLeft 0.3s ease-out;
+    animation-fill-mode: both;
+}
+
+.kt-menu-item:nth-child(1) { animation-delay: 0.1s; }
+.kt-menu-item:nth-child(2) { animation-delay: 0.2s; }
+.kt-menu-item:nth-child(3) { animation-delay: 0.3s; }
+.kt-menu-item:nth-child(4) { animation-delay: 0.4s; }
+.kt-menu-item:nth-child(5) { animation-delay: 0.5s; }
+.kt-menu-item:nth-child(6) { animation-delay: 0.6s; }
+
+/* Enhanced Focus States for Accessibility */
+.kt-menu-link:focus {
+    outline: 2px solid #67C1F5;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(103, 193, 245, 0.2);
+}
+
+/* Loading State for Menu Items */
+.kt-menu-item.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #67C1F5, transparent);
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}

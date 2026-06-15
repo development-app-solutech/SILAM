@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="07/09/2025 11:27:41" ReportInfo.Modified="07/23/2025 18:19:04" ReportInfo.CreatorVersion="2023.3.0.0">
+  <Dictionary>
+    <PostgresDataConnection Name="Connection" ConnectionString="rijcmlqzIWTAdoF2frcEEZW8+WmSn8EjTWlmxc6XqsWwQ/0mOue9UtI3j17m9xPFWFHNE86lzQXmV2EgGN8QuK86q0p9uA0HdKqB1guSKwBFSA0A7s=">
+      <TableDataSource Name="Table" Alias="getdata" DataType="System.Int32" Enabled="true" SelectCommand="SELECT TO_CHAR(date, 'DD/MM/YYYY') AS date, id, nom, nbre, prix, montant, CAST((montant*0.20) AS NUMERIC(20,2)) AS remise &#13;&#10;FROM &#13;&#10;(&#13;&#10;(SELECT DISTINCT ON(p3.categorieid) P.date, p3.categorieid AS id, p3.nom, COUNT(p3.categorieid) as nbre, p2.prix, (COUNT(p3.categorieid)*p2.prix) AS montant, p2.partassurance, p2.partpatient, p2.complement, p2.net, p4.codeassurance, p4.nom AS assurance&#13;&#10;FROM public.&quot;entetefacture&quot; P, public.&quot;entetedemande&quot; p1, public.&quot;detaildemande&quot; p2, public.&quot;categorie&quot; p3, public.&quot;assurance&quot; p4, public.&quot;policeassurance&quot; p5&#13;&#10;WHERE DATE(P.date) &gt;= DATE(@datedebut1) AND DATE(P.date) &lt;= DATE(@datefin1) AND p4.codeassurance=@codeassurance1 AND P.entetedemandeid = p1.entetedemandeid AND p1.entetedemandeid = p2.entetedemandeid AND p1.policeassuranceid = p5.policeassuranceid AND p5.codeassurance = p4.codeassurance AND p3.categorieid = p2.categorieid&#13;&#10;GROUP BY P.date, p3.categorieid, p3.nom, p2.prix, p2.partassurance, p2.partpatient, p2.complement, p2.net, p4.codeassurance, p4.nom)&#13;&#10;&#13;&#10;UNION ALL &#13;&#10;&#13;&#10;(select DISTINCT ON(p3.idanalyse) P.date, p3.idanalyse AS id, p3.nom, COUNT(p3.idanalyse) AS nbre, p2.prix, (COUNT(p3.idanalyse)*(p2.prix)) as montant, p2.partassurance, p2.partpatient, p2.complement, p2.net, p5.codeassurance, p5.nom AS assurance&#13;&#10;FROM public.&quot;entetefacture&quot; P, public.&quot;entetedemande&quot; p1, public.&quot;detaildemande&quot; p2, public.&quot;analyse&quot; p3, public.&quot;policeassurance&quot; p4, public.&quot;assurance&quot; p5&#13;&#10;WHERE DATE(P.date) &gt;= DATE(@datedebut2) AND DATE(P.date) &lt;= DATE(@datefin2) AND p5.codeassurance=@codeassurance2 AND p2.idanalyse = p3.idanalyse AND p2.entetedemandeid = p1.entetedemandeid AND P.entetedemandeid = p1.entetedemandeid AND p1.policeassuranceid = p4.policeassuranceid AND p5.codeassurance = p4.codeassurance&#13;&#10;GROUP BY P.date, p3.idanalyse, p3.nom, p2.prix, p2.partassurance, p2.partpatient, p2.complement, p2.net, p5.codeassurance, p5.nom)&#13;&#10;) sub&#13;&#10;ORDER BY date DESC &#13;&#10;">
+        <Column Name="nom" DataType="System.String"/>
+        <Column Name="date" DataType="System.String"/>
+        <Column Name="id" DataType="System.String"/>
+        <Column Name="nbre" DataType="System.String"/>
+        <Column Name="prix" DataType="System.String"/>
+        <Column Name="remise" DataType="System.String"/>
+        <Column Name="montant" DataType="System.String"/>
+        <CommandParameter Name="datedebut1" DataType="7" Expression="[datedebut]"/>
+        <CommandParameter Name="datefin1" DataType="7" Expression="[datefin]"/>
+        <CommandParameter Name="codeassurance1" DataType="22" Expression="[codeassurance]"/>
+        <CommandParameter Name="datedebut2" DataType="7" Expression="[datedebut]"/>
+        <CommandParameter Name="datefin2" DataType="7" Expression="[datefin]"/>
+        <CommandParameter Name="codeassurance2" DataType="22" Expression="[codeassurance]"/>
+      </TableDataSource>
+    </PostgresDataConnection>
+    <Parameter Name="datedebut" DataType="System.String" AsString=""/>
+    <Parameter Name="datefin" DataType="System.String" AsString=""/>
+    <Parameter Name="codeassurance" DataType="System.String" AsString=""/>
+    <Parameter Name="dateedition" DataType="System.String" AsString=""/>
+    <Parameter Name="datedebutstr" DataType="System.String" AsString=""/>
+    <Parameter Name="datefinstr" DataType="System.String" AsString=""/>
+    <Parameter Name="doit" DataType="System.String" AsString=""/>
+    <Parameter Name="numero" DataType="System.String" AsString=""/>
+    <Parameter Name="sommetotal" DataType="System.String" AsString=""/>
+    <Parameter Name="sommeremise" DataType="System.String" AsString=""/>
+    <Parameter Name="montantnet" DataType="System.String" AsString=""/>
+    <Parameter Name="sommenet" DataType="System.String" AsString=""/>
+    <Parameter Name="montanttotal" DataType="System.String" AsString=""/>
+    <Parameter Name="remisetotal" DataType="System.String" AsString=""/>
+    <Parameter Name="assurance" DataType="System.String" AsString=""/>
+  </Dictionary>
+  <ReportPage Name="Page1" RawPaperSize="9" Watermark.Font="Arial, 60pt" StartPageEvent="Page1_StartPage">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="226.8">
+      <TextObject Name="Text1" Left="9.45" Top="9.45" Width="340.2" Height="47.25" Text="MINISTERE DE LA SANTE, DE L'HYGIENE PUBLIQUE ET DE L'ACCES UNIVERSEL AUX SOINS&#13;&#10;------" HorzAlign="Center" Font="Times New Roman, 10pt"/>
+      <TextObject Name="Text2" Left="491.4" Top="9.45" Width="217.35" Height="18.9" Text="REPUBLIQUE TOGOLAISE" HorzAlign="Center" Font="Times New Roman, 9.75pt"/>
+      <TextObject Name="Text3" Left="491.4" Top="37.8" Width="217.35" Height="18.9" Text="Travail - Liberté - Patrie" HorzAlign="Center" Font="Times New Roman, 9.75pt"/>
+      <TextObject Name="Text4" Left="9.45" Top="132.3" Width="340.2" Height="18.9" Text="BP : 1396 Tél : 22 21 06 33 LOME-TOGO" HorzAlign="Center" Font="Times New Roman, 10pt"/>
+      <TextObject Name="Text33" Left="9.45" Top="56.7" Width="340.2" Height="28.35" Text="CABINET&#13;&#10;------" HorzAlign="Center" Font="Times New Roman, 10pt"/>
+      <TextObject Name="Text34" Left="9.45" Top="85.05" Width="340.2" Height="28.35" Text="SECRETARIAT GENERAL&#13;&#10;------" HorzAlign="Center" Font="Times New Roman, 10pt"/>
+      <TextObject Name="Text35" Left="9.45" Top="113.4" Width="340.2" Height="18.9" Text="INSTITUT NATIONAL" HorzAlign="Center" Font="Times New Roman, 10pt, style=Bold"/>
+      <TextObject Name="Text36" Left="529.2" Top="85.05" Width="179.55" Height="18.9" Text="Lomé le, [dateedition]" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text37" Left="529.2" Top="113.4" Width="47.25" Height="18.9" Text="Doit :" Font="Times New Roman, 11pt, style=Bold"/>
+      <TextObject Name="Text38" Left="529.2" Top="170.1" Width="94.5" Height="18.9" Text="Facture N° :" Font="Times New Roman, 11pt, style=Bold"/>
+      <TextObject Name="Text39" Left="9.45" Top="170.1" Width="340.2" Height="18.9" Text="Période du [datedebutstr] au [datefinstr]" HorzAlign="Center" Font="Times New Roman, 11pt, style=Bold">
+        <Formats>
+          <GeneralFormat/>
+          <GeneralFormat/>
+        </Formats>
+      </TextObject>
+      <TextObject Name="Text64" Left="529.2" Top="141.75" Width="179.55" Height="18.9" Text="[assurance]" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text65" Left="529.2" Top="198.45" Width="179.55" Height="18.9" Text="[numero]" Font="Times New Roman, 11pt"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="230.8" Width="718.2" Height="28.35">
+      <TextObject Name="Text40" Left="9.45" Width="122.85" Height="28.35" Border.Lines="All" Text="Date de référence" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 11pt, style=Bold"/>
+      <TextObject Name="Text41" Left="132.3" Width="189" Height="28.35" Border.Lines="All" Text="Désignation" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 11pt, style=Bold"/>
+      <TextObject Name="Text42" Left="321.3" Width="75.6" Height="28.35" Border.Lines="All" Text="Nbre" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 11pt, style=Bold"/>
+      <TextObject Name="Text43" Left="396.9" Width="94.5" Height="28.35" Border.Lines="All" Text="Prix unitaire" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 11pt, style=Bold"/>
+      <TextObject Name="Text44" Left="491.4" Width="122.85" Height="28.35" Border.Lines="All" Text="Montant total" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 11pt, style=Bold"/>
+      <TextObject Name="Text45" Left="614.25" Width="94.5" Height="28.35" Border.Lines="All" Text="Remise" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 11pt, style=Bold"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="263.15" Width="718.2" Height="28.35" CanGrow="true" CanShrink="true" DataSource="Table">
+      <TextObject Name="Text58" Left="9.45" Width="122.85" Height="28.35" Border.Lines="All" Text="[getdata.date]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text59" Left="132.3" Width="189" Height="28.35" Border.Lines="All" Text="[getdata.nom]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text60" Left="321.3" Width="75.6" Height="28.35" Border.Lines="All" Text="[getdata.nbre]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text61" Left="396.9" Width="94.5" Height="28.35" Border.Lines="All" Text="[getdata.prix]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text62" Left="491.4" Width="122.85" Height="28.35" Border.Lines="All" Text="[getdata.montant]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text63" Left="614.25" Width="94.5" Height="28.35" Border.Lines="All" Text="[getdata.remise]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 11pt"/>
+    </DataBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="295.5" Width="718.2" Height="444.15">
+      <TextObject Name="Text5" Left="9.45" Top="47.25" Width="264.6" Height="18.9" Text="Arrêté la présente facture à la somme de :" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text6" Left="9.45" Top="75.6" Width="151.2" Height="18.9" Text="N.B Ristourne à payer " Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text46" Left="274.05" Top="47.25" Width="434.7" Height="18.9" Text="[sommetotal] FRANCS CFA" VertAlign="Center" Font="Times New Roman, 11pt, style=Bold"/>
+      <TextObject Name="Text47" Left="160.65" Top="75.6" Width="548.1" Height="18.9" Text="[remisetotal] : [sommeremise] FRANCS CFA" VertAlign="Center" Font="Times New Roman, 11pt, style=Bold">
+        <Formats>
+          <GeneralFormat/>
+          <GeneralFormat/>
+        </Formats>
+      </TextObject>
+      <TextObject Name="Text48" Left="9.45" Top="103.95" Width="94.5" Height="18.9" Text="Net à payer :" VertAlign="Center" Font="Times New Roman, 11pt, style=Bold"/>
+      <TextObject Name="Text49" Left="103.95" Top="103.95" Width="198.45" Height="18.9" Text="[montantnet]" VertAlign="Center" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text50" Left="9.45" Top="132.3" Width="481.95" Height="18.9" Text="[sommenet] FRANCS CFA" VertAlign="Center" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text51" Left="9.45" Top="179.55" Width="132.3" Height="18.9" Text="Le Responsable" VertAlign="Center" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text52" Left="9.45" Top="274.05" Width="226.8" Height="56.7" Text="AGENCE CPTABLE INST. NA. H&#13;&#10;CODE BANQUE : TG116&#13;&#10;COMPTE N° : 040210024408" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text53" Left="444.15" Top="236.25" Width="236.25" Height="66.15" Text="Validation du règlement de la facture&#13;&#10;&#13;&#10;CODE GUICHET : 01101&#13;&#10;Clé RIB : 24" HorzAlign="Center" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text54" Left="444.15" Top="340.2" Width="236.25" Height="18.9" Text="Le Directeur de l'INH" HorzAlign="Center" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text55" Left="444.15" Top="415.8" Width="236.25" Height="18.9" Text="Dr. HALATOKO Wemboo Afiwa" HorzAlign="Center" Font="Times New Roman, 11pt, style=Bold, Underline"/>
+      <TextObject Name="Text56" Left="415.8" Top="160.65" Width="292.95" Height="18.9" Text="Le Responsable de la collecte de l'échantillon" HorzAlign="Center" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text57" Left="9.45" Top="425.25" Width="292.95" Height="18.9" Text="Imprimé le [Date]" Font="Times New Roman, 11pt"/>
+      <TextObject Name="Text66" Left="9.45" Width="481.95" Height="28.35" Border.Lines="All" Text="TOTAL" VertAlign="Center" Font="Times New Roman, 11pt, style=Bold"/>
+      <TextObject Name="Text67" Left="491.4" Width="122.85" Height="28.35" Border.Lines="All" Text="[montanttotal]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 11pt, style=Bold"/>
+      <TextObject Name="Text68" Left="614.25" Width="94.5" Height="28.35" Border.Lines="All" Text="[remisetotal]" HorzAlign="Center" VertAlign="Center" Font="Times New Roman, 11pt, style=Bold"/>
+    </ReportSummaryBand>
+    <PageFooterBand Name="PageFooter1" Top="743.65" Width="718.2" Height="18.9"/>
+  </ReportPage>
+</Report>

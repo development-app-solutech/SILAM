@@ -1,0 +1,313 @@
+/* Simple Responsive Medical Results Datatable */
+
+.medical-results-dashboard {
+    padding: 20px;
+    min-height: 100vh;
+}
+
+/* Statistics Cards */
+.stats-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    flex: 1;
+    min-width: 280px;
+    padding: 25px;
+    border-radius: 12px;
+    color: white;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card.yellow {
+    background: linear-gradient(135deg, #f1c40f 0%, #f39c12 100%);
+}
+
+.stat-card.green {
+    background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+}
+
+.stat-card.purple {
+    background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+}
+
+.stat-card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin: 0 0 15px 0;
+}
+
+.stat-number {
+    font-size: 40px;
+    font-weight: 700;
+    margin: 15px 0;
+}
+
+.stat-button {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.stat-button:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+/* Table Container */
+.table-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.table-header {
+    background: #f8f9fa;
+    padding: 20px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.table-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+/* Responsive Table - Desktop First */
+.responsive-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.responsive-table th,
+.responsive-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.responsive-table th {
+    background: #f8f9fa;
+    font-weight: 600;
+    color: #555;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.responsive-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+.patient-name {
+    font-weight: 600;
+    color: #2c3e50;
+    display: block;
+}
+
+.patient-id {
+    font-size: 11px;
+    color: #6c757d;
+    display: block;
+    margin-top: 2px;
+}
+
+/* Mobile Collapse Button */
+.mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    color: #666;
+    font-size: 14px;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.mobile-toggle:hover {
+    background: #f8f9fa;
+    color: #333;
+}
+
+.mobile-details {
+    display: none;
+    background: #f8f9fa;
+    padding: 15px;
+    border-left: 4px solid #007bff;
+    margin-top: 10px;
+}
+
+.mobile-details.active {
+    display: block;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    font-weight: 600;
+    color: #495057;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.detail-value {
+    color: #212529;
+    font-size: 13px;
+    text-align: right;
+}
+
+/* Company Info */
+.company-info {
+    text-align: center;
+    padding: 15px;
+    color: #6c757d;
+    font-size: 12px;
+}
+
+/* Mobile Styles - Key Responsive Breakpoints */
+@media screen and (max-width: 768px) {
+    .medical-results-dashboard {
+        padding: 15px;
+    }
+
+    .stats-grid {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .stat-card {
+        min-width: auto;
+        padding: 20px;
+    }
+
+    .stat-number {
+        font-size: 32px;
+    }
+
+    /* Show mobile toggle button */
+    .mobile-toggle {
+        display: inline-block;
+    }
+
+    /* Hide columns that should collapse on mobile */
+    .responsive-table th:nth-child(4),
+    .responsive-table td:nth-child(4) {
+        display: none;
+    }
+
+    /* Adjust remaining column widths */
+    .responsive-table th:nth-child(1),
+    .responsive-table td:nth-child(1) {
+        width: 50%;
+    }
+
+    .responsive-table th:nth-child(2),
+    .responsive-table td:nth-child(2) {
+        width: 25%;
+    }
+
+    .responsive-table th:nth-child(3),
+    .responsive-table td:nth-child(3) {
+        width: 15%;
+    }
+
+    .responsive-table th:nth-child(5),
+    .responsive-table td:nth-child(5) {
+        width: 10%;
+    }
+
+    .responsive-table th,
+    .responsive-table td {
+        padding: 8px 6px;
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    /* Hide patient column too on very small screens */
+    .responsive-table th:nth-child(3),
+    .responsive-table td:nth-child(3) {
+        display: none;
+    }
+
+    /* Adjust remaining columns */
+    .responsive-table th:nth-child(1),
+    .responsive-table td:nth-child(1) {
+        width: 70%;
+    }
+
+    .responsive-table th:nth-child(2),
+    .responsive-table td:nth-child(2) {
+        width: 20%;
+    }
+
+    .responsive-table th:nth-child(5),
+    .responsive-table td:nth-child(5) {
+        width: 10%;
+    }
+
+    .stat-number {
+        font-size: 28px;
+    }
+}
+
+/* Animation for mobile details */
+.mobile-details {
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from { 
+        opacity: 0; 
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    to { 
+        opacity: 1; 
+        max-height: 200px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+}
+
+/* Print styles */
+@media print {
+    .mobile-toggle {
+        display: none !important;
+    }
+    
+    .responsive-table th,
+    .responsive-table td {
+        display: table-cell !important;
+    }
+    
+    .mobile-details {
+        display: none !important;
+    }
+}

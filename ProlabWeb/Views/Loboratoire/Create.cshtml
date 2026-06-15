@@ -1,0 +1,57 @@
+@model ProlabWeb.Db.Loboratoire
+
+@{
+    ViewData["Title"] = "Créer un laboratoire";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="grid grid-cols-2 gap-5 mb-2">
+    <div>
+        <h1 class="font-bold">Créer un laboratoire</h1>
+    </div>
+    <div class="text-end">
+        <a asp-action="Index" class="text-primary">Retour à la liste</a>
+    </div>
+</div>
+<div class="flex items-center gap-2 mb-4">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+<div class="min-w-full mb-5">
+    <form asp-action="Create" method="post" class="flex flex-col gap-5">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-red-500"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div class="flex flex-col gap-5">
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Nom"></label>
+                    <input class="kt-input" asp-for="Nom" placeholder="Nom du laboratoire" type="text">
+                    <span asp-validation-for="Nom" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Description"></label>
+                    <textarea class="kt-input" asp-for="Description" placeholder="Description" rows="3"></textarea>
+                    <span asp-validation-for="Description" class="text-red-500"></span>
+                </div>
+            </div>
+            <div class="flex flex-col gap-5">
+                <div class="flex items-center gap-2 mt-6">
+                    <label class="kt-checkbox-group">
+                        <input class="kt-checkbox kt-checkbox-sm" asp-for="Isactive" type="checkbox" />
+                        <span class="kt-checkbox-label">@Html.DisplayNameFor(model => model.Isactive)</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <<div class="inline-flex justify-start grow">
+            <button type="submit" class="kt-btn kt-btn-primary">
+                <span class="material-symbols-outlined">
+                    save
+                </span> Enregistrer
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,48 @@
+﻿@model IEnumerable<ProlabWeb.Db.Demandeanalysemateriel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantite)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Analysemateriel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Entetedemande)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantite)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Analysemateriel.Analysematerielid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Entetedemande.Entetedemandeid)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Demandeanalysematerielid">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Demandeanalysematerielid">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Demandeanalysematerielid">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

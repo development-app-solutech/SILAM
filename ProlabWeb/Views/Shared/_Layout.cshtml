@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html class="h-full" data-kt-theme="true" data-kt-theme-mode="light" dir="ltr" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SILAM - Système d'Information de Laboratoire Médical</title>
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
+    <link rel="apple-touch-icon" href="~/img/logo_solutech.jpg" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="~/metronic/dist/assets/vendors/apexcharts/apexcharts.css" rel="stylesheet" />
+    <link href="~/metronic/dist/assets/vendors/keenicons/styles.bundle.css" rel="stylesheet" />
+    <link href="~/metronic/dist/assets/css/styles.css" rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.min.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/css/dashboard.css" rel="stylesheet" />
+    <link href="~/css/sidebar-enhanced.css" rel="stylesheet" />
+    <link href="~/css/theme-integration.css" rel="stylesheet" />
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Mobile menu fallback CSS */
+        #sidebar.mobile-sidebar {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            bottom: 0 !important;
+            width: 16rem !important;
+            background-color: rgb(15 23 42) !important;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+            transform: translateX(-100%) !important;
+            transition: transform 0.3s ease-in-out !important;
+            z-index: 50 !important;
+        }
+        #sidebar.mobile-sidebar.open {
+            transform: translateX(0) !important;
+        }
+        #mobile-overlay.mobile-overlay {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            background-color: rgba(0, 0, 0, 0.5) !important;
+            z-index: 40 !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            transition: opacity 0.3s ease, visibility 0.3s ease !important;
+        }
+        #mobile-overlay.mobile-overlay.show {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+        /* Mobile content styles */
+        .main-content-mobile {
+            margin-left: 0 !important;
+        }
+        
+        /* Mobile overrides for content */
+        @@media (max-width: 1023px) {
+            .main-content-mobile {
+                margin-left: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+            
+            .kt-container-fixed {
+                padding-left: 15px !important;
+                padding-right: 15px !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                max-width: 100% !important;
+            }
+            
+            body {
+                overflow-x: hidden !important;
+            }
+        }
+        
+        @@media (min-width: 1024px) {
+            #sidebar.mobile-sidebar {
+                position: static !important;
+                transform: translateX(0) !important;
+                box-shadow: none !important;
+            }
+            #mobile-overlay.mobile-overlay {
+                display: none !important;
+            }
+        }
+    </style>
+    @RenderSection("Styles", required: false)
+</head>
+<body class="antialiased flex h-full text-base text-foreground bg-background [--header-height:60px] [--sidebar-width:270px] lg:overflow-hidden bg-mono dark:bg-background">
+    <!-- Theme Mode -->
+    <script>
+        const defaultThemeMode = 'light'; 
+                 let themeMode;
+
+                 if (document.documentElement) {
+                     if (localStorage.getItem('kt-theme')) {
+                         themeMode = localStorage.getItem('kt-theme');
+                     } else if (
+                         document.documentElement.hasAttribute('data-kt-theme-mode')
+                     ) {
+                         themeMode =
+                             document.documentElement.getAttribute('data-kt-theme-mode');
+                     } else {
+                         themeMode = defaultThemeMode;
+                     }
+
+                     if (themeMode === 'system') {
+                         themeMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+                             ? 'dark'
+                             : 'light';
+                     }
+
+                     document.documentElement.classList.add(themeMode);
+                 }
+    </script>
+    <!-- End of Theme Mode -->
+    <!-- Base -->
+    <div class="flex grow">
+        <!-- Header -->
+        <header class="flex items-center fixed z-10 top-0 start-0 end-0 shrink-0 bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-700 dark:to-blue-800 h-(--header-height)" id="header">
+            <!-- Container -->
+             <div class="kt-container-fixed flex items-center justify-between flex-wrap gap-3 w-full">
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-toggle" class="lg:hidden flex items-center justify-center w-10 h-10 rounded-md text-white hover:bg-white/10 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+                <!-- App Branding Section -->
+                <div class="flex items-center gap-4">
+                    <div class="flex flex-col">
+                        <span class="text-2xl font-bold text-white tracking-wide">SILAM</span>
+                        <span class="text-sm text-white font-medium opacity-90 hidden lg:inline tracking-wide">Système d'Information de Laboratoire Médical</span>
+                    </div>
+                </div>
+                <!-- User Profile Section -->
+                <div class="flex items-center">
+                    <!-- Profil utilisateur ici -->
+                    <div data-kt-dropdown="true" data-kt-dropdown-offset="10px, 10px" data-kt-dropdown-offset-rtl="-20px, 10px" data-kt-dropdown-placement="bottom-end" data-kt-dropdown-trigger="click">
+                        <div class="cursor-pointer shrink-0" data-kt-dropdown-toggle="true">
+                            <span class="flex items-center justify-center rounded-full border-2 border-mono/25 bg-gray-200 text-gray-500" style="width:36px; height:36px;">
+                                <span class="material-icons-outlined" style="font-size:36px; line-height:36px;">account_circle</span>
+                            </span>
+                        </div>
+                        <div class="kt-dropdown-menu w-[250px]" data-kt-dropdown-menu="true">
+                            <div class="flex items-center justify-between px-2.5 py-1.5 gap-1.5">
+                                <div class="flex items-center gap-2">
+                                    <span class="flex items-center justify-center rounded-full border-2 border-mono/25 bg-gray-200 text-gray-500" style="width:36px; height:36px;">
+                                        <span class="material-icons-outlined" style="font-size:36px; line-height:36px;">account_circle</span>
+                                    </span>
+                                    <div class="flex flex-col gap-1.5">
+                                        <span class="text-sm text-foreground font-semibold leading-none">
+                                            @User.Identity?.Name
+                                        </span>
+                                        <span class="text-xs text-secondary-foreground font-medium leading-none">
+                                            @User.FindFirst("email")?.Value
+                                        </span>
+                                    </div>
+                                </div>
+                                <span class="kt-badge kt-badge-sm kt-badge-primary kt-badge-outline">
+                                    Pro
+                                </span>
+                            </div>
+                            <ul class="kt-dropdown-menu-sub">
+                                <li>
+                                    <a class="kt-dropdown-menu-link" href="/Identity/Account/Manage/ChangePassword">
+                                        Changer de mot de passe
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="kt-dropdown-menu-link flex items-center justify-between">
+                                        Mode
+                                        <button id="theme-toggle" type="button" class="ml-2">
+                                            <span id="theme-icon" class="material-icons-outlined align-middle">dark_mode</span>
+                                        </button>
+                                    </div>
+                                </li>
+                                <li>
+                                    <form method="post" asp-area="Identity" asp-page="/Account/Logout" id="logoutForm">
+                                        <button type="submit" class="kt-dropdown-menu-link w-full text-left">
+                                            Se deconnecter
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Fin profil utilisateur -->
+                </div>
+            </div>
+            <!-- End of Container -->
+        </header>
+        <!-- End of Header -->
+        <!-- Wrapper -->
+        <div class="flex flex-col lg:flex-row grow pt-(--header-height) lg:pt-0">
+            <!-- Mobile Overlay -->
+            <div id="mobile-overlay" class="mobile-overlay"></div>
+            
+            <!-- Sidebar -->
+            <div class="mobile-sidebar" id="sidebar">
+                <!-- Sidebar Header -->
+                <div class="flex flex-col gap-2.5" id="sidebar_header">
+                    <div class="flex items-center gap-2.5 px-3.5 h-[70px]">
+                        <a class="flex items-stretch grow shrink-0 justify-start mt-5" asp-controller="Home" asp-action="Index">
+                            <div class="flex items-center gap-3">
+                                <img src="~/img/logo_solutech.jpg" alt="Logo" class="h-12 w-auto">
+                                <span class="text-xl font-bold text-white">SILAM</span>
+                            </div>
+                        </a>
+                       @*  <div class="kt-menu kt-menu-default grow" data-kt-menu="true">
+                            <div class="kt-menu-item grow" data-kt-menu-item-offset="0, 15px" data-kt-menu-item-placement="bottom-start" data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="hover">
+                                <div class="kt-menu-label cursor-pointer text-mono font-medium grow justify-between">
+                                    <span class="text-lg font-medium text-inverse grow">
+                                        Metronic
+                                    </span>
+                                    <div class="flex flex-col text-mono font-medium">
+                                        <span class="kt-menu-arrow">
+                                            <i class="ki-filled ki-up">
+                                            </i>
+                                        </span>
+                                        <span class="kt-menu-arrow">
+                                            <i class="ki-filled ki-down">
+                                            </i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="kt-menu-dropdown w-48 py-2">
+                                    <div class="kt-menu-item">
+                                        <a class="kt-menu-link" href="html/demo10/public-profile/profiles/default.html" tabindex="0">
+                                            <span class="kt-menu-icon">
+                                                <i class="ki-filled ki-profile-circle">
+                                                </i>
+                                            </span>
+                                            <span class="kt-menu-title">
+                                                Public Profile
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="kt-menu-item">
+                                        <a class="kt-menu-link" href="html/demo10.html" tabindex="0">
+                                            <span class="kt-menu-icon">
+                                                <i class="ki-filled ki-setting-2">
+                                                </i>
+                                            </span>
+                                            <span class="kt-menu-title">
+                                                Account
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="kt-menu-item">
+                                        <a class="kt-menu-link" href="html/demo10/network/get-started.html" tabindex="0">
+                                            <span class="kt-menu-icon">
+                                                <i class="ki-filled ki-users">
+                                                </i>
+                                            </span>
+                                            <span class="kt-menu-title">
+                                                Network
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="kt-menu-item">
+                                        <a class="kt-menu-link" asp-area="Identity" asp-page="/Account/Login" tabindex="0">
+                                            <span class="kt-menu-icon">
+                                                <i class="ki-filled ki-security-user">
+                                                </i>
+                                            </span>
+                                            <span class="kt-menu-title">
+                                                Authentication
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> *@
+                    </div>
+                    @* <div class="flex items-center gap-2.5 px-3.5">
+                        <!-- Input -->
+                        <a class="kt-btn kt-btn-secondary text-white [&_i]:text-white justify-center min-w-[198px]" href="html/demo10/public-profile/projects/3-columns.html">
+                            <i class="ki-filled ki-plus">
+                            </i>
+                            Add New
+                        </a>
+                        <!-- End of Input -->
+                        <button class="kt-btn kt-btn-icon kt-btn-secondary [&_i]:text-white" data-kt-modal-toggle="#search_modal">
+                            <i class="ki-filled ki-magnifier">
+                            </i>
+                        </button>
+                    </div> *@
+                </div>
+                <!-- End of Sidebar Header -->
+                <!-- Sidebar menu -->
+             
+                <div class="flex items-stretch grow shrink-0 justify-center my-5" id="sidebar_menu">
+                    <div class="kt-scrollable-y-auto grow" data-kt-scrollable="true" data-kt-scrollable-dependencies="#sidebar_header, #sidebar_footer" data-kt-scrollable-height="auto" data-kt-scrollable-offset="0px" data-kt-scrollable-wrappers="#sidebar_menu">
+                        <!-- Primary Menu -->
+                        <div class="mb-5">
+                            <h3 class="text-sm text-muted-foreground uppercase ps-5 inline-block mb-3">
+                                @* Pages *@
+                            </h3>
+                            <div class="kt-menu flex flex-col w-full gap-1.5 px-3.5" data-kt-menu="true" data-kt-menu-accordion-expand-all="false" id="sidebar_primary_menu">
+                                <div class="kt-menu-item">
+                                    <a class="kt-menu-link gap-2.5 py-2 px-2.5 rounded-md kt-menu-item-active:bg-accent/60 kt-menu-link-hover:bg-accent/60 !menu-item-here:bg-transparent" asp-controller="Home" asp-action="Index">
+                                        <span class="kt-menu-icon items-start text-lg text-secondary-foreground kt-menu-item-active:text-mono kt-menu-item-here:text-mono">
+                                            <i class="ki-filled ki-chart-simple">
+                                            </i>
+                                        </span>
+                                        <span class="kt-menu-title text-sm text-foreground font-medium kt-menu-item-here:text-mono kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                            Tableau de bord
+                                        </span>
+                                    </a>
+                                </div>
+                               
+                                @* Menu analyse *@
+                                 @if (User.IsInRole(EnumRoles.Caisse.ToString()) || User.IsInRole(EnumRoles.Administrateur.ToString()) || User.IsInRole(EnumRoles.GestionAnalyse.ToString()))
+
+                                {
+                                    <div class="kt-menu-item" data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
+                                        <div class="kt-menu-link gap-2.5 py-2 px-2.5 rounded-md kt-menu-item-hover:bg-transparent kt-menu-item-here:bg-transparent">
+                                            <span class="kt-menu-icon items-start text-muted-foreground text-lg kt-menu-item-here:text-mono kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
+                                                <i class="ki-filled ki-document">
+                                                </i>
+                                            </span>
+                                            <span class="kt-menu-title font-medium text-sm text-secondary-foreground kt-menu-item-here:text-mono kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
+                                              Analyses
+                                            </span>
+                                            <span class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-muted-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
+                                                <span class="inline-flex kt-menu-item-show:hidden">
+                                                    <i class="ki-filled ki-down text-xs">
+                                                    </i>
+                                                </span>
+                                                <span class="hidden kt-menu-item-show:inline-flex">
+                                                    <i class="ki-filled ki-up text-xs">
+                                                    </i>
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="kt-menu-accordion gap-px ps-7">
+
+                                            @if (User.IsInRole(EnumRoles.Caisse.ToString()) || User.IsInRole(EnumRoles.Administrateur.ToString()) || User.IsInRole(EnumRoles.Technicien.ToString()))
+                                            {
+                                            <div class="kt-menu-item">
+                                                    <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="EnteteDemande" asp-action="Index">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                      Demandes
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            }
+
+                                            @* Liste des demandes d'analyses - accessible to all roles with access to this menu 
+                                            @if (User.IsInRole(EnumRoles.Caisse.ToString()) || User.IsInRole(EnumRoles.Administrateur.ToString()) || User.IsInRole(EnumRoles.GestionAnalyse.ToString()) || User.IsInRole(EnumRoles.Biologiste.ToString()) || User.IsInRole(EnumRoles.Technicien.ToString()) || User.IsInRole(EnumRoles.GestionResultat.ToString()))
+                                            {
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Entetedemande" asp-action="Index">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Liste des demandes
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            }*@
+
+                                            @if (User.IsInRole(EnumRoles.Administrateur.ToString()) || User.IsInRole(EnumRoles.GestionAnalyse.ToString()))
+
+                                            {
+                                            <div class="kt-menu-item" data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
+                                                <div class="kt-menu-link py-2 px-2.5 rounded-md border border-transparent !menu-item-here:bg-transparent">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-here:text-mono kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
+                                                        Paramétrage
+                                                    </span>
+                                                    <span class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-muted-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
+                                                        <span class="inline-flex kt-menu-item-show:hidden">
+                                                            <i class="ki-filled ki-down text-xs">
+                                                            </i>
+                                                        </span>
+                                                        <span class="hidden kt-menu-item-show:inline-flex">
+                                                            <i class="ki-filled ki-up text-xs">
+                                                            </i>
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                                
+                                                <div class="kt-menu-accordion gap-px ps-2.5">
+                                                    @* Analysis-related items: accessible to Biologiste, Administrateur, GestionAnalyse *@
+                                                    @if (User.IsInRole(EnumRoles.Administrateur.ToString()) || User.IsInRole(EnumRoles.GestionAnalyse.ToString()))
+                                                    {
+                                                    <div class="kt-menu-item">
+                                                        <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="AnalyseAvecOnglet" asp-action="Index">
+                                                            <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                                Analyse
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="kt-menu-item">
+                                                        <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Categorie" asp-action="Index">
+                                                            <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                                Catégorie
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="kt-menu-item">
+                                                        <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Methode" asp-action="Index">
+                                                            <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                                Méthode
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="kt-menu-item">
+                                                        <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Natureechantillon" asp-action="Index">
+                                                            <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                                Nature d'échantillon
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                    @* } *@
+                                                    
+                                                    @* Patient menu - accessible to Caisse, Biologiste, Administrateur only (NOT GestionAnalyse) *@
+                                                    @* @if (User.IsInRole(EnumRoles.Caisse.ToString()) || User.IsInRole(EnumRoles.Administrateur.ToString())) *@
+                                                   @*  { *@
+                                                    @* <div class="kt-menu-item">
+                                                        <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Patient" asp-action="Index">
+                                                            <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                                Patient
+                                                            </span>
+                                                        </a>
+                                                    </div> *@
+                                                    }
+                                                    
+                                                    @* Preleveur and related items - accessible to Biologiste, Administrateur only (NOT GestionAnalyse or Caisse) *@
+                                                        @if (User.IsInRole(EnumRoles.Administrateur.ToString())  || User.IsInRole(EnumRoles.GestionAnalyse.ToString()))
+                                                    {
+                                                    @* <div class="kt-menu-item">
+                                                        <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Analyse" asp-action="Preleveur">
+                                                            <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                                Préleveur
+                                                            </span>
+                                                        </a>
+                                                    </div> *@
+                                                    <div class="kt-menu-item">
+                                                        <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Prelevement" asp-action="Index">
+                                                            <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                                Prélèvement
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="kt-menu-item">
+                                                        <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Prescripteur" asp-action="Index">
+                                                            <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                                Prescripteur
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                    @* <div class="kt-menu-item">
+                                                        <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Tarifanalyseassurance" asp-action="Index">
+                                                            <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                                Tarif des analyses pour assurance
+                                                            </span>
+                                                        </a>
+                                                    </div> *@
+                                                    <div class="kt-menu-item">
+                                                        <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Tarifcategorieassurance" asp-action="Index">
+                                                            <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                                Tarif des catégories pour assurance
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="kt-menu-item">
+                                                        <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Typepeau" asp-action="Index">
+                                                            <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                                Type de peau
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                    @* <div class="kt-menu-item">
+                                                        <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Valeurreference" asp-action="Index">
+                                                            <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                                Valeurs de référence
+                                                            </span>
+                                                        </a>
+                                                    </div> *@
+                                                    }
+                                                </div>
+                                            </div>
+
+                                            }
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Patient" asp-action="Index">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Patients
+                                                    </span>
+                                                </a>
+                                            </div>
+
+
+                                            @* <div class="kt-menu-item" data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
+                                                <div class="kt-menu-link py-2 px-2.5 rounded-md border border-transparent !menu-item-here:bg-transparent">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-here:text-mono kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
+                                                        Consultations
+                                                    </span>
+                                                    <span class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-muted-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
+                                                        <span class="inline-flex kt-menu-item-show:hidden">
+                                                            <i class="ki-filled ki-down text-xs">
+                                                            </i>
+                                                        </span>
+                                                        <span class="hidden kt-menu-item-show:inline-flex">
+                                                            <i class="ki-filled ki-up text-xs">
+                                                            </i>
+                                                        </span>
+                                                    </span>
+                                                </div>
+
+                                               
+                                                <div class="kt-menu-accordion gap-px ps-2.5">
+                                                     <div class="kt-menu-item">
+                                                        <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" href="#">
+                                                            <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                                Analyse
+                                                            </span>
+                                                        </a>
+                                                    </div> 
+
+                                                <div class="kt-menu-item">
+                                                    <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Patient" asp-action="Index">
+                                                        <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                            Patients
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                   
+                                                </div>
+                                            </div> *@
+
+                                        </div>
+                                    </div>
+
+                                }
+                                @* Menu résultat *@
+                                @if (User.IsInRole(EnumRoles.Biologiste.ToString()) || User.IsInRole(EnumRoles.Technicien.ToString()) || User.IsInRole(EnumRoles.Administrateur.ToString()) || User.IsInRole(EnumRoles.GestionResultat.ToString()))
+
+                                {
+                                    <div class="kt-menu-item" data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
+                                        <div class="kt-menu-link gap-2.5 py-2 px-2.5 rounded-md kt-menu-item-hover:bg-transparent kt-menu-item-here:bg-transparent">
+                                            <span class="kt-menu-icon items-start text-muted-foreground text-lg kt-menu-item-here:text-mono kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
+                                                <i class="ki-filled ki-flask">
+                                                </i>
+                                            </span>
+                                            <span class="kt-menu-title font-medium text-sm text-secondary-foreground kt-menu-item-here:text-mono kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
+                                                Résultats
+                                            </span>
+                                            <span class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-muted-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
+                                                <span class="inline-flex kt-menu-item-show:hidden">
+                                                    <i class="ki-filled ki-down text-xs">
+                                                    </i>
+                                                </span>
+                                                <span class="hidden kt-menu-item-show:inline-flex">
+                                                    <i class="ki-filled ki-up text-xs">
+                                                    </i>
+                                                </span>
+                                            </span>
+                                        </div>
+
+
+                                        <div class="kt-menu-accordion gap-px ps-7">
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Enteteresultat" asp-action="Index">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Saisie / Import
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            @* Liste des résultats à valider: visible uniquement pour Biologiste *@
+                                            @if (User.IsInRole(EnumRoles.Biologiste.ToString()))
+                                            {
+                                                @* <div class="kt-menu-item">
+                                                    <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Validationresultat" asp-action="Index">
+                                                        <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                            Liste des résultats à valider
+                                                        </span>
+                                                    </a>
+                                                </div> *@
+                                            }
+                                            @* Liste des résultats à valider: visible uniquement pour Technicien *@
+
+                                            @if (User.IsInRole(EnumRoles.Technicien.ToString()) )
+                                            {
+                                                <div class="kt-menu-item">
+                                                    <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Entetedemande" asp-action="Index">
+                                                        <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                            Demandes
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            }
+
+                                            @if (User.IsInRole(EnumRoles.Biologiste.ToString()) || User.IsInRole(EnumRoles.Administrateur.ToString()))
+
+                                            {
+                                                <div class="kt-menu-item">
+                                                    <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Validationresultat" asp-action="Index">
+                                                        <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                            Validations
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            }
+
+                                            @if (User.IsInRole(EnumRoles.Administrateur.ToString()) || User.IsInRole(EnumRoles.GestionResultat.ToString()) || User.IsInRole(EnumRoles.Technicien.ToString()))
+
+                                            {
+                                            <div class="kt-menu-item" data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
+                                                <div class="kt-menu-link py-2 px-2.5 rounded-md border border-transparent !menu-item-here:bg-transparent">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-here:text-mono kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
+                                                        Paramétrage
+                                                    </span>
+                                                    <span class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-muted-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
+                                                        <span class="inline-flex kt-menu-item-show:hidden">
+                                                            <i class="ki-filled ki-down text-xs">
+                                                            </i>
+                                                        </span>
+                                                        <span class="hidden kt-menu-item-show:inline-flex">
+                                                            <i class="ki-filled ki-up text-xs">
+                                                            </i>
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                                <div class="kt-menu-accordion gap-px ps-2.5">
+                                                    @* <div class="kt-menu-item">
+                                                        <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Parametre" asp-action="Index">
+                                                            <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                                Paramètre
+                                                            </span>
+                                                        </a>
+                                                    </div> *@
+                                                    <div class="kt-menu-item">
+                                                        <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Unite" asp-action="Index">
+                                                            <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                                Unité
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            }
+                                                @* <div class="kt-menu-item">
+                                                    <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Enteteresultat" asp-action="Index">
+                                                        <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                            Liste des Résultats
+                                                        </span>
+                                                    </a>
+                                                </div> *@
+                                            
+                                            @* <div class="kt-menu-item" data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
+                                                <div class="kt-menu-link py-2 px-2.5 rounded-md border border-transparent !menu-item-here:bg-transparent">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-here:text-mono kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
+                                                        Consultations
+                                                    </span>
+                                                    <span class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-muted-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
+                                                        <span class="inline-flex kt-menu-item-show:hidden">
+                                                            <i class="ki-filled ki-down text-xs">
+                                                            </i>
+                                                        </span>
+                                                        <span class="hidden kt-menu-item-show:inline-flex">
+                                                            <i class="ki-filled ki-up text-xs">
+                                                            </i>
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                                <div class="kt-menu-accordion gap-px ps-2.5">
+                                                    <div class="kt-menu-item">
+                                                        <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Enteteresultat" asp-action="Index">
+                                                            <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                                Liste des résultats
+                                                            </span>
+                                                            </a>
+                                                    </div>
+                                                </div>
+                                            </div> *@
+
+                                        </div>
+                                    </div>
+                                }
+
+                                @* Menu gestion stock *@
+                                @if (User.IsInRole(EnumRoles.Gestionnaire.ToString()) || User.IsInRole(EnumRoles.Administrateur.ToString()))
+
+                                {
+                                    <div class="kt-menu-item" data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
+                                        <div class="kt-menu-link gap-2.5 py-2 px-2.5 rounded-md kt-menu-item-hover:bg-transparent kt-menu-item-here:bg-transparent">
+                                            <span class="kt-menu-icon items-start text-muted-foreground text-lg kt-menu-item-here:text-mono kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
+                                                <i class="ki-filled ki-package">
+                                                </i>
+                                            </span>
+                                            <span class="kt-menu-title font-medium text-sm text-secondary-foreground kt-menu-item-here:text-mono kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
+                                                Gestion de stocks
+                                            </span>
+                                            <span class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-muted-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
+                                                <span class="inline-flex kt-menu-item-show:hidden">
+                                                    <i class="ki-filled ki-down text-xs">
+                                                    </i>
+                                                </span>
+                                                <span class="hidden kt-menu-item-show:inline-flex">
+                                                    <i class="ki-filled ki-up text-xs">
+                                                    </i>
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="kt-menu-accordion gap-px ps-7">
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Fournisseur" asp-action="Index">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Fournisseur
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Categoriemateriel" asp-action="Index">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Catégorie
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Materiel" asp-action="Index">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Matériel
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Entetematerielappro" asp-action="Index">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Approvisionnement
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @* Menu données de base *@
+                                 @if (User.IsInRole(EnumRoles.Administrateur.ToString()))
+                                        
+                                {
+                                    <div class="kt-menu-item" data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
+                                        <div class="kt-menu-link gap-2.5 py-2 px-2.5 rounded-md kt-menu-item-hover:bg-transparent kt-menu-item-here:bg-transparent">
+                                            <span class="kt-menu-icon items-start text-muted-foreground text-lg kt-menu-item-here:text-mono kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
+                                                <i class="ki-filled ki-setting-2">
+                                                </i>
+                                            </span>
+                                            <span class="kt-menu-title font-medium text-sm text-secondary-foreground kt-menu-item-here:text-mono kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
+                                                Données de base
+                                            </span>
+                                            <span class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-muted-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
+                                                <span class="inline-flex kt-menu-item-show:hidden">
+                                                    <i class="ki-filled ki-down text-xs">
+                                                    </i>
+                                                </span>
+                                                <span class="hidden kt-menu-item-show:inline-flex">
+                                                    <i class="ki-filled ki-up text-xs">
+                                                    </i>
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="kt-menu-accordion gap-px ps-7">
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Loboratoire" asp-action="Index">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Laboratoire
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Partenaire" asp-action="Index">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Partenaire
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Assurance" asp-action="Index">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Assurance
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Policeassurance" asp-action="Index">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Police d&lsquo;assurance
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Automate" asp-action="Index">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Automate
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                @* Administration système *@
+                                @if (User.IsInRole(EnumRoles.Administrateur.ToString()))
+
+                                {
+                                    <div class="kt-menu-item" data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
+                                        <div class="kt-menu-link gap-2.5 py-2 px-2.5 rounded-md kt-menu-item-hover:bg-transparent kt-menu-item-here:bg-transparent">
+                                            <span class="kt-menu-icon items-start text-muted-foreground text-lg kt-menu-item-here:text-mono kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
+                                                <i class="ki-filled ki-gear">
+                                                </i>
+                                            </span>
+                                            <span class="kt-menu-title font-medium text-sm text-secondary-foreground kt-menu-item-here:text-mono kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
+                                                Administration système
+                                            </span>
+                                            <span class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-muted-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
+                                                <span class="inline-flex kt-menu-item-show:hidden">
+                                                    <i class="ki-filled ki-down text-xs">
+                                                    </i>
+                                                </span>
+                                                <span class="hidden kt-menu-item-show:inline-flex">
+                                                    <i class="ki-filled ki-up text-xs">
+                                                    </i>
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="kt-menu-accordion gap-px ps-7">
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Utilisateur" asp-action="Index">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Utilisateur
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Site" asp-action="Index">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Site
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Caisse" asp-action="Index">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Caisse
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            @*  <div class="kt-menu-item">
+                                            <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Profil" asp-action="Index">
+                                                <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                    Profil
+                                                </span>
+                                            </a>
+                                        </div>  *@
+                                            @*  <div class="kt-menu-item">
+                                            <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Utilisateurprofil" asp-action="Index">
+                                                <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                    Affectation de profil
+                                                </span>
+                                            </a>
+                                        </div>  *@
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Affectationcaisse" asp-action="Index">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Affectation de caisse
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Utilisateurlaboratoire" asp-action="Index">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Affectation d'un laboratoire
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="UtilisateurManyLaboratoire" asp-action="Index">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Affectation de plusieurs laboratoires
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                @* Menu Rapports *@
+                                @if (User.IsInRole(EnumRoles.Topmanager.ToString()) || User.IsInRole(EnumRoles.Caisse.ToString()) || User.IsInRole(EnumRoles.Administrateur.ToString()))
+
+                                {
+                                    <div class="kt-menu-item" data-kt-menu-item-toggle="accordion" data-kt-menu-item-trigger="click">
+                                        <div class="kt-menu-link gap-2.5 py-2 px-2.5 rounded-md kt-menu-item-hover:bg-transparent kt-menu-item-here:bg-transparent">
+                                            <span class="kt-menu-icon items-start text-muted-foreground text-lg kt-menu-item-here:text-mono kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
+                                                <i class="ki-filled ki-chart-line">
+                                                </i>
+                                            </span>
+                                            <span class="kt-menu-title font-medium text-sm text-secondary-foreground kt-menu-item-here:text-mono kt-menu-item-show:text-mono kt-menu-link-hover:text-mono">
+                                                Rapports
+                                            </span>
+                                            <span class="kt-menu-arrow text-muted-foreground kt-menu-item-here:text-muted-foreground kt-menu-item-show:text-foreground kt-menu-link-hover:text-foreground">
+                                                <span class="inline-flex kt-menu-item-show:hidden">
+                                                    <i class="ki-filled ki-down text-xs">
+                                                    </i>
+                                                </span>
+                                                <span class="hidden kt-menu-item-show:inline-flex">
+                                                    <i class="ki-filled ki-up text-xs">
+                                                    </i>
+                                                </span>
+                                            </span>
+                                        </div>
+                                        <div class="kt-menu-accordion gap-px ps-7">
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Rapport" asp-action="RecetteParJour">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Recette journalière
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Rapport" asp-action="RecetteParJourParPartenaire">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Recette journalière par partenaire
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Rapport" asp-action="RecetteParPeriode">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Recette périodique
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Rapport" asp-action="RecetteParPeriodeParPartenaire">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Recette périodique par partenaire
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Rapport" asp-action="FactureAssurance">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Facture d'une assurance
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Rapport" asp-action="FacturePartenaire">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Facture d'un partenaire
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Rapport" asp-action="TitreRecetteParAssurance">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Titre de recette d'une assurance
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link py-2 px-2.5 rounded-md kt-menu-item-active:bg-secondary kt-menu-link-hover:bg-secondary" asp-controller="Rapport" asp-action="TitreRecetteClientPayant">
+                                                    <span class="kt-menu-title text-sm text-foreground kt-menu-item-active:font-medium kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                                        Titre de recette client payant
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                                    </div>
+                                
+                                <!-- End of Primary Menu -->
+                        <!-- Secondary Menu -->
+                       @*  <div>
+                            <h3 class="text-sm text-muted-foreground uppercase ps-5 inline-block mb-3">
+                                Outline
+                            </h3>
+                            <div class="kt-menu flex flex-col w-full gap-1.5 px-3.5" data-kt-menu="true" data-kt-menu-accordion-expand-all="true" id="sidebar_secondary_menu">
+                                <div class="kt-menu-item">
+                                    <a class="kt-menu-link py-1 px-2.5" href="https://keenthemes.com/metronic/tailwind/docs/">
+                                        <span class="rounded-md flex items-center justify-center size-7 bg-coal-black kt-menu-link-hover:border-none me-2">
+                                            <img alt="" class="size-3.5" src="~/assets/media/brand-logos/x-dark.svg" />
+                                        </span>
+                                        <span class="kt-menu-title text-sm text-secondary-foreground kt-menu-item-here:text-mono kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                            keenthemes
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class="kt-menu-item">
+                                    <a class="kt-menu-link py-1 px-2.5" href="https://github.com/keenthemes/">
+                                        <span class="rounded-md flex items-center justify-center size-7 bg-coal-black kt-menu-link-hover:border-none me-2">
+                                            <img alt="" class="size-3.5" src="~/assets/media/brand-logos/slack.svg" />
+                                        </span>
+                                        <span class="kt-menu-title text-sm text-secondary-foreground kt-menu-item-here:text-mono kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                            keenthemes_hub
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class="kt-menu-item">
+                                    <a class="kt-menu-link py-1 px-2.5" href="https://keenthemes.com/metronic/tailwind/docs/">
+                                        <span class="rounded-md flex items-center justify-center size-7 bg-coal-black kt-menu-link-hover:border-none me-2">
+                                            <img alt="" class="size-3.5" src="~/assets/media/brand-logos/figma.svg" />
+                                        </span>
+                                        <span class="kt-menu-title text-sm text-secondary-foreground kt-menu-item-here:text-mono kt-menu-item-active:text-mono kt-menu-link-hover:text-mono">
+                                            metronic
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div> *@
+                        <!-- Secondary Menu -->
+                    </div>
+                </div>
+                <!-- End of Sidebar kt-menu-->
+                <!-- Footer -->
+                <div class="flex flex-center justify-between shrink-0 ps-4 pe-3.5 mb-3.5" id="sidebar_footer">
+                    <!-- User -->
+                    <!-- Bloc supprimé ici -->
+                </div>
+                <!-- End of Footer -->
+            </div>
+            <!-- End of Sidebar -->
+            <!-- Main -->
+            <div class="flex flex-col grow lg:rounded-l-xl bg-background border border-input lg:ms-(--sidebar-width) pt-[--header-height] main-content-mobile">
+                <div class="flex flex-col grow kt-scrollable-y-auto lg:[--kt-scrollbar-width:auto] pt-5" id="scrollable_content">
+                    <main class="grow" role="main">
+                        <!-- Toolbar -->
+                        @* <div class="pb-5">
+                            <!-- Container -->
+                            <div class="kt-container-fixed flex items-center justify-between flex-wrap gap-3">
+                                <div class="flex flex-col flex-wrap gap-1">
+                                    <h1 class="font-medium text-lg text-mono">
+                                    </h1>
+                                    <div class="flex items-center gap-1 text-sm font-normal">
+                                        <a class="text-secondary-foreground hover:text-primary" asp-area="" asp-controller="Home" asp-action="Index">
+                                            Home
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="flex items-center flex-wrap gap-1.5 lg:gap-2.5">
+                                    <a class="kt-btn kt-btn-outline" href="html/demo10/account/home/get-started.html">
+                                        <i class="ki-filled ki-exit-down">
+                                        </i>
+                                        Export
+                                    </a>
+                                    <div class="kt-menu kt-menu-default" data-kt-menu="true">
+                                        <div class="kt-menu-item" data-kt-menu-item-offset="0, 0" data-kt-menu-item-placement="bottom-end" data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="hover">
+                                            <button class="kt-menu-toggle kt-btn kt-btn-outline flex-nowrap">
+                                                <span class="flex items-center me-1">
+                                                    <i class="ki-filled ki-calendar text-base!">
+                                                    </i>
+                                                </span>
+                                                <span class="hidden md:inline text-nowrap">
+                                                    September, 2024
+                                                </span>
+                                                <span class="inline md:hidden text-nowrap">
+                                                    Sep, 2024
+                                                </span>
+                                                <span class="flex items-center lg:ms-4">
+                                                    <i class="ki-filled ki-down text-xs!">
+                                                    </i>
+                                                </span>
+                                            </button>
+                                            <div class="kt-menu-dropdown w-48 py-2 kt-scrollable-y max-h-[250px]">
+                                                <div class="kt-menu-item">
+                                                    <a class="kt-menu-link" href="#">
+                                                        <span class="kt-menu-title">
+                                                            January, 2024
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="kt-menu-item">
+                                                    <a class="kt-menu-link" href="#">
+                                                        <span class="kt-menu-title">
+                                                            February, 2024
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="kt-menu-item active">
+                                                    <a class="kt-menu-link" href="#">
+                                                        <span class="kt-menu-title">
+                                                            March, 2024
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="kt-menu-item">
+                                                    <a class="kt-menu-link" href="#">
+                                                        <span class="kt-menu-title">
+                                                            April, 2024
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="kt-menu-item">
+                                                    <a class="kt-menu-link" href="#">
+                                                        <span class="kt-menu-title">
+                                                            May, 2024
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="kt-menu-item">
+                                                    <a class="kt-menu-link" href="#">
+                                                        <span class="kt-menu-title">
+                                                            June, 2024
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="kt-menu-item">
+                                                    <a class="kt-menu-link" href="#">
+                                                        <span class="kt-menu-title">
+                                                            July, 2024
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="kt-menu-item">
+                                                    <a class="kt-menu-link" href="#">
+                                                        <span class="kt-menu-title">
+                                                            August, 2024
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="kt-menu-item">
+                                                    <a class="kt-menu-link" href="#">
+                                                        <span class="kt-menu-title">
+                                                            September, 2024
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="kt-menu-item">
+                                                    <a class="kt-menu-link" href="#">
+                                                        <span class="kt-menu-title">
+                                                            October, 2024
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="kt-menu-item">
+                                                    <a class="kt-menu-link" href="#">
+                                                        <span class="kt-menu-title">
+                                                            November, 2024
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="kt-menu-item">
+                                                    <a class="kt-menu-link" href="#">
+                                                        <span class="kt-menu-title">
+                                                            December, 2024
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End of Container -->
+                        </div> *@
+                        <!-- End of Toolbar -->
+                        <!-- Container -->
+                        <div class="kt-container-fixed" style="margin-top:60px;">
+                            <div class="grid gap-5 lg:gap-7.5 lg\:pt-10">
+                                @RenderBody()
+                            </div>
+                        </div>
+                        <!-- End of Container -->
+                    </main>
+                    <!-- Footer -->
+                    <footer class="footer">
+                        <!-- Container -->
+                        <div class="kt-container-fixed">
+                            <div class="flex flex-col md:flex-row justify-center md:justify-between items-center gap-3 py-5">
+                                <div class="flex order-2 md:order-1 gap-2 font-normal text-sm">
+                                    <span class="text-muted-foreground">
+                                        2025©
+                                    </span>
+                                    <a class="text-secondary-foreground hover:text-primary" href="https://keenthemes.com">
+                                        Solutech Informatique et Services
+                                    </a>
+                                </div>
+                                <nav class="flex order-1 md:order-2 gap-4 font-normal text-sm text-secondary-foreground">
+                                    @* <a class="hover:text-primary" href="https://keenthemes.com/metronic/tailwind/docs">
+                                        Docs
+                                    </a>
+                                    <a class="hover:text-primary" href="https://1.envato.market/Vm7VRE">
+                                        Purchase
+                                    </a>
+                                    <a class="hover:text-primary" href="https://keenthemes.com/metronic/tailwind/docs/getting-started/license">
+                                        FAQ
+                                    </a>
+                                    <a class="hover:text-primary" href="https://devs.keenthemes.com">
+                                        Support
+                                    </a>
+                                    <a class="hover:text-primary" href="https://keenthemes.com/metronic/tailwind/docs/getting-started/license">
+                                        License
+                                    </a> *@
+
+                                    
+
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- End of Container -->
+                    </footer>
+                    <!-- End of Footer -->
+                </div>
+            </div>
+            <!-- End of Main -->
+        </div>
+        <!-- End of Wrapper -->
+    </div>
+    <!-- End of Base -->
+    <!--Core bundle script-->
+    <script src="~/metronic/dist/assets/js/core.bundle.js">
+    </script>
+    <!--Vendor script -->
+    <script src="~/metronic/dist/assets/vendors/ktui/ktui.min.js">
+    </script>
+
+    <script src="~/metronic/dist/assets/vendors/apexcharts/apexcharts.min.js">
+    </script>
+    <script src="~/metronic/dist/assets/js/widgets/general.js">
+    </script>
+
+    @* Les scripts spécifiques aux pages sont chargés dans chaque vue individuelle *@
+
+    <!-- Load jQuery first -->
+    <script src="~/lib/jquery-3.7.1.min.js"></script>
+    
+    <!-- Load jQuery validation plugins -->
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    
+    <!-- Load third-party libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/lang/summernote-fr-FR.min.js"></script>
+    <script src="https://cdn.datatables.net/2.3.2/js/dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.9.179/pdf.min.js"></script>
+    
+    <!-- Enhanced Dropdown Menu Script - Global Application -->
+    <script src="~/js/enhanced-dropdown-menu.js"></script>
+    <script>
+        function updateThemeIcon() {
+            const icon = document.getElementById('theme-icon');
+            if (document.documentElement.classList.contains('dark')) {
+                icon.textContent = 'light_mode';
+            } else {
+                icon.textContent = 'dark_mode';
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            const btn = document.getElementById('theme-toggle');
+            if (btn) {
+                btn.addEventListener('click', function () {
+                    document.documentElement.classList.toggle('dark');
+                    if (document.documentElement.classList.contains('dark')) {
+                        localStorage.setItem('kt-theme', 'dark');
+                    } else {
+                        localStorage.setItem('kt-theme', 'light');
+                    }
+                    updateThemeIcon();
+                });
+                updateThemeIcon();
+            }
+
+            // Mobile menu toggle functionality
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const mobileOverlay = document.getElementById('mobile-overlay');
+
+            function toggleMobileMenu() {
+                console.log('Toggle mobile menu called');
+                const isOpen = sidebar.classList.contains('open');
+                console.log('Menu is currently open:', isOpen);
+                
+                if (isOpen) {
+                    // Close menu
+                    sidebar.classList.remove('open');
+                    mobileOverlay.classList.remove('show');
+                } else {
+                    // Open menu
+                    sidebar.classList.add('open');
+                    mobileOverlay.classList.add('show');
+                }
+            }
+
+            // Toggle menu when hamburger button is clicked
+            if (mobileMenuToggle) {
+                mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+            }
+
+            // Close menu when overlay is clicked
+            if (mobileOverlay) {
+                mobileOverlay.addEventListener('click', toggleMobileMenu);
+            }
+
+            // Close menu when clicking on menu links (on mobile)
+            const menuLinks = sidebar.querySelectorAll('a[href]');
+            menuLinks.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    // Only close on mobile (screen width < 1024px)
+                    if (window.innerWidth < 1024) {
+                        setTimeout(toggleMobileMenu, 100); // Small delay for better UX
+                    }
+                });
+            });
+
+            // Handle window resize to ensure proper state
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 1024) {
+                    // Desktop view - ensure menu is closed
+                    sidebar.classList.remove('open');
+                    mobileOverlay.classList.remove('show');
+                }
+            });
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,147 @@
+@model IEnumerable<ProlabWeb.Db.Affectationcaisse>
+
+@{
+    ViewData["Title"] = "Affectations caisse";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="grid grid-cols-2 gap-5 mb-2">
+    <div>
+        <h1 class="font-bold">Liste des affectations caisse</h1>
+    </div>
+</div>
+<div class="flex items-center gap-2 mb-4">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+<div class="min-w-full">
+    <div class="grid gap-5">
+        <div class="grid grid-cols-3 gap-5 mb-4">
+            <div>
+                <label class="kt-input border-t border-primary">
+                    <span class="material-symbols-outlined">search</span>
+                    <input class="kt-input" placeholder="Recherche" type="text" id="search-affectationcaisse" data-kt-affectationcaisse-table-filter="search">
+                </label>
+            </div>
+            <div></div>
+            <div class="inline-flex justify-end grow gap-5">
+                <a asp-action="Create" class="kt-btn kt-btn-primary">
+                    <span class="material-symbols-outlined align-middle">add</span> Nouvelle affectation
+                </a>
+
+            </div>
+        </div>
+        <div id="kt_spinner_affectationcaisse_index" style="visibility:hidden;">
+            <span class="spinner-border spinner-border-sm"></span> Chargement...
+        </div>
+        <div class="kt-scrollable-x-auto">
+            <form method="post">
+                @Html.AntiForgeryToken()
+                <table id="kt_table_affectationcaisse_index" class="kt-table table-auto kt-table-border min-w-full">
+                    <thead>
+                        <tr>
+                            <th><span class="kt-table-col-label font-bold">Caisse</span></th>
+                            <th><span class="kt-table-col-label font-bold">Site</span></th>
+                            <th><span class="kt-table-col-label font-bold">Caissier</span></th>
+                            <th><span class="kt-table-col-label font-bold">Date</span></th>
+                            <th class="w-[60px]"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="font-normal text-foreground">@Html.DisplayFor(modelItem => item.Caisse.Nom)</td>
+                                <td class="font-normal text-foreground">@Html.DisplayFor(modelItem => item.Caisse.CodesiteNavigation.Name)</td>
+                                <td class="font-normal text-foreground">@Html.DisplayFor(modelItem => item.Utilisateur.Nom)</td>
+                                <td class="font-normal text-foreground">@Html.DisplayFor(modelItem => item.Date)</td>
+                                <td class="text-center">
+                                    <div data-kt-dropdown="true" data-kt-dropdown-placement="bottom-end" data-kt-dropdown-placement-rtl="bottom-start" data-kt-dropdown-trigger="click" data-kt-dropdown-initialized="true" class="">
+                                        <button class="kt-dropdown-toggle kt-btn kt-btn-icon kt-btn-outline" data-kt-dropdown-toggle="true">
+                                            <i class="ki-filled ki-dots-vertical">
+                                            </i>
+                                        </button>
+                                        <div class="kt-dropdown-menu w-full max-w-[220px] hidden" data-kt-dropdown-menu="true" style="opacity: 0;">
+                                            <ul class="kt-dropdown-menu-sub">
+                                                <li>
+                                                    <a class="kt-dropdown-menu-link h-8" 
+                                                        asp-action="Edit" 
+                                                        asp-route-id="@item.Affectationcaisseid" 
+                                                        data-kt-dropdown-dismiss="true">
+                                                        <i class="ki-filled ki-pencil">
+                                                        </i>
+                                                        Modifier
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a class="kt-dropdown-menu-link h-8" 
+                                                        asp-action="Details" 
+                                                        asp-route-id="@item.Affectationcaisseid" 
+                                                        data-kt-dropdown-dismiss="true">
+                                                        <i class="ki-filled ki-eye">
+                                                        </i>
+                                                        Détails
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <button class="kt-dropdown-menu-link h-8" 
+                                                        data-id="@item.Affectationcaisseid"
+                                                        data-kt-affectationcaisses-table-filter="delete_row"
+                                                        data-kt-dropdown-dismiss="true"
+                                                        onclick="return KTAffectationcaisseList.deleteRow(this, event);">
+                                                        <i class="ki-filled ki-trash">
+                                                        </i>
+                                                        Dissocier
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/app/affectationcaisse/index.js"></script>
+    <script>
+        $(document).ready(function() {
+            @if (TempData["AffectationcaisseCree"] != null)
+            {
+                <text>
+                var msg = @Html.Raw(Json.Serialize(TempData["AffectationcaisseCree"]));
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Succès',
+                    html: msg,
+                    confirmButtonText: 'OK'
+                });
+                </text>
+            }
+            @if (TempData["AffectationcaisseModifie"] != null)
+            {
+                <text>
+                var msgModif = @Html.Raw(Json.Serialize(TempData["AffectationcaisseModifie"]));
+                if (msgModif === "success") {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Succès',
+                        text: 'Modifications enregistrées avec succès',
+                        confirmButtonText: 'OK'
+                    });
+                } else if (msgModif === "error") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erreur',
+                        text: "Une erreur est survenue. Les modifications n'ont pas été enregistrées",
+                        confirmButtonText: 'OK'
+                    });
+                }
+                </text>
+            }
+        });
+    </script>
+}

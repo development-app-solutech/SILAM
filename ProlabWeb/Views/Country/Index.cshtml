@@ -1,0 +1,130 @@
+@model IEnumerable<ProlabWeb.Db.Country>
+
+@{
+    ViewData["Title"] = "Pays";
+}
+
+<div class="grid grid-cols-2 gap-5">
+    <div>
+        <h1 class="font-bold">Liste des pays</h1>
+    </div>
+</div>
+<div class="flex items-center gap-2">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+
+<div class="min-w-full">
+    <div class="grid gap-5" data-kt-datatable="true" data-kt-datatable-page-size="10">
+        <div class="grid gap-5">
+            <div class="inline-flex justify-end grow gap-5">
+                <a asp-action="Create" class="kt-btn kt-btn-primary">
+                    <span class="material-symbols-outlined">add</span> Nouveau pays
+                </a>
+
+            </div>
+        </div>
+        <div class="kt-scrollable-x-auto">
+            <table id="kt_table_country_index" class="kt-table table-auto kt-table-border">
+                <thead>
+                    <tr>
+                        <th class="w-[60px]">
+                            <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-check="true" type="checkbox">
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">@Html.DisplayNameFor(model => model.First().Countryisocode3)</span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">@Html.DisplayNameFor(model => model.First().Name)</span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">@Html.DisplayNameFor(model => model.First().Currencycode)</span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">@Html.DisplayNameFor(model => model.First().Internetdomain)</span>
+                            </span>
+                        </th>
+                        <th class="w-[60px]"></th>
+                    </tr>
+                </thead>
+
+                <div id="kt_spinner_country_index" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="display: none;">
+                    <div class="kt-datatable-loading">
+                        <svg class="animate-spin -ml-1 h-5 w-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Loading...
+                    </div>
+                </div>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-start">
+                                <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true" type="checkbox" value="1">
+                            </td>
+                            <td class="font-normal text-foreground">
+                                @Html.DisplayFor(modelItem => item.Countryisocode3)
+                            </td>
+                            <td class="font-normal text-foreground">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td class="font-normal text-foreground">
+                                @Html.DisplayFor(modelItem => item.Currencycode)
+                            </td>
+                            <td class="font-normal text-foreground">
+                                @Html.DisplayFor(modelItem => item.Internetdomain)
+                            </td>
+                            <td class="text-center">
+                                <div class="kt-menu flex-inline" data-kt-menu="true">
+                                    <div class="kt-menu-item kt-menu-item-dropdown" data-kt-menu-item-offset="0, 10px" data-kt-menu-item-placement="bottom-end" data-kt-menu-item-placement-rtl="bottom-start" data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click">
+                                        <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
+                                            <i class="ki-filled ki-dots-vertical text-lg"></i>
+                                        </button>
+                                        <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]" data-kt-menu-dismiss="true">
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link" asp-action="Edit" asp-route-id="@item.Countryisocode2">
+                                                    <span class="kt-menu-icon">
+                                                        <i class="ki-filled ki-pencil"></i>
+                                                    </span>
+                                                    <span class="kt-menu-title">Modifier</span>
+                                                </a>
+                                            </div>
+                                            @* <div class="kt-menu-item">
+                                                <a class="kt-menu-link" asp-action="Delete" asp-route-id="@item.Countryisocode2" data-kt-countries-table-filter="delete_row" data-id="@item.Countryisocode2">
+                                                    <span class="kt-menu-icon">
+                                                        <i class="ki-filled ki-trash"></i>
+                                                    </span>
+                                                    <span class="kt-menu-title">Supprimer</span>
+                                                </a>
+                                            </div> *@
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function() {
+            // Initialisation JS spécifique si besoin
+        });
+    </script>
+}

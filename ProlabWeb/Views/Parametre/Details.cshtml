@@ -1,0 +1,39 @@
+@model ProlabWeb.Db.Parametre
+
+@{
+    ViewData["Title"] = "Détail du paramètre";
+}
+
+<div class="grid grid-cols-2 gap-5 mb-5">
+    <div>
+        <h1 class="font-bold">@ViewData["Title"]</h1>
+    </div>
+    <div class="text-end">
+        <a asp-action="Index" class="kt-btn kt-btn-light">Retour à la liste</a>
+    </div>
+</div>
+<div class="flex items-center gap-2 mb-4">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+<div class="kt-scrollable-x-auto mb-5">
+    <table class="kt-table table-auto kt-table-border min-w-full">
+        <tbody>
+            <tr><th>Nom</th><td>@Model.Nom</td></tr>
+            <tr><th>Code</th><td>@Model.Code</td></tr>
+            <tr><th>Masquer</th><td>@(Model.Masquerdansrapport ? "Oui" : "Non")</td></tr>
+            <tr><th>Formule</th><td>@Model.Formuleautomate</td></tr>
+            <tr><th>Unité Standard</th><td>@Model.Codeunite</td></tr>
+            <tr><th>Unité SI</th><td>@Model.Codeunitesi</td></tr>
+            <tr><th>Décimales Résultat Standard</th><td>@Model.Decimalresultatstandard</td></tr>
+            <tr><th>Décimales Résultat SI</th><td>@Model.Decimalresultatsi</td></tr>
+            <tr><th>Facteur Conversion</th><td>@Model.Facteurconversionsi</td></tr>
+            <tr><th>Ordre Affichage</th><td>@Model.Ordreaffichage</td></tr>
+            <tr><th>Value builder</th><td>@Model.Valuebuilder</td></tr>
+            <tr><th>Analyse</th><td>@Model.IdanalyseNavigation?.Nom</td></tr>
+        </tbody>
+    </table>
+</div>
+<div class="flex flex-row gap-4 justify-end">
+    <a asp-action="Edit" asp-route-id="@Model?.Parametreid" class="kt-btn kt-btn-warning">Modifier</a>
+    <a asp-action="Index" class="kt-btn kt-btn-light">Retour à la liste</a>
+</div>

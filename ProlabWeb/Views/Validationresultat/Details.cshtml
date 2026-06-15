@@ -1,0 +1,348 @@
+@model ProlabWeb.ViewModels.ValidationresultatVM
+@{
+    ViewData["Title"] = "Validation du résultat d'analyse";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="grid grid-cols-2 gap-5">
+    <div>
+        <h1 class="font-bold">@ViewData["Title"]</h1>
+    </div>
+    <div class="text-end">
+        <a asp-action="Index" class="text-primary">Retour à la liste</a>
+    </div>
+</div>
+<div class="flex items-center gap-2">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+
+<div class="min-w-full mb-5">
+    <form asp-action="Details" asp-route-id="@Model.Enteteresultatid" method="post" enctype="multipart/form-data" class="flex flex-col gap-5">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Enteteresultatid" />
+        <input type="hidden" asp-for="Codesite" />
+        <input type="hidden" asp-for="SiteNom" />
+        <input type="hidden" asp-for="Technicienid" />
+        <input type="hidden" asp-for="TechnicienNom" />
+        <input type="hidden" asp-for="TechnicienPrenom" />
+        <input type="hidden" asp-for="Entetedemandeid" />
+        <input type="hidden" asp-for="Biologisteid" />
+        <input type="hidden" asp-for="BiologisteNomComplet" />
+        <input type="hidden" asp-for="Idanalyse" />
+        <input type="hidden" asp-for="AnalyseNom" />
+        <input type="hidden" asp-for="Date" />
+        <input type="hidden" asp-for="Statut" />
+        <input type="hidden" asp-for="DemandeNumero" />
+        <input type="hidden" asp-for="DemandeDate" />
+        <input type="hidden" asp-for="PatientNom" />
+        <input type="hidden" asp-for="PatientPrenom" />
+        <input type="hidden" asp-for="PatientCode" />
+        <input type="hidden" asp-for="PrescripteurNom" />
+        <input type="hidden" asp-for="AssuranceNom" />
+        <input type="hidden" asp-for="AssuranceTaux" />
+        @if (TempData["Error"] != null)
+        {
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                <strong>Erreur:</strong> @TempData["Error"]
+            </div>
+        }
+        @if (TempData["Success"] != null)
+        {
+            <div id="success-message" data-message="@TempData["Success"]" style="display: none;"></div>
+        }
+        <div asp-validation-summary="All" class="text-red-500 bg-red-100 border border-red-400 p-3 rounded mb-4"></div>
+        <!-- Informations principales -->
+        <div class="grid grid-cols-3 gap-10 mb-5">
+            <div class="flex flex-col gap-3">
+                <label class="kt-form-label text-mono">Site</label>
+                <span class="kt-input">@Model.SiteNom</span>
+            </div>
+            <div class="flex flex-col gap-3">
+                <label class="kt-form-label text-mono">Technicien</label>
+                <span class="kt-input">@Model.TechnicienNom @Model.TechnicienPrenom</span>
+            </div>
+            <div class="flex flex-col gap-3">
+                <label class="kt-form-label text-mono" asp-for="Biologisteid"></label>
+                <select asp-for="Biologisteid" class="kt-input" asp-items="ViewBag.Biologisteid"></select>
+                <span asp-validation-for="Biologisteid" class="text-red-500"></span>
+            </div>
+        </div>
+        <!-- Détail de la demande et analyse -->
+        <div class="grid grid-cols-1 gap-5 mb-5">
+            <div class="flex flex-col gap-3">
+                <label class="kt-form-label text-mono">Demande</label>
+                <span class="text-xs text-gray-500">Format : numéro - date - patient - prescripteur - assurance</span>
+                <span class="kt-input">
+                    @Model.DemandeNumero - @Model.DemandeDate?.ToString("dd/MM/yyyy") - @Model.PatientNom @Model.PatientPrenom (@Model.PatientCode) - @Model.PrescripteurNom - @Model.AssuranceNom (@Model.AssuranceTaux?.ToString("0.##")%)
+                </span>
+            </div>
+            <div class="flex flex-col gap-3">
+                <label class="kt-form-label text-mono">Analyse</label>
+                <span class="kt-input">@Model.AnalyseNom</span>
+            </div>
+        </div>
+        <!-- Date résultat -->
+        <div class="flex flex-col gap-3 mb-5">
+            <label class="kt-form-label text-mono">Date résultat</label>
+            <span class="kt-input">@Model.Date.ToString("dd/MM/yyyy")</span>
+        </div>
+        
+        <!-- Informations sur les échantillons -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-5 mb-5">
+            <div class="flex flex-col gap-3">
+                <label class="kt-form-label text-mono" asp-for="NatureEchantillons"></label>
+                <span class="kt-input">@(Model.NatureEchantillons ?? "Non spécifié")</span>
+            </div>
+            <div class="flex flex-col gap-3">
+                <label class="kt-form-label text-mono" asp-for="DatePrelevement"></label>
+                <span class="kt-input">
+                    @if (Model.DatePrelevement.HasValue)
+                    {
+                        @Model.DatePrelevement.Value.ToString("dd/MM/yyyy HH:mm")
+                    }
+                    else
+                    {
+                        <span class="text-gray-500">Non enregistrée</span>
+                    }
+                </span>
+            </div>
+            <div class="flex flex-col gap-3">
+                <label class="kt-form-label text-mono" asp-for="HeureArrivee"></label>
+                <span class="kt-input">
+                    @if (Model.HeureArrivee.HasValue)
+                    {
+                        @Model.HeureArrivee.Value.ToString("dd/MM/yyyy HH:mm")
+                    }
+                    else
+                    {
+                        <span class="text-gray-500">Non enregistrée</span>
+                    }
+                </span>
+            </div>
+            @* <div class="flex flex-col gap-3"> 
+                <label class="kt-form-label text-mono" asp-for="LieuPrelevement"></label>
+                <span class="kt-input">@(Model.LieuPrelevement ?? "Non spécifié")</span>
+            </div> *@
+        </div>
+        
+        <!-- Tableau de 7 colonnes -->
+        <div class="grid grid-cols-1 gap-10">
+            <div class="text-center">
+                <h2 class="font-bold text-lg">Liste des paramètres</h2>
+            </div>
+            <div class="kt-scrollable-x-auto">
+                <table class="kt-table table-auto kt-table-border min-w-full">
+                    <thead>
+                        <tr>
+                            <th>Nom/code</th>
+                            <th>Unité</th>
+                            <th>Résultat</th>
+                            <th>Unité SI</th>
+                            <th>Résultat SI</th>
+                            <th>Commentaire</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @for (int i = 0; i < Model.Parametres.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                <input type="hidden" asp-for="Parametres[i].Parametreid" />
+                                <div class="flex flex-col">
+                                    <span class="font-bold">@Model.Parametres[i].Nom</span>
+                                    <input type="hidden" asp-for="Parametres[i].Nom" />
+                                    <span class="text-sm text-gray-500">@Model.Parametres[i].Code</span>
+                                    <input type="hidden" asp-for="Parametres[i].Code" />
+                                </div>
+                            </td>
+                            <td>
+                                <span>@Model.Parametres[i].Unite</span>
+                                <input type="hidden" asp-for="Parametres[i].Unite" />
+                            </td>
+                            <td>
+                                <span>@Model.Parametres[i].Resultat</span>
+                                <input type="hidden" asp-for="Parametres[i].Resultat" />
+                            </td>
+                            <td>
+                                <span>@Model.Parametres[i].UniteSI</span>
+                                <input type="hidden" asp-for="Parametres[i].UniteSI" />
+                            </td>
+                            <td>
+                                <span>@Model.Parametres[i].Resultatsi</span>
+                                <input type="hidden" asp-for="Parametres[i].Resultatsi" />
+                            </td>
+                            <td>
+                                <span>@Model.Parametres[i].Commentaire</span>
+                                <input type="hidden" asp-for="Parametres[i].Commentaire" />
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Section Signature du biologiste -->
+        <div class="grid grid-cols-1 gap-5 mt-5">
+            <div class="flex flex-col gap-3">
+                <label class="kt-form-label text-mono">Biologiste validateur</label>
+                <span class="kt-input">@Model.BiologisteNomComplet</span>
+            </div>
+            
+            <!-- Signature automatique ou manuelle -->
+            @if (Model.HasBiologisteSignature)
+            {
+                <!-- Signature récupérée automatiquement depuis Signatureutilisateur -->
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono">Signature du biologiste (automatique)</label>
+                    <div class="p-4 border border-green-300 rounded-lg bg-green-50">
+                        <img src="@Model.BiologisteSignatureBase64" alt="Signature biologiste" class="max-w-xs max-h-32 border rounded" />
+                        <small class="text-green-600 block mt-2">✓ Signature récupérée automatiquement depuis votre profil</small>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <!-- Pas de signature en base - proposer de signer avec la souris -->
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono">Signature du biologiste</label>
+                    <div class="p-4 border border-orange-300 rounded-lg bg-orange-50">
+                        <div class="mb-3">
+                            <small class="text-orange-600">⚠️ Aucune signature trouvée dans votre profil. Vous pouvez signer avec la souris ci-dessous :</small>
+                        </div>
+                        
+                        <!-- Canvas pour signature -->
+                        <div class="mb-4">
+                            <label class="kt-form-label text-mono">Dessiner votre signature :</label>
+                            <div class="border border-gray-300 rounded-lg p-4 bg-white">
+                                <canvas id="signatureCanvas" width="400" height="150" class="border border-gray-400 cursor-crosshair"></canvas>
+                                <div class="mt-2 flex gap-2">
+                                    <button type="button" id="clearCanvasBtn" class="px-3 py-1 bg-gray-500 text-white rounded hover:bg-gray-600">
+                                        Effacer
+                                    </button>
+                                </div>
+                            </div>
+                            <input type="hidden" asp-for="CanvasSignatureData" id="canvasSignatureData" />
+                            <small class="text-gray-600 block mt-1">Note : Cette signature sera automatiquement enregistrée dans votre profil pour les prochaines validations.</small>
+                        </div>
+                    </div>
+                </div>
+            }
+            
+            <!-- Les colonnes Biologistesignature et Biologistesignatureextension ont été supprimées de la BD -->
+            <!-- Plus besoin d'affichage de compatibilité avec l'ancien système -->
+        </div>
+        
+        <!-- Ligne Interpretation déplacée ici -->
+        <div class="flex flex-col gap-3 mt-5">
+            <label class="kt-form-label text-mono" asp-for="Interpretation"></label>
+            <textarea class="kt-input w-full" asp-for="Interpretation" id="interpretationEditor" placeholder="Saisir votre interprétation..." rows="6" style="min-height: 120px; resize: vertical;"></textarea>
+            <span asp-validation-for="Interpretation" class="text-red-500"></span>
+        </div>
+        <!-- Bouton Valider -->
+        <div class="flex gap-5 mt-5">
+            <button type="submit" class="kt-btn kt-btn-primary">
+                <span class="material-symbols-outlined">
+                    check_circle
+                </span> Valider
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function() {
+            
+            // Check for success message and show dialog
+            var successMessage = $('#success-message');
+            if (successMessage.length > 0) {
+                var message = successMessage.data('message');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Validation réussie !',
+                    text: message,
+                    showConfirmButton: true,
+                    confirmButtonText: 'Retourner à la liste',
+                    confirmButtonColor: '#10B981'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '@Url.Action("Index", "Validationresultat")';
+                    }
+                });
+            }
+            
+            // Debug form submission
+            $('form').on('submit', function(e) {
+                console.log('Form is being submitted');
+                console.log('Form data:', $(this).serialize());
+                // Show loading indicator
+                $('button[type="submit"]').prop('disabled', true).html('<span class="material-symbols-outlined">hourglass_empty</span> Validation en cours...');
+            });
+            
+            // === GESTION DU CANVAS DE SIGNATURE ===
+            const canvas = document.getElementById('signatureCanvas');
+            const ctx = canvas ? canvas.getContext('2d') : null;
+            let isDrawing = false;
+            
+            if (canvas && ctx) {
+                // Configuration du canvas
+                ctx.strokeStyle = '#000';
+                ctx.lineWidth = 2;
+                ctx.lineCap = 'round';
+                
+                // Événements souris
+                canvas.addEventListener('mousedown', startDrawing);
+                canvas.addEventListener('mousemove', draw);
+                canvas.addEventListener('mouseup', stopDrawing);
+                canvas.addEventListener('mouseout', stopDrawing);
+                
+                // Événements tactiles (mobiles/tablettes)
+                canvas.addEventListener('touchstart', handleTouch);
+                canvas.addEventListener('touchmove', handleTouch);
+                canvas.addEventListener('touchend', stopDrawing);
+                
+                function startDrawing(e) {
+                    isDrawing = true;
+                    const rect = canvas.getBoundingClientRect();
+                    ctx.beginPath();
+                    ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+                }
+                
+                function draw(e) {
+                    if (!isDrawing) return;
+                    const rect = canvas.getBoundingClientRect();
+                    ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+                    ctx.stroke();
+                }
+                
+                function stopDrawing() {
+                    if (isDrawing) {
+                        isDrawing = false;
+                        // Sauvegarder la signature en base64
+                        const dataURL = canvas.toDataURL('image/png');
+                        $('#canvasSignatureData').val(dataURL);
+                    }
+                }
+                
+                function handleTouch(e) {
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 
+                                                      e.type === 'touchmove' ? 'mousemove' : 'mouseup', {
+                        clientX: touch.clientX,
+                        clientY: touch.clientY
+                    });
+                    canvas.dispatchEvent(mouseEvent);
+                }
+                
+                // Bouton effacer
+                $('#clearCanvasBtn').on('click', function() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    $('#canvasSignatureData').val('');
+                });
+            }
+        });
+    </script>
+} 

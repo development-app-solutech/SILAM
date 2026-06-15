@@ -1,0 +1,193 @@
+﻿@model ProlabWeb.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Tableau de bord";
+}
+
+<div class="dashboard-container">
+    <div class="main-title">
+        <h2>Tableau de bord</h2>
+    </div>
+    <div class="main-card">
+        <div class="card">
+            <div class="card-inner">
+                <h3 class="card-label">PATIENTS</h3>
+                <span class="material-icons-outlined">
+                    people
+                </span>
+            </div>
+            <h1 class="card-total">@Model.PatientsCount</h1>
+
+            @if (User.IsInRole(EnumRoles.Administrateur.ToString()) || User.IsInRole(EnumRoles.Technicien.ToString()))
+
+                   {
+            <div class="card-info">
+                 <a asp-controller="Patient" asp-action="Index">
+                    Plus d&lsquo;infos <span class="material-symbols-outlined">arrow_circle_right</span>
+                </a> 
+                </div>
+            }
+            else
+            {
+                <div class="card-info">
+                    Plus d&lsquo;infos
+              </div>
+            }
+        </div>
+        <div class="card">
+            <div class="card-inner">
+                <h3 class="card-label">DEMANDES</h3>
+                <span class="material-icons-outlined">
+                    assignment
+                </span>
+            </div>
+            <h1 class="card-total">@Model.DemandesCount</h1>
+
+            @if (User.IsInRole(EnumRoles.Administrateur.ToString()) || User.IsInRole(EnumRoles.Technicien.ToString()) || User.IsInRole(EnumRoles.Biologiste.ToString()))
+                    {
+            <div class="card-info">
+                <a asp-controller="Entetedemande" asp-action="Index">
+                    Plus d&lsquo;infos <span class="material-symbols-outlined">arrow_circle_right</span>
+                </a>
+            </div>
+                    }
+            else
+            {
+                <div class="card-info">
+                    Plus d&lsquo;infos
+                </div>
+            }
+        </div>
+        <div class="card">
+            <div class="card-inner">
+                <h3 class="card-label">RESULTATS</h3>
+                <span class="material-icons-outlined">
+                    science
+                </span>
+            </div>
+            <h1 class="card-total">@Model.ResultatsCount</h1>
+
+             @if (User.IsInRole(EnumRoles.Administrateur.ToString()) || User.IsInRole(EnumRoles.Technicien.ToString()))
+
+                   {
+
+            <div class="card-info">
+                <a asp-controller="Enteteresultat" asp-action="Index">
+                    Plus d&lsquo;infos <span class="material-symbols-outlined">arrow_circle_right</span>
+                </a>
+            </div>
+                   }
+            else
+            {
+                <div class="card-info">
+                    Plus d&lsquo;infos
+                </div>
+            }
+        </div>
+        <div class="card">
+            <div class="card-inner">
+                <h3 class="card-label">VALIDATIONS</h3>
+                <span class="material-icons-outlined">
+                    verified
+                </span>
+            </div>
+            <h1 class="card-total">@Model.ValidationsCount</h1>
+
+            @if (User.IsInRole(EnumRoles.Administrateur.ToString()) || User.IsInRole(EnumRoles.Technicien.ToString()) || User.IsInRole(EnumRoles.Biologiste.ToString()))
+
+                   {
+            <div class="card-info">
+                <a asp-controller="Validationresultat" asp-action="Index">
+                    Plus d&lsquo;infos <span class="material-symbols-outlined">arrow_circle_right</span>
+                </a>
+            </div>
+                   }
+            else
+            {
+                <div class="card-info">
+                    Plus d&lsquo;infos
+                </div>
+            }
+        </div>
+    </div>
+
+    <h1 class="table-title">Liste des 10 derniers résultats médicaux</h1>
+
+    <div class="table-container">
+        <table class="results-table">
+            <thead>
+                <tr>
+                    <th>
+                        <span>Numéro demande</span>
+                    </th>
+                    <th>
+                        <span>Date</span>
+                    </th>
+                    <th>
+                        <span>Patient</span>
+                    </th>
+                    <th>
+                        <span>Prescripteur</span>
+                    </th>
+                    <th>
+                        <span>Analyse</span>
+                    </th>
+                    @* <th>
+                        <span>Statut</span>
+                    </th> *@
+                        </tr>
+                    </thead>
+            <tbody>
+                @foreach (var item in Model.DerniersResultats)
+                {
+                    <tr>
+                        <td>
+                            <span>@item.Entetedemande.Numero</span>
+                        </td>
+                        <td>
+                            @item.Date.ToString("dd/MM/yyyy")
+                        </td>
+                        <td>
+                            <div>
+                                <div>
+                                    <span>
+                                        @item.Entetedemande.Patient.Nom @item.Entetedemande.Patient.Prenom
+                                    </span>
+                                    <span>
+                                        @item.Entetedemande.Patient.Code
+                                    </span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            @item.Entetedemande.Prescripteur.Nom
+                        </td>
+                        <td>
+                            @item.IdanalyseNavigation.Nom
+                        </td>
+                        @* <td>
+                            @if (item.Statut == "valide")
+                            {
+                                <span class="status-badge status-success">Validé</span>
+                            }
+                            else if (item.Statut == "en_attente")
+                            {
+                                <span class="status-badge status-warning">En attente</span>
+                            }
+                            else
+                            {
+                                <span class="status-badge status-secondary">@item.Statut</span>
+                            }
+                                </td> *@
+                            </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (!Model.DerniersResultats.Any())
+    {
+        <div class="no-results">
+            <p>Aucun résultat trouvé.</p>
+        </div>
+    }
+</div>

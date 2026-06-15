@@ -1,0 +1,42 @@
+@model ProlabWeb.Db.Assurance
+
+@{
+    ViewData["Title"] = "Détails de l'assurance";
+}
+
+<div class="grid grid-cols-2 gap-5 mb-5">
+    <div>
+        <h1 class="font-bold">Détails de l'assurance</h1>
+    </div>
+    <div class="text-end">
+        <a asp-action="Index" class="text-primary">Retour à la liste</a>
+    </div>
+</div>
+<div class="flex items-center gap-2 mb-5">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+<div class="min-w-full mb-5">
+    <div class="kt-card p-5">
+        <dl class="grid grid-cols-2 gap-5">
+            <dt class="font-semibold">@Html.DisplayNameFor(model => model.Nom)</dt>
+            <dd>@Html.DisplayFor(model => model.Nom)</dd>
+            <dt class="font-semibold">@Html.DisplayNameFor(model => model.Description)</dt>
+            <dd>@Html.DisplayFor(model => model.Description)</dd>
+            <dt class="font-semibold">@Html.DisplayNameFor(model => model.Isactive)</dt>
+            <dd>
+                @if (Model.Isactive)
+                {
+                    <span class="kt-badge kt-badge-success">Oui</span>
+                }
+                else
+                {
+                    <span class="kt-badge kt-badge-danger">Non</span>
+                }
+            </dd>
+        </dl>
+        <div class="flex gap-3 mt-5">
+            <a asp-action="Edit" asp-route-id="@Model?.Codeassurance" class="kt-btn kt-btn-warning">Modifier</a>
+            <a asp-action="Index" class="kt-btn kt-btn-secondary">Retour à la liste</a>
+        </div>
+    </div>
+</div>

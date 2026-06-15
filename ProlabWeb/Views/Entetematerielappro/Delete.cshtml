@@ -1,0 +1,37 @@
+﻿@model ProlabWeb.Db.Entetematerielappro
+@{
+    ViewData["Title"] = "Suppression Approvisionnement Matériel";
+}
+
+<div class="grid grid-cols-2 gap-5 mb-5">
+<div>
+        <h1 class="font-bold">@ViewData["Title"]</h1>
+    </div>
+    <div class="text-end">
+        <a asp-action="Index" class="text-primary">Retour à la liste</a>
+    </div>
+</div>
+<div class="flex items-center gap-2 mb-5">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+
+<div class="min-w-full mb-5">
+    <h3 class="text-danger">Êtes-vous sûr de vouloir supprimer cet approvisionnement ?</h3>
+    <dl class="row">
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Date)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Date)</dd>
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Numero)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Numero)</dd>
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Fournisseur)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Fournisseur.Nom)</dd>
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Utilisateur)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Utilisateur.Nom)</dd>
+    </dl>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Entetematerielapproid" />
+        <div class="flex gap-5 mt-5">
+            <button type="submit" class="kt-btn kt-btn-danger">Supprimer</button>
+            <a asp-action="Index" class="kt-btn kt-btn-secondary">Retour</a>
+        </div>
+    </form>
+</div>

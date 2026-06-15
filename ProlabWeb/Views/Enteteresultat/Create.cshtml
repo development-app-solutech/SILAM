@@ -1,0 +1,244 @@
+@model ProlabWeb.ViewModels.EnteteresultatCreateVM
+@{
+    ViewData["Title"] = "Ajout de résultat d'analyse";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="grid grid-cols-2 gap-5">
+    <div>
+        <h1 class="font-bold">@ViewData["Title"]</h1>
+    </div>
+    <div class="text-end">
+        <a asp-action="Index" class="text-primary">Retour à la liste</a>
+    </div>
+</div>
+<div class="flex items-center gap-2">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+
+<div class="min-w-full mb-5">
+    <form asp-action="Create" method="post" class="flex flex-col gap-5">
+        @Html.AntiForgeryToken()
+        <div asp-validation-summary="ModelOnly" class="text-red-500"></div>
+        <input hidden asp-for="Codesite" />
+        <input hidden asp-for="Technicienid" />
+        <input hidden name="Age" />
+        <input hidden name="Sexe" />
+        <input hidden name="Peau" />
+        <!-- Ligne 1: Site et Utilisateur -->
+        <div class="grid grid-cols-3 gap-10">
+            <div class="flex flex-col gap-3">
+                <label class="kt-form-label text-mono" asp-for="Codesite"></label>
+                <select class="kt-select w-100 js-example-basic-single" asp-for="Codesite" asp-items="@(ViewData["Codesite"] as List<SelectListItem>)" disabled>
+                </select>
+                <span asp-validation-for="Codesite" class="text-red-500"></span>
+            </div>
+            <div class="flex flex-col gap-3">
+                <label class="kt-form-label text-mono" asp-for="Technicienid"></label>
+                <select class="kt-select w-100 js-example-basic-single" asp-for="Technicienid" asp-items="@(ViewData["Technicienid"] as List<SelectListItem>)" disabled>
+                </select>
+                <span asp-validation-for="Technicienid" class="text-red-500"></span>
+            </div>
+            <div class="flex flex-col gap-3">
+                <label class="kt-form-label text-mono" asp-for="Laboratoireid"></label>
+                <select class="kt-select w-100 js-example-basic-single" asp-for="Laboratoireid" asp-items="@(ViewData["Laboratoireid"] as List<SelectListItem>)" disabled>
+                </select>
+                <span asp-validation-for="Laboratoireid" class="text-red-500"></span>
+            </div>
+        </div>        
+        <!-- Ligne 2: Demande et Analyse sur 1 colonne -->
+        <div class="grid grid-cols-1 gap-5">
+            <div class="flex flex-col gap-3">
+                <label class="kt-form-label text-mono" asp-for="Entetedemandeid"></label>
+                <span class="text-xs text-gray-500">Format : numéro - date - patient - prescripteur - assurance</span>
+                <select class="kt-select w-100 js-example-basic-single select2-demande" asp-for="Entetedemandeid" asp-items="@(ViewData["Entetedemandeid"] as List<SelectListItem>)"></select>
+                <span asp-validation-for="Entetedemandeid" class="text-red-500"></span>
+            </div>
+            <div class="flex flex-col gap-3">
+                <label class="kt-form-label text-mono" asp-for="Idanalyse"></label>
+                <select class="kt-select w-100 js-example-basic-single" asp-for="Idanalyse" asp-items="@(ViewData["Idanalyse"] as List<SelectListItem>)"></select>
+                <span asp-validation-for="Idanalyse" class="text-red-500"></span>
+            </div>
+        </div>
+        <div class="flex flex-col gap-3 mt-5">
+            <label class="kt-form-label text-mono" asp-for="Date"></label>
+            <input class="kt-input" asp-for="Date" type="date" placeholder="jj/mm/aaaa" />
+            <span asp-validation-for="Date" class="text-red-500"></span>
+        </div>
+        
+        <!-- Heures de prélèvement et réception -->
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-5">
+            <h3 class="text-lg font-semibold text-blue-800 mb-4">
+                <span class="material-symbols-outlined mr-2 text-xl">schedule</span>
+                Gestion des heures
+            </h3>
+            <div class="grid grid-cols-2 gap-5">
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="DatePrelevement"></label>
+                    @if (User.IsInRole("Technicien"))
+                    {
+                        <input class="kt-input" asp-for="DatePrelevement" type="datetime-local" />
+                    }
+                    else
+                    {
+                        <input class="kt-input" asp-for="DatePrelevement" type="datetime-local" readonly disabled style="background-color: #f8f9fa; cursor: not-allowed;" />
+                    }
+                    <span asp-validation-for="DatePrelevement" class="text-red-500"></span>
+                    <small class="text-gray-600">Heure à laquelle l'échantillon a été prélevé</small>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="DateReception"></label>
+                    @if (User.IsInRole("Technicien"))
+                    {
+                        <input class="kt-input" asp-for="DateReception" type="datetime-local" />
+                    }
+                    else
+                    {
+                        <input class="kt-input" asp-for="DateReception" type="datetime-local" readonly disabled style="background-color: #f8f9fa; cursor: not-allowed;" />
+                    }
+                    <span asp-validation-for="DateReception" class="text-red-500"></span>
+                    <small class="text-gray-600">Heure d'arrivée de l'échantillon au laboratoire</small>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Tableau de 7 colonnes -->
+        <div class="grid grid-cols-1 gap-10">
+            <div class="text-center">
+                <h2 class="font-bold text-lg">Liste des paramètres</h2>
+            </div>
+            <div class="kt-scrollable-x-auto">
+                <table class="kt-table table-auto kt-table-border min-w-max table-fixed">
+                    <thead>
+                        <tr>
+                            <th class="min-w-\[200px\]">Nom/code</th>
+                            <th class="min-w-\[100px\]">Unité</th>
+                            <th class="min-w-\[100px\]">Résultat</th>
+                            <th class="min-w-\[100px\]">Unité SI</th>                             
+                            <th class="min-w-\[100px\]">Résultat SI</th>
+                            <th style="min-width: 200px !important; width: 25% !important;">
+                                <span class="kt-table-col-label f">Commentaire</span>
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @for (int i = 0; i < Model.Parametres.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                <input type="hidden" asp-for="Parametres[i].Parametreid" />
+                                <div class="flex flex-col">
+                                    <span class="font-bold">@Model.Parametres[i].Nom</span>
+                                    <input type="hidden" asp-for="Parametres[i].Nom" />
+                                    <span class="text-sm text-gray-500">@Model.Parametres[i].Code</span>
+                                    <input type="hidden" asp-for="Parametres[i].Code" />
+                                </div>
+                            </td>
+                            <td>
+                                <span>@Model.Parametres[i].Unite</span>
+                                <input type="hidden" asp-for="Parametres[i].Unite" />
+                            </td>
+                            <td>
+                                <input class="kt-input" asp-for="Parametres[i].Resultat" type="number" placeholder="Résultat" />
+                            </td>
+                            <td>
+                                <span>@Model.Parametres[i].UniteSI</span>
+                                <input type="hidden" asp-for="Parametres[i].UniteSI" />
+                            </td>
+                            <td>
+                                <input class="kt-input" asp-for="Parametres[i].Resultatsi" type="number" placeholder="Résultat SI" />
+                            </td>
+                            <td>
+                                <input type="text" class="kt-input commentaire-field" 
+                                       asp-for="Parametres[i].Commentaire" 
+                                       readonly 
+                                       placeholder="Auto-calculé après enregistrement" 
+                                       style="background-color: #f8f9fa; cursor: not-allowed; text-align: center; font-style: italic;" 
+                                       title="Le commentaire sera calculé automatiquement lors de l'enregistrement" />
+                                <span asp-validation-for="Parametres[i].Commentaire" class="text-red-500"></span>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Ligne Interpretation déplacée ici -->
+        <div class="flex flex-col gap-3 mt-5">
+            <label class="kt-form-label text-mono" asp-for="Interpretation"></label>
+            <textarea class="kt-input summernote" asp-for="Interpretation" placeholder=""></textarea>
+            <span asp-validation-for="Interpretation" class="text-red-500"></span>
+        </div>
+        
+        <!-- Bouton Enregistrer -->
+        <div class="flex gap-5 mt-5">
+            <button type="submit" name="submitAction" value="save" class="kt-btn kt-btn-primary">
+                <span class="material-symbols-outlined">
+                    save
+                </span> Enregistrer
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/app/enteteresultat/create.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function() {
+            function forceFormulaFieldsEditable() {
+                function escapeRegexForFormula(value) {
+                    return (value || '').toString().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                }
+
+                function isSelfVariableInFormula(formula, code) {
+                    if (!formula || !code) return false;
+                    var pattern = new RegExp('\\b' + escapeRegexForFormula(code) + '\\b', 'i');
+                    return pattern.test((formula || '').toString());
+                }
+
+                $('input[name$=".Builder.Type"]').each(function() {
+                    var name = $(this).attr('name');
+                    var match = name.match(/Parametres\[(\d+)\]\.Builder\.Type/);
+                    if (!match) return;
+
+                    var index = match[1];
+                    var type = ($(this).val() || '').toString().trim().toLowerCase();
+                    if (type === 'formule') {
+                        var formula = ($('input[name="Parametres[' + index + '].Builder.Valeur"]').val() || '').toString();
+                        var code = ($('input[name="Parametres[' + index + '].Code"]').val() || '').toString();
+                        var selfFormula = isSelfVariableInFormula(formula, code);
+                        var $resultInput = $('input[name="Parametres[' + index + '].Resultat"]');
+                        if ($resultInput.length) {
+                            $resultInput.prop('readonly', !selfFormula);
+                            if (selfFormula) {
+                                $resultInput.removeAttr('readonly');
+                            }
+                        }
+                    }
+                });
+            }
+
+            $('.summernote').summernote({
+                height: 200,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
+                ]
+            });
+
+            // Filet de sécurité: même si un ancien JS est en cache, les champs formule restent saisissables.
+            forceFormulaFieldsEditable();
+            $(document).on('change', '[name="Idanalyse"]', function() {
+                setTimeout(forceFormulaFieldsEditable, 250);
+                setTimeout(forceFormulaFieldsEditable, 700);
+            });
+        });
+    </script>
+} 

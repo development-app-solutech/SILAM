@@ -1,0 +1,105 @@
+@model ProlabWeb.ViewModels.PreleveurEditVM
+
+@{
+    ViewData["Title"] = "Modifier un préleveur";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="grid grid-cols-2 gap-5 mb-2">
+    <div>
+        <h1 class="font-bold">Modifier un préleveur</h1>
+    </div>
+    <div class="text-end">
+        <a asp-action="Index" class="text-primary">Retour à la liste</a>
+    </div>
+</div>
+<div class="flex items-center gap-2 mb-4">
+    <span class="border-t border-border border-primary w-full"></span>
+</div>
+<div class="min-w-full mb-5">
+    <form asp-action="Edit" method="post" class="flex flex-col gap-5">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Preleveurid" />
+        @if (!ViewData.ModelState.IsValid && ViewData.ModelState.Values.SelectMany(v => v.Errors).Any())
+        {
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <li>@error.ErrorMessage</li>
+                    }
+                </ul>
+            </div>
+        }
+        <div asp-validation-summary="ModelOnly" class="text-red-500"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div class="flex flex-col gap-5">
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Nom"></label>
+                    <input class="kt-input" asp-for="Nom" placeholder="Nom" type="text">
+                    <span asp-validation-for="Nom" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Prenom"></label>
+                    <input class="kt-input" asp-for="Prenom" placeholder="Prénom" type="text">
+                    <span asp-validation-for="Prenom" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Codesexe"></label>
+                    <select class="kt-input" asp-for="Codesexe" asp-items="@(ViewData["Codesexe"] as IEnumerable<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>)">
+                        <option value="">-- Sélectionner le sexe --</option>
+                    </select>
+                    <span asp-validation-for="Codesexe" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Datenaissance"></label>
+                    <input class="kt-input" asp-for="Datenaissance" placeholder="Date de naissance" type="date">
+                    <span asp-validation-for="Datenaissance" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Type"></label>
+                    <input class="kt-input" asp-for="Type" placeholder="Type" type="text">
+                    <span asp-validation-for="Type" class="text-red-500"></span>
+                </div>
+            </div>
+            <div class="flex flex-col gap-5">
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Tel1"></label>
+                    <input class="kt-input" asp-for="Tel1" placeholder="Téléphone 1" type="text">
+                    <span asp-validation-for="Tel1" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Tel2"></label>
+                    <input class="kt-input" asp-for="Tel2" placeholder="Téléphone 2" type="text">
+                    <span asp-validation-for="Tel2" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Mob1"></label>
+                    <input class="kt-input" asp-for="Mob1" placeholder="Mobile 1" type="text">
+                    <span asp-validation-for="Mob1" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Mob2"></label>
+                    <input class="kt-input" asp-for="Mob2" placeholder="Mobile 2" type="text">
+                    <span asp-validation-for="Mob2" class="text-red-500"></span>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <label class="kt-form-label text-mono" asp-for="Email"></label>
+                    <input class="kt-input" asp-for="Email" placeholder="Email" type="email">
+                    <span asp-validation-for="Email" class="text-red-500"></span>
+                </div>
+            </div>
+        </div>
+        <div class="inline-flex justify-start grow">
+            <button type="submit" class="kt-btn kt-btn-primary">
+                <span class="material-symbols-outlined">
+                    save
+                </span> Enregistrer
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

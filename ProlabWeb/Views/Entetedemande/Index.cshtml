@@ -1,0 +1,381 @@
+@model IEnumerable<ProlabWeb.Models.EntetedemandeModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    #kt_table_entetedemande_index {
+        width: 100% !important;
+        min-width: 100% !important;
+        table-layout: auto !important;
+    }
+
+    #kt_table_entetedemande_index thead th,
+    #kt_table_entetedemande_index tbody td {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: initial !important;
+        word-wrap: break-word !important;
+        min-width: auto !important;
+    }
+
+    .kt-scrollable-x-auto {
+        width: 100% !important;
+        overflow-x: auto !important;
+        overflow-y: visible !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    .kt-scrollable-x-auto > table {
+        width: 100% !important;
+        min-width: 100% !important;
+    }
+
+    .dataTables_wrapper {
+        width: 100% !important;
+    }
+
+    .dataTables_wrapper .dataTables_scroll {
+        clear: both !important;
+        width: 100% !important;
+    }
+
+    .dataTables_wrapper .dataTables_scrollBody {
+        overflow: visible !important;
+        width: 100% !important;
+    }
+</style>
+
+@* <h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Numero)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodesiteNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Patient)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Policeassurance)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prescripteur)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Numero)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CodesiteNavigation.Codesite)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Patient.Patientid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Policeassurance.Policeassuranceid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prescripteur.Prescripteurid)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Entetedemandeid">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Entetedemandeid">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Entetedemandeid">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+ *@
+
+<div class="grid grid-cols-2 gap-5">
+    <div>
+        <h1 class="font-bold">Liste des demande d'analyses</h1>
+    </div>
+</div>
+<div class="flex items-center gap-2">
+    <span class="border-t border-border border-primary w-full">
+    </span>
+</div>
+
+<div class="w-full overflow-x-auto">
+    <div class="grid gap-5" data-kt-datatable="true" data-kt-datatable-page-size="10">
+        <div class="grid grid-cols-4 gap-5">
+            <div>
+                <label class="kt-input border-t border-primary">
+                    <span class="material-symbols-outlined">
+                        search
+                    </span>
+                    <input class="kt-input" placeholder="Recherche" type="text" data-kt-entetedemande-table-filter="search">
+                </label>
+            </div>
+            <div>
+                <select class="kt-select" data-kt-entetedemande-table-filter="status">
+                    <option value="">Tous les statuts</option>
+                    <option value="En attente de saisie">En attente de saisie</option>
+                    <option value="En cours de saisie">En cours de saisie</option>
+                    <option value="Résultats saisie">Résultats saisie</option>
+                </select>
+            </div>
+            <div></div>
+            <div class="inline-flex justify-end grow gap-5">
+                @if (!User.IsInRole(EnumRoles.Technicien.ToString()))
+                {
+                    <a asp-action="Create" class="kt-btn kt-btn-primary">
+                        <span class="material-symbols-outlined">
+                            add
+                        </span> Nouvelle demande
+                    </a>
+                }
+
+            </div>
+        </div>
+        <div class="kt-scrollable-x-auto w-full" style="overflow-x: auto; overflow-y: visible;">
+            <table id="kt_table_entetedemande_index" class="kt-table table-auto kt-table-border" style="width: 100%; min-width: 100%;">
+                <thead>
+                    <tr>
+                        <th class="w-[60px]">
+                            <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-check="true" type="checkbox">
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">
+                                    @Html.DisplayNameFor(model => model.Numero)
+                                </span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">
+                                    @Html.DisplayNameFor(model => model.Date)
+                                </span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">
+                                    Patient
+                                </span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">
+                                    @Html.DisplayNameFor(model => model.Sexe)
+                                </span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">
+                                    @Html.DisplayNameFor(model => model.Datenaissance)
+                                </span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">
+                                    Analyses
+                                </span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">
+                                    @Html.DisplayNameFor(model => model.Prescripteur)
+                                </span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">
+                                    @Html.DisplayNameFor(model => model.Assurance)
+                                </span>
+                            </span>
+                        </th>
+                        <th>
+                            <span class="kt-table-col">
+                                <span class="kt-table-col-label">
+                                    Statut
+                                </span>
+                            </span>
+                        </th>
+                        <th class="w-[60px]">
+                        </th>
+                    </tr>
+                </thead>
+
+                <div id="kt_spinner_entetedemande_index" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="display: none;">
+                    <div class="kt-datatable-loading">
+                        <svg class="animate-spin -ml-1 h-5 w-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Loading...
+                    </div>
+                </div>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-start">
+                                <input class="kt-checkbox kt-checkbox-sm" data-kt-datatable-row-check="true" type="checkbox" value="1">
+                            </td>
+                            <td class="font-normal text-foreground">
+                                @Html.DisplayFor(modelItem => item.Numero)
+                            </td>
+                            <td class="font-normal text-foreground">
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                            <td class="font-normal text-foreground">
+                                <p>@(string.Join(" ", item.Nom, item.Prenom))</p>
+                            </td>
+                            <td class="font-normal text-foreground">
+                                @Html.DisplayFor(modelItem => item.Sexe)
+                            </td>
+                            <td class="font-normal text-foreground">
+                                @Html.DisplayFor(modelItem => item.Datenaissance)
+                            </td>
+                            <td class="font-normal text-foreground">
+                                @Html.DisplayFor(modelItem => item.Analyses)
+                            </td>
+                            <td class="font-normal text-foreground">
+                                @Html.DisplayFor(modelItem => item.Prescripteur)
+                            </td>
+                            <td class="font-normal text-foreground">
+                                @{
+                                    var valeur = string.Join(", ", new[] { item.Assurance, item.Taux }
+                                    .Where(x => !string.IsNullOrWhiteSpace(x)));
+                                }
+                                @(string.IsNullOrWhiteSpace(valeur) ? "N/A" : valeur)
+                            </td>
+                            <td class="text-center">
+                                <span class="@item.StatutCssClass">
+                                    <span class="kt-badge-dot size-1.5"></span>
+                                    @item.StatutDisplay
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <div class="kt-menu flex-inline" data-kt-menu="true">
+                                    <div class="kt-menu-item kt-menu-item-dropdown" data-kt-menu-item-offset="0, 10px" data-kt-menu-item-placement="bottom-end" data-kt-menu-item-placement-rtl="bottom-start" data-kt-menu-item-toggle="dropdown" data-kt-menu-item-trigger="click">
+                                        <button class="kt-menu-toggle kt-btn kt-btn-sm kt-btn-icon kt-btn-ghost">
+                                            <i class="ki-filled ki-dots-vertical text-lg">
+                                            </i>
+                                        </button>
+                                        <div class="kt-menu-dropdown kt-menu-default w-full max-w-[175px]" data-kt-menu-dismiss="true">
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link" asp-action="Edit" asp-route-id="@item.Entetedemandeid">
+                                                    <span class="kt-menu-icon">
+                                                        <i class="ki-filled ki-pencil">
+                                                        </i>
+                                                    </span>
+                                                    <span class="kt-menu-title">
+                                                        Modifier
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            @* <div class="kt-menu-separator">
+                                                    </div> *@
+                                            @* Show "Saisir Résultats" only if status is "En cours de saisie" and user is not in "caisse" role *@
+                                            @if ((item.StatutDisplay == "En cours de saisie" || item.StatutDisplay == "En attente de saisie") && !User.IsInRole(EnumRoles.Caisse.ToString()))
+                                            {
+                                                <div class="kt-menu-item">
+                                                    <a class="kt-menu-link" asp-action="Create" asp-controller="Enteteresultat" asp-route-entetedemandeid="@item.Entetedemandeid">
+                                                        <span class="kt-menu-icon">
+                                                            <i class="ki-filled ki-note-add">
+                                                            </i>
+                                                        </span>
+                                                        <span class="kt-menu-title">
+                                                            Saisir Résultats
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            }
+                                            <div class="kt-menu-item">
+                                                <a class="kt-menu-link" asp-action="Facture" asp-route-id="@item.Entetedemandeid" data-kt-entetedemandes-table-filter="print_row" data-id="@item.Entetedemandeid">
+                                                    <span class="kt-menu-icon">
+                                                        <i class="ki-filled ki-printer">
+                                                        </i>
+                                                    </span>
+                                                    <span class="kt-menu-title">
+                                                        Imprimer
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            @* <div class="kt-menu-item">
+                                                <a class="kt-menu-link" asp-action="Delete" asp-route-id="@item.Entetedemandeid" data-kt-entetedemandes-table-filter="delete_row" data-id="@item.Entetedemandeid">
+                                                    <span class="kt-menu-icon">
+                                                        <i class="ki-filled ki-trash">
+                                                        </i>
+                                                    </span>
+                                                    <span class="kt-menu-title">
+                                                        Supprimer
+                                                    </span>
+                                                </a>
+                                            </div> *@
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <!-- Standalone Status Filter -->
+    <script src="~/js/status-filter-standalone.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Initialize KT components first
+            if (typeof KTEntetedemandeList !== 'undefined') {
+                KTEntetedemandeList.init();
+            } else {
+                console.error('KTEntetedemandeList is not defined');
+            }
+            
+            // Initialize enhanced dropdowns after a short delay
+            setTimeout(function() {
+                console.log('Manually initializing enhanced dropdowns...');
+                if (typeof window.initializeEnhancedDropdowns === 'function') {
+                    window.initializeEnhancedDropdowns();
+                } else {
+                    console.log('Enhanced dropdown function not available yet');
+                }
+            }, 100);
+            
+            // Also try again after longer delay for dynamic content
+            setTimeout(function() {
+                console.log('Second attempt at initializing enhanced dropdowns...');
+                if (typeof window.initializeEnhancedDropdowns === 'function') {
+                    window.initializeEnhancedDropdowns();
+                }
+            }, 1000);
+        });
+    </script>
+}

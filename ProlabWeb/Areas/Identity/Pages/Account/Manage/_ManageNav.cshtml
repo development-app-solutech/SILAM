@@ -1,0 +1,52 @@
+﻿@inject SignInManager<ProlabWeb.Data.ProlabIdentityUser> SignInManager
+@{
+    var hasExternalLogins = false;
+    try
+    {
+        if (SignInManager != null)
+        {
+            var schemes = await SignInManager.GetExternalAuthenticationSchemesAsync();
+            hasExternalLogins = schemes != null && schemes.Any();
+        }
+    }
+    catch
+    {
+        hasExternalLogins = false;
+    }
+
+    var indexClass = ManageNavPages.IndexNavClass(ViewContext) ?? "";
+    var indexStyle = indexClass.Contains("active") ? "background-color:#e09b2d33;color:#e09b2d;" : "color:#1a202c;";
+    var emailClass = ManageNavPages.EmailNavClass(ViewContext) ?? "";
+    var emailStyle = emailClass.Contains("active") ? "background-color:#e09b2d33;color:#e09b2d;" : "color:#1a202c;";
+    var pwdClass = ManageNavPages.ChangePasswordNavClass(ViewContext) ?? "";
+    var pwdStyle = pwdClass.Contains("active") ? "background-color:#e09b2d33;color:#e09b2d;" : "color:#1a202c;";
+    var extClass = ManageNavPages.ExternalLoginsNavClass(ViewContext) ?? "";
+    var extStyle = extClass.Contains("active") ? "background-color:#e09b2d33;color:#e09b2d;" : "color:#1a202c;";
+    var twofaClass = ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext) ?? "";
+    var twofaStyle = twofaClass.Contains("active") ? "background-color:#e09b2d33;color:#e09b2d;" : "color:#1a202c;";
+    var dataClass = ManageNavPages.PersonalDataNavClass(ViewContext) ?? "";
+    var dataStyle = dataClass.Contains("active") ? "background-color:#e09b2d33;color:#e09b2d;" : "color:#1a202c;";
+}
+<ul class="flex flex-col gap-2">
+    <li>
+        <a class="block px-4 py-2 rounded-lg font-medium transition @indexClass" style="@indexStyle" asp-page="./Index">Profil</a>
+    </li>
+    <li>
+        <a class="block px-4 py-2 rounded-lg font-medium transition @emailClass" style="@emailStyle" asp-page="./Email">Email</a>
+    </li>
+    <li>
+        <a class="block px-4 py-2 rounded-lg font-medium transition @pwdClass" style="@pwdStyle" asp-page="./ChangePassword">Changer le mot de passe</a>
+    </li>
+    @if (hasExternalLogins)
+    {
+        <li>
+            <a class="block px-4 py-2 rounded-lg font-medium transition @extClass" style="@extStyle" asp-page="./ExternalLogins">Connexions externes</a>
+        </li>
+    }
+    <li>
+        <a class="block px-4 py-2 rounded-lg font-medium transition @twofaClass" style="@twofaStyle" asp-page="./TwoFactorAuthentication">Authentification à deux facteurs</a>
+    </li>
+    <li>
+        <a class="block px-4 py-2 rounded-lg font-medium transition @dataClass" style="@dataStyle" asp-page="./PersonalData">Données personnelles</a>
+    </li>
+</ul>
