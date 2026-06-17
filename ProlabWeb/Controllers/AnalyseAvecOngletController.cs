@@ -77,11 +77,11 @@ namespace ProlabWeb.Controllers
             {
                 Parametres = new List<ParametreCreateAvecOngletVM>
                 {
-                    new ParametreCreateAvecOngletVM()
+                    //new ParametreCreateAvecOngletVM()
                 },
                 ValeursReference = new List<ValeurreferenceCreateAvecOngletVM>
                 {
-                    new ValeurreferenceCreateAvecOngletVM()
+                    //new ValeurreferenceCreateAvecOngletVM()
                 },
                 TarifsAssurance = _context.Assurances.AsNoTracking()
                     .Select(x => new TarifanalyseassuranceCreateAvecOngletVM
