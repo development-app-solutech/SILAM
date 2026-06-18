@@ -1,0 +1,78 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\ALI\\Desktop\\CodesSourcesSILAM\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{47038448-1906-9B05-1AE0-9D16ECDA5F5D}|ProlabWeb.Api\\ProlabWeb.Api.csproj|c:\\users\\ali\\desktop\\codessourcessilam\\prolabweb.api\\prolabweb.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{47038448-1906-9B05-1AE0-9D16ECDA5F5D}|ProlabWeb.Api\\ProlabWeb.Api.csproj|solutionrelative:prolabweb.api\\prolabweb.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{203B28CD-DD5E-2A4D-0D24-DCD2F505D9F8}|ProlabWeb\\ProlabWeb.csproj|c:\\users\\ali\\desktop\\codessourcessilam\\prolabweb\\prolabweb.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{203B28CD-DD5E-2A4D-0D24-DCD2F505D9F8}|ProlabWeb\\ProlabWeb.csproj|solutionrelative:prolabweb\\prolabweb.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{c6f34f0d-7ae5-4f3a-be61-fe0c21ae9eb8}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ProlabWeb.Api",
+              "DocumentMoniker": "C:\\Users\\ALI\\Desktop\\CodesSourcesSILAM\\ProlabWeb.Api\\ProlabWeb.Api.csproj",
+              "RelativeDocumentMoniker": "ProlabWeb.Api\\ProlabWeb.Api.csproj",
+              "ToolTip": "C:\\Users\\ALI\\Desktop\\CodesSourcesSILAM\\ProlabWeb.Api\\ProlabWeb.Api.csproj",
+              "RelativeToolTip": "ProlabWeb.Api\\ProlabWeb.Api.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-06-18T09:53:21.554Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ProlabWeb",
+              "DocumentMoniker": "C:\\Users\\ALI\\Desktop\\CodesSourcesSILAM\\ProlabWeb\\ProlabWeb.csproj",
+              "RelativeDocumentMoniker": "ProlabWeb\\ProlabWeb.csproj",
+              "ToolTip": "C:\\Users\\ALI\\Desktop\\CodesSourcesSILAM\\ProlabWeb\\ProlabWeb.csproj",
+              "RelativeToolTip": "ProlabWeb\\ProlabWeb.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-06-18T09:52:12.578Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

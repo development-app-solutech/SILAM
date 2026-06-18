@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProlabWeb.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+75254c062cc5db0d1706d9eba5d363117928716a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c671529ded7db396dc6e4a9e7117bfeeb5f85498")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProlabWeb.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProlabWeb.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
