@@ -29,7 +29,7 @@ COPY *.csproj ./
 RUN dotnet restore
 
 COPY . ./
-RUN dotnet publish -c Release -o out
+RUN dotnet publish ProlabWeb.csproj -c Release -o out
 
 # Étape 3 : Runtime final avec fonts visibles pour SkiaSharp
 FROM base AS final
